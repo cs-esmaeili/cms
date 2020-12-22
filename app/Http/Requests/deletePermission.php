@@ -13,7 +13,7 @@ class deletePermission extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class deletePermission extends FormRequest
     public function rules()
     {
         return [
-            //
+            'role_id' => 'required|numeric',
+            'permission_id' => 'required|numeric',
         ];
     }
 }

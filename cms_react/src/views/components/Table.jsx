@@ -81,7 +81,9 @@ const Table = ({
                             setCurrentPage(page);
                             pData = (paginate(data, currentPage, perPage));
                         }} currentPage={currentPage} />
-                        {(loadSomething != null) ? loadSomething() : null}
+
+                        {(loadSomething != null) ? loadSomething(clearSelect) : null}
+
                     </div >
                     : null
             }

@@ -10,7 +10,10 @@ use App\Http\Requests\createPerson;
 use App\Http\Requests\deletePermission;
 use App\Http\Requests\editPerson;
 use App\Http\Requests\editRole;
+use App\Http\Requests\missingPermissionss;
 use App\Http\Requests\permissions;
+use App\Http\Requests\rolePermissions;
+use App\Models\Permission;
 use App\Models\Person as ModelsPerson;
 use App\Models\PersonInfo;
 use App\Models\Role;
@@ -43,11 +46,22 @@ class Person extends Controller
         $roles = Role::all(['name', 'role_id']);
         return response(['statusText' => 'ok', "list" => $roles], 200);
     }
-    public function permissions(permissions $request)
+    public function rolePermissions(rolePermissions $request)
     {
         $content =  json_decode($request->getContent());
         $permissions = Role::where('role_id', '=', $content->role_id)->get()[0]->permissions;
         return response(['statusText' => 'ok', "list" => $permissions], 200);
+    }
+    public function missingPermissions(missingPermissionss $request)
+    {
+        $content =  json_decode($request->getContent());
+        $permissions = Role::where('role_id', '=', $content->role_id)->get()[0]->permissions()->get(['permission.permission_id'])->toArray();
+        $outPermissions = [];
+        foreach ($permissions as $key => $value) {
+            $outPermissions[] = $value['permission_id'];
+        }
+        $miss =  Permission::whereNotIn('permission_id', $outPermissions)->get();
+        return response(['statusText' => 'ok', "list" => $miss], 200);
     }
 
     public function addRole(addRole $request)
@@ -56,7 +70,7 @@ class Person extends Controller
         Role::create([
             'name' => $content->name,
         ]);
-        return response(['statusText' => 'ok'], 200);
+        return response(['statusText' => 'ok', 'message' => "نقش ساخته شد"], 200);
     }
     public function deleteRole()
     {
@@ -77,14 +91,14 @@ class Person extends Controller
             'role_id' => $content->role_id,
             'permission_id' => $content->permission_id,
         ]);
-        return response(['statusText' => 'ok'], 200);
+        return response(['statusText' => 'ok', 'message' => "دسترسی اضافه شد"], 200);
     }
 
     public function deletePermission(deletePermission $request)
     {
         $content =  json_decode($request->getContent());
         Role_Permission::where('role_id', '=', $content->role_id)->where('permission_id', '=', $content->permission_id)->delete();
-        return response(['statusText' => 'ok'], 200);
+        return response(['statusText' => 'ok', 'message' => "دسترسی حذف شد"], 200);
     }
 
     public function createPerson(createPerson $request)

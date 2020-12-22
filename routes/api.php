@@ -44,11 +44,12 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/createperson', [Person::class, 'createPerson'])->name('createPerson');
         Route::post('/editperson', [Person::class, 'editPerson'])->name('editPerson');
         Route::post('/roles', [Person::class, 'roles'])->name('roles');
-        Route::post('/permissions', [Person::class, 'permissions'])->name('permissions');
+        Route::post('/rolepermissions', [Person::class, 'rolePermissions'])->name('rolePermissions');
+        Route::post('/addpermission', [Person::class, 'addPermission'])->name('addPermission');
+        Route::post('/missingpermissions', [Person::class, 'missingPermissions'])->name('missingPermissions');
         Route::post('/addrole', [Person::class, 'addRole'])->name('addRole');
         Route::post('/deleterole', [Person::class, 'deleteRole'])->name('deleteRole');
         Route::post('/editrole', [Person::class, 'editRole'])->name('editRole');
-        Route::post('/addpermission', [Person::class, 'addPermission'])->name('addPermission');
         Route::post('/deletepermission', [Person::class, 'deletePermission'])->name('deletePermission');
 
         Route::post('/createpost', [Post::class, 'createPost'])->name('createPost');
