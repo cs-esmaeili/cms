@@ -4,6 +4,7 @@ namespace App\Http\classes;
 
 use App\Models\Token;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class G
 {
@@ -27,7 +28,7 @@ class G
 
     public static function newToken($unicData, $token_id = -1, $time = 0)
     {
-        $token = G::getHash($unicData . rand(0, 1000) . Carbon::now());
+        $token = G::getHash($unicData . rand(0, 1000) . Carbon::now() .  Str::uuid());
         $result = Token::updateOrCreate(['token_id' => $token_id], [
             'token' => $token,
             'expiration' => self::timeNow($time),
@@ -70,7 +71,7 @@ class G
     }
     public static function getPersonFromToken($token)
     {
-        $token = Token::where('token' , '=' , $token)->get()[0];
+        $token = Token::where('token', '=', $token)->get()[0];
         $person = $token->person;
         return $person;
     }
@@ -113,5 +114,23 @@ class G
         $month = $temp->jdate_words(['mm' => $month]);
 
         return $current_jdate;
+    }
+
+    public static function getArrayItems($array, $params, $newItems = null)
+    {
+        $outPut = [];
+        foreach ($array as  $key => $value) {
+            foreach ($params as  $pkey => $pvalue) {
+                if ($key === $pkey || $key === $pvalue) {
+                    $outPut[$key] = $value;
+                }
+            }
+        }
+        if ($newItems != null) {
+            foreach ($newItems as  $key => $value) {
+                $outPut[$key] = $value;
+            }
+        }
+        return $outPut;
     }
 }

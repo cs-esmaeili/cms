@@ -120,26 +120,23 @@ class Person extends Controller
 
     public function editPerson(editPerson $request)
     {
-        $search = ModelsPerson::where('person_id', '=',$request->person_id)->get();
+        $search = ModelsPerson::where('person_id', '=', $request->person_id)->get();
         if ($search->count() == 0) {
             return response(['statusText' => 'fail', 'message' => "کار بر یافت نشد"], 406);
         } else {
-            $token_id = G::newToken($request->username)['token_id'];
-            // $search[0]->update([
-            //     "username" => G::changeWords($request->username),
-            //     "password" => G::getHash(G::changeWords($request->password)),
-            //     "name" => $request->name,
-            //     "family" => $request->family,
-            //     "role_id" => $request->role_id,
-            //     "token_id" => $token_id,
-            //     "description" => $$request->description,
-            //     "status" => 1,
-            // ]);
             $data = collect($request->request)->toArray();
-            $search[0]->update($data);
+            $temp = null;
+            if (array_key_exists('password', $data)) {
+                $token_id = G::newToken($request->person_id, $search[0]->token->token_id)['token_id'];
+                $temp = ['token_id' => $token_id, 'password' => G::getHash($data['password'])];
+            }
+            $search[0]->update(G::getArrayItems($data, (new ModelsPerson)->getFillable(), $temp));
+            $search[0]->personInfo()->update(G::getArrayItems($data, (new PersonInfo)->getFillable()));
+
+
             if ($request->hasFile('image')) {
-                FileManager::deleteDirectory(FileManager::location('person', 'public', ['person_id' => $request->person_id]));
-                FileManager::saveFile($request, FileManager::location('person', 'public', ['person_id' => $request->person_id]), 'image', 'public');
+                $file_id = $search[0]->personInfo->file_id;
+                FileManager::replaceFile($file_id, $request, FileManager::location('person', 'public', ['person_id' => $request->person_id]), 'image', 'public');
             }
             return response(['statusText' => 'ok', 'message' => "تغییرات ذخیره شد"], 201);
         }

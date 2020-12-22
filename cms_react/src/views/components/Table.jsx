@@ -44,6 +44,7 @@ const Table = ({
     const rowelemnt = (row, index) => {
         if (select) {
             return (
+
                 <tr key={generateID()} onClick={() => { setActive(index); selectLisener(row); }} className={(index == acive) ? "table-primary" : ""}>
                     {columens(row, generateID)}
                 </tr>
@@ -76,13 +77,10 @@ const Table = ({
                                 )}
                             </tbody>
                         </table>
-
                         <Pagination total={data.length} perPage={perPage} onPageChange={(page) => {
                             setCurrentPage(page);
                             pData = (paginate(data, currentPage, perPage));
                         }} currentPage={currentPage} />
-
-
                         {(loadSomething != null) ? loadSomething() : null}
                     </div >
                     : null

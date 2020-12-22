@@ -29,7 +29,7 @@ class AdminSeeder extends Seeder
             'orginal_name' => 'firstFile',
             'new_name' => '3aa77aae-bc9e-4e36-a00b-35b2027bfad0.jpg',
             'hash' => "",
-            'location' => env('FILE_MANAGER_BASE_PUBLIC_Directory') . "person/1/",
+            'location' => env('FILE_MANAGER_BASE_PUBLIC_Directory') . "Images/person/1/",
             'type' => "public"
         ]);
         PersonInfo::create([

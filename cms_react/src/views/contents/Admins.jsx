@@ -16,6 +16,7 @@ const Admins = () => {
     const [family, setFamily] = useState("");
     const [description, setDescription] = useState("");
     const [roleId, setRoleId] = useState("");
+    const [personId, setPersonId] = useState("");
     const [generateID] = useGenerator();
     const [clearSelect, setclearSelect] = useState(generateID());
     const [forceUpdate, setForceUpdate] = useState(false);
@@ -36,6 +37,7 @@ const Admins = () => {
         try {
             const respons = await _Admins();
             if (respons.data.statusText === "ok") {
+                console.log(respons.data.list[0]);
                 setAdmins(respons.data.list);
             }
         } catch (error) { }
@@ -60,6 +62,7 @@ const Admins = () => {
     };
     const resetInputs = (data) => {
         validator.current.hideMessageFor();
+
         if (data === null) {
             setImage("/img/undraw_profile.svg");
             setUsername("");
@@ -67,11 +70,15 @@ const Admins = () => {
             setName("");
             setFamily("");
             setRoleId("");
+            setDescription("");
             setSelecting(false);
+            setclearSelect(generateID());
         } else {
             setOldUsername(data.username);
             setSelecting(true);
             setImage(data.image);
+            setPersonId(data.person_id);
+
             setPassword("");
             setUsername(data.username);
             setName(data.name);
@@ -85,22 +92,26 @@ const Admins = () => {
         setForceUpdate(!forceUpdate);
     }
     const handelSubmit = async (event) => {
-        console.log("handelSubmit");
 
         event.preventDefault();
         let data = new FormData();
+        if(password !== null && password !== ""){
+            data.append("password", password);
+        }
+        data.append("person_id", personId);
         data.append("username", username);
-        data.append("password", password);
         data.append("name", name);
         data.append("family", family);
         data.append("role_id", roleId);
         data.append("oldUsername", oldUsername);
         data.append("description", description);
         data.append("image", event.target.imageUrl.files[0]);
-
+        console.log("handelSubmit1");
         if (validator.current.allValid()) {
             try {
                 if (selecting) {
+                    console.log("handelSubmit2");
+
                     const response = await _EditPerson(data);
                     if (response.data.statusText === "ok") {
                         resetInputs(null);
@@ -135,7 +146,7 @@ const Admins = () => {
             <div className="container-fluid">
                 <form onSubmit={handelSubmit}>
                     <div className="row">
-                        <div className="col-4">
+                        <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                             <div className="card shadow">
                                 <div className="card-header">
                                     <h6 className="font-weight-bold text-primary">تصویر حساب کاربری</h6>
@@ -144,7 +155,7 @@ const Admins = () => {
                                     <label
                                         htmlFor="imageUrl"
                                     >
-                                        <img className="img-fluid" src={image} style={{ height: "10rem", margin: "20px", borderRadius: "50%" }} alt="erorr"/>
+                                        <img className="img-fluid" src={image} style={{ height: "10rem", margin: "20px", borderRadius: "50%" }} alt="erorr" />
                                     </label>
                                     <input
                                         id="imageUrl"
@@ -163,7 +174,7 @@ const Admins = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-8">
+                        <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12">
                             <div className="card shadow">
                                 <div className="card-header">
                                     <h6 className="font-weight-bold text-primary">مشخصات حساب کاربری</h6>
@@ -174,11 +185,13 @@ const Admins = () => {
                                             <div className="form-group">
                                                 <label htmlFor="password">رمز عبور</label>
                                                 <input placeholder="رمز عبور" name="password" id="password" className="form-control form-control-user" type="text" value={password} onChange={(e) => setPassword(e.target.value)} />
-                                                {validator.current.message(
-                                                    "password",
-                                                    password,
-                                                    rules('password')
-                                                )}
+                                                {
+                                                    validator.current.message(
+                                                        "password",
+                                                        (selecting ? "tempstring" : password),
+                                                        rules('password')
+                                                    )
+                                                }
                                             </div>
                                             <div className="form-group">
                                                 <label htmlFor="family">نام خانوادگی</label>
@@ -284,6 +297,7 @@ const Admins = () => {
                                         "نام کاربری"
                                     ]} data={admins} select={true} clearSelect={clearSelect} selectLisener={(selectedData) => {
                                         if (selectedData != null) {
+
                                             resetInputs(selectedData);
                                         }
                                     }} columens={columens} />

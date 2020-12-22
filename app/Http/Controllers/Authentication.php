@@ -34,7 +34,7 @@ class Authentication extends Controller
                 return response(['status' => 'disabel'], 200);
             }
             $token = $person->token;
-            $token = G::newToken($content->username, $token->token_id, 1)['token'];
+            $token = G::newToken($person->person_id, $token->token_id, 1)['token'];
             return response(['statusText' => 'ok', 'token' => $token, 'information' => $person->informations(), 'permissions' => $person->role->permissions()->select(['name'])->get()->toArray()], 200);
         }
         return response(['statusText' => 'fail'], 200);

@@ -32,7 +32,7 @@ class FileManager
         }
         return $location;
     }
-    public static function saveFile($request, $location, $uploadedKey, $type = "public")
+    public static function saveFile($request, $location, $uploadedKey, $type = "public", $file_id = null)
     {
         if (!file_exists($location) && !is_dir($location)) {
             mkdir($location,  0755, true);
@@ -41,13 +41,13 @@ class FileManager
         if (is_array($request[$uploadedKey])) {
             $total = count($request[$uploadedKey]);
         }
-        $result = DB::transaction(function () use ($total, $request, $location, $uploadedKey, $type) {
+        $result = DB::transaction(function () use ($total, $request, $location, $uploadedKey, $type, $file_id) {
             if ($total == 0) {
                 $newName =  Str::uuid() . "." .  $request->file($uploadedKey)->getClientOriginalExtension();
                 $result = move_uploaded_file($_FILES[$uploadedKey]['tmp_name'], $location . '/' . $newName);
                 $hash = G::getHash($newName);
                 if ($result) {
-                    $file =  File::create([
+                    $file =  File::updateOrCreate(['file_id' => $file_id], [
                         "orginal_name" => $request->file($uploadedKey)->getClientOriginalName(),
                         "new_name" => $newName,
                         "hash" => $hash,
@@ -65,7 +65,7 @@ class FileManager
                     $result = move_uploaded_file($_FILES[$uploadedKey]['tmp_name'][$i], $location . '/' . $newName);
                     $hash = G::getHash($newName);
                     if ($result) {
-                        $file = File::create([
+                        $file = File::updateOrCreate(['file_id' => $file_id], [
                             "orginal_name" => $request->file($uploadedKey)[$i]->getClientOriginalName(),
                             "new_name" => $newName,
                             "hash" => $hash,
@@ -130,7 +130,7 @@ class FileManager
         unset($files[1]);
 
         foreach ($files as $key => $value) {
-            $result = File::where('name', '=', $value)->get();
+            $result = File::where('new_name', '=', $value)->get();
             if ($result->count() == 1) {
                 $result = $result[0]['file_id'];
                 self::deleteFile($result);
@@ -155,7 +155,6 @@ class FileManager
             $result = $result[0];
             $path =  $result['location'] . $result['new_name'] . "." . $result['extension'];
 
-            $result->tokens()->delete();
             $result = $result->delete();
             if (file_exists($path)) {
                 if ($result) {
@@ -163,5 +162,17 @@ class FileManager
                 }
             }
         }
+    }
+    public static function replaceFile($file_id, $request, $location, $uploadedKey,  $type = "public")
+    {
+        $file = File::where('file_id', '=', $file_id)->get()[0];
+        if ($file->count() == 1) {
+            $status = self::saveFile($request, $location, $uploadedKey, $type, $file_id);
+            if ($status != false) {
+                unlink($file->location . $file->new_name);
+                return true;
+            }
+        }
+        return false;
     }
 }
