@@ -22,10 +22,7 @@ const Table = ({
 
 
     useEffect(() => {
-
         setActive(-1);
-        selectLisener(null);
-
         if (select && pData != null && pData.length > 0) {
             if (selectedValue != null) {
                 pData.map((row, index) => {
@@ -45,7 +42,7 @@ const Table = ({
         if (select) {
             return (
 
-                <tr key={generateID()} onClick={() => { setActive(index); selectLisener(row); }} className={(index == acive) ? "table-primary" : ""}>
+                <tr key={generateID()} onClick={() => { setActive(index); (selectLisener != null) && selectLisener(row); }} className={(index === acive) ? "table-primary" : ""}>
                     {columens(row, generateID)}
                 </tr>
             );

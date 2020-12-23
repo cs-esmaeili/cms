@@ -5,7 +5,7 @@ import Table from './../Table';
 import { toast } from 'react-toastify';
 import useGenerator from "../../../global/Idgenerator";
 
-const AddPermission = ({ selectedRole, clearSelect, update }) => {
+const AddPermission = ({ selectedRole, update }) => {
     const [generateID] = useGenerator();
     const [permissions, setPermissions] = useState(null);
     const [selectedPermission, setSelectedPermission] = useState(null);
@@ -26,7 +26,7 @@ const AddPermission = ({ selectedRole, clearSelect, update }) => {
                 getMissingPermissions(selectedRole);
                 setSelectedPermission(null);
                 setClear(generateID());
-                update();
+                update();//TODO update injast
                 toast(respons.data.message);
             }
         } catch (error) { }
@@ -51,23 +51,27 @@ const AddPermission = ({ selectedRole, clearSelect, update }) => {
     }
 
     useEffect(() => {
+        setPermissions(null);
         getMissingPermissions(selectedRole);
-    }, [clearSelect]);
+        setClear(generateID());
+    }, [selectedRole , update]);//TODO ta update to azafe kardam  harvaght update seda bezanam update mishe !
 
     return (
-        <Modal obj_id="Modal_AddPermission" close={false} footer={footer()} title="ساخت نقش">
-            {(permissions != null) ?
-                <Table titles={[
-                    "id",
-                    "نام",
-                ]} data={permissions} select={true} clearSelect={clear} selectLisener={(selectedData) => {
-                    if (selectedData != null) {
-                        setSelectedPermission(selectedData.permission_id);
-                    }
-                }} columens={columens} />
-                : null}
-        </Modal>
+        <>
+            <Modal obj_id="Modal_AddPermission" close={false} footer={footer()} title="ساخت نقش">
 
+                {(permissions != null) ?
+                    <Table titles={[
+                        "id",
+                        "نام",
+                    ]} data={permissions} select={true} clearSelect={clear} selectLisener={(selectedData) => {
+                        if (selectedData != null) {
+                            setSelectedPermission(selectedData.permission_id);
+                        }
+                    }} columens={columens} />
+                    : null}
+            </Modal>
+        </>
 
     );
 };

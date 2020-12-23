@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Table from "../components/Table.jsx";
 import { toast } from 'react-toastify';
-import useGenerator from "../../global/Idgenerator";
 import { _Roles, _RolePermissions } from "../../services/Person";
 import AddRole from "../components/modals/AddRole";
 import { _DeletePermission } from './../../services/Person';
@@ -9,12 +8,9 @@ import AddPermission from './../components/modals/AddPermission';
 
 const Role_Permissions = () => {
 
-    const [generateID] = useGenerator();
     const [roles, setRoles] = useState(null);
     const [permissions, setPermissions] = useState(null);
     const [selectedRole, setSelectedRole] = useState(null);
-    const [clearSelect, setClearSelect] = useState(null);
-    const [forceUpdate, setForceUpdate] = useState(false);
 
     const roleColumens = (row, generateID) => {
         return (
@@ -74,7 +70,6 @@ const Role_Permissions = () => {
             if (respons.data.statusText === "ok") {
                 toast(respons.data.message);
                 getRolePermissions(role_id);
-                setClearSelect(generateID());
             }
         } catch (error) { }
     }
@@ -97,7 +92,7 @@ const Role_Permissions = () => {
                                     <Table titles={[
                                         "نام",
                                         "id",
-                                    ]} data={roles} select={true} clearSelect={null} selectLisener={(selectedData) => {
+                                    ]} data={roles} select={true} selectLisener={(selectedData) => {
                                         if (selectedData != null) {
                                             setSelectedRole(selectedData.role_id);
                                             getRolePermissions(selectedData.role_id);
@@ -108,7 +103,7 @@ const Role_Permissions = () => {
                                                 <div style={{ borderStyle: "dashed", padding: "10px", textAlign: "center" }} data-toggle="modal" data-target="#Modal_AddRole">
                                                     <i className="fa fa-plus" aria-hidden="true"></i>
                                                 </div>
-                                                <AddRole update={() => { setForceUpdate(!forceUpdate); getRoles(); }} />
+                                                <AddRole update={() => { getRoles(); }} />
                                             </>
                                         );
                                     }} />
@@ -130,17 +125,12 @@ const Role_Permissions = () => {
                                             "عملیات",
                                             "نام",
                                             "id",
-                                        ]} data={permissions} select={true} clearSelect={clearSelect} selectLisener={(selectedData) => {
-                                            if (selectedData != null) {
-
-                                            }
-                                        }} columens={permissionsColumens} />
+                                        ]} data={permissions} select={false} columens={permissionsColumens} />
 
                                         <div style={{ borderStyle: "dashed", padding: "10px", textAlign: "center" }} data-toggle="modal" data-target="#Modal_AddPermission">
                                             <i className="fa fa-plus" aria-hidden="true"></i>
                                         </div>
-                                        <AddPermission selectedRole={selectedRole} clearSelect={clearSelect} update={() => {
-                                            setForceUpdate(!forceUpdate);
+                                        <AddPermission selectedRole={selectedRole} update={() => {
                                             getRolePermissions(selectedRole);
                                         }} />
                                     </>
