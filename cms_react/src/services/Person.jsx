@@ -39,6 +39,14 @@ export const _DeletePermission = (data) => {
     });
 };
 
+export const _DeleteRole = (data) => {
+    return http.post(`${config.api_url}deleterole`, JSON.stringify(data), {
+        headers: {
+            "Action": "deleteRole",
+        }
+    });
+};
+
 export const _AddPermission = (data) => {
     return http.post(`${config.api_url}addpermission`, JSON.stringify(data), {
         headers: {

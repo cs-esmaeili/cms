@@ -43,7 +43,7 @@ const Table = ({
             return (
 
                 <tr key={generateID()} onClick={() => { setActive(index); (selectLisener != null) && selectLisener(row); }} className={(index === acive) ? "table-primary" : ""}>
-                    {columens(row, generateID)}
+                    {columens(row, generateID, () => setActive(index))}
                 </tr>
             );
         } else {

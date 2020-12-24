@@ -8,6 +8,7 @@ use App\Http\Requests\addPermission;
 use App\Http\Requests\addRole;
 use App\Http\Requests\createPerson;
 use App\Http\Requests\deletePermission;
+use App\Http\Requests\deleteRole;
 use App\Http\Requests\editPerson;
 use App\Http\Requests\editRole;
 use App\Http\Requests\missingPermissionss;
@@ -55,13 +56,18 @@ class Person extends Controller
     public function missingPermissions(missingPermissionss $request)
     {
         $content =  json_decode($request->getContent());
-        $permissions = Role::where('role_id', '=', $content->role_id)->get()[0]->permissions()->get(['permission.permission_id'])->toArray();
-        $outPermissions = [];
-        foreach ($permissions as $key => $value) {
-            $outPermissions[] = $value['permission_id'];
+        $permissions = Role::where('role_id', '=', $content->role_id)->get();
+        if ($permissions->count() > 0) {
+            $permissions = $permissions[0]->permissions()->get(['permission.permission_id'])->toArray();
+            $outPermissions = [];
+            foreach ($permissions as $key => $value) {
+                $outPermissions[] = $value['permission_id'];
+            }
+            $miss =  Permission::whereNotIn('permission_id', $outPermissions)->get();
+            return response(['statusText' => 'ok', "list" => $miss], 200);
+        } else {
+            return response(['statusText' => 'ok', "list" => null], 200);
         }
-        $miss =  Permission::whereNotIn('permission_id', $outPermissions)->get();
-        return response(['statusText' => 'ok', "list" => $miss], 200);
     }
 
     public function addRole(addRole $request)
@@ -72,8 +78,12 @@ class Person extends Controller
         ]);
         return response(['statusText' => 'ok', 'message' => "نقش ساخته شد"], 200);
     }
-    public function deleteRole()
+    public function deleteRole(deleteRole $request)
     {
+        $content =  json_decode($request->getContent());
+        ModelsPerson::where('role_id', '=', $content->role_id)->update(['role_id' => $content->new_role_id]);
+        $result = Role::where('role_id', '=', $content->role_id)->delete();
+        return response(['statusText' => 'ok', "message" => 'نقش مورد نظر حذف شد'], 200);
     }
     public function editRole(editRole $request)
     {

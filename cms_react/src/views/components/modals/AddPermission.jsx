@@ -58,7 +58,7 @@ const AddPermission = ({ selectedRole, update }) => {
 
     return (
         <>
-            <Modal obj_id="Modal_AddPermission" close={false} footer={footer()} title="ساخت نقش">
+            <Modal obj_id="Modal_AddPermission" close={false} footer={footer()} title="افزودن دسترسی">
 
                 {(permissions != null) ?
                     <Table titles={[

@@ -12,13 +12,13 @@ const Modal = ({ obj_id, children, title, footer, close, size = null }) => {
                 <div className="modal-dialog modal-dialog-centered " role="document" style={{ minWidth: size }}>
                     <div className="modal-content">
                         <div className="modal-header justify-content-center" >
-                            <h5 className="modal-title" id="ModalLabel" style={{width:"100%" , textAlign:"end"}}>{title}</h5>
+                            <h5 className="modal-title" id="ModalLabel" style={{ width: "100%", textAlign: "end" }}>{title}</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true"> </span>
                             </button>
                         </div>
                         <div className="modal-body">
-                            <div className="container-fluid">
+                            <div className="container-fluid" style={{ textAlign: "center" }}>
                                 {children}
                             </div>
                         </div>
