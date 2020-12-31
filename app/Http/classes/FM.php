@@ -72,26 +72,48 @@ class FM
     }
     public static function deleteFolder($location)
     {
-        $files = self::files($location);
-
-        foreach ($files as $key => $value) {
-            $result = File::where('new_name', '=', $value)->get();
-            if ($result->count() == 1) {
-                $result = self::deleteFile($result[0]);
+        $result = DB::transaction(function () use ($location) {
+            $files = self::files($location);
+            foreach ($files as $key => $value) {
+                if (is_dir($location . $value)) {
+                    $result =  self::deleteFolder($location . $value);
+                    if ($result == false) {
+                        return false;
+                    }
+                } else {
+                    $result = File::where('new_name', '=', $value)->get();
+                    if ($result->count() == 1) {
+                        $result = self::deleteFile($result[0]);
+                        if ($result == false) {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
+                }
             }
-        }
-        rmdir($location);
+            rmdir($location);
+            return true;
+        });
+        return $result;
     }
     public static function deleteFile(File $file)
     {
-        $path = null;
-        $path =  $file['location'] . $file['new_name'];
-        $result = $file->delete();
-        if (file_exists($path) && $result) {
-            unlink($path);
-            return true;
-        }
-        return false;
+        $result = DB::transaction(function () use ($file) {
+            $path = null;
+            $path =  $file['location'] . $file['new_name'];
+            if (file_exists($path)) {
+                $result = $file->delete();
+                if ($result) {
+                    unlink($path);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            return false;
+        });
+        return $result;
     }
 
     public static function files($location)

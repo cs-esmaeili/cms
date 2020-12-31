@@ -69,6 +69,12 @@ class FileManager extends Controller
     public function deleteFolder(Request $request)
     {
         $content =  json_decode($request->getContent());
-        $result = FM::deleteFolder($content->path);
+        $location = FM::location($content->path, (array)  $content->params,  $content->type);
+        $result = FM::deleteFolder($location);
+        if ($result) {
+            return response(['statusText' => 'ok', 'message' => "پوشه حذف شد"], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' => "پوشه حذف نشد"], 200);
+        }
     }
 }
