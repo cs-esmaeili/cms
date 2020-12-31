@@ -77,4 +77,24 @@ class FileManager extends Controller
             return response(['statusText' => 'fail', 'message' => "پوشه حذف نشد"], 200);
         }
     }
+    public function assignFileToUser(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $result = FM::assignFileToUser($content->file_id, $content->person_id);
+        if ($result) {
+            return response(['statusText' => 'ok', 'message' => "دسترسی فایل به شخص داده شد"], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' => "دسترسی فایل به شخص داده نشد"], 200);
+        }
+    }
+    public function unAssignFileFromUser(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $result = FM::unAssignFileFromUser($content->file_id, $content->person_id);
+        if ($result) {
+            return response(['statusText' => 'ok', 'message' => "دسترسی شخص به فایل حذف شد"], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' => "دسترسی شخص به فایل حذف نشد"], 200);
+        }
+    }
 }
