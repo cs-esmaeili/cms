@@ -16,12 +16,10 @@ class CreateFileTable extends Migration
         Schema::create('file', function (Blueprint $table) {
             $table->id('file_id');
             $table->timestamps();
-            $table->string('orginal_name', 255);
-            $table->string('new_name', 255);
-            $table->string('hash', 255);
-            $table->mediumText('location');
-            $table->foreignId('person_id');
-            $table->foreign('person_id')->references('person_id')->on('person');
+            $table->string('orginal_name' ,255);
+            $table->string('new_name' ,255);
+            $table->string('hash' ,255);
+            $table->string('location' ,255);
             $table->enum('type', ['public', 'private']);
         });
     }
