@@ -15,7 +15,7 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $text = Route::getRoutes()->get();
+        $text = Route::getRoutes()->getRoutes();
         foreach ($text as $route) {
             if (array_key_exists('as', $route->action)) {
                 Permission::create([

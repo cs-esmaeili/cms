@@ -95,27 +95,21 @@ class FM
         foreach ($files as $key => $value) {
             $result = File::where('new_name', '=', $value)->get();
             if ($result->count() == 1) {
-                $result = $result[0]['file_id'];
-                self::deleteFile($result);
+                self::deleteFile($result[0]);
             }
         }
         rmdir($location);
     }
-    public static function deleteFile($file_id)
+    public static function deleteFile(File $file)
     {
-        $result = File::where('file_id', '=', $file_id)->get();
         $path = null;
-        if ($result->count() == 1) {
-            $result = $result[0];
-            $path =  $result['location'] . $result['new_name'];
-
-            $result = $result->delete();
-            if (file_exists($path)) {
-                if ($result) {
-                    unlink($path);
-                }
-            }
+        $path =  $file['location'] . $file['new_name'];
+        $result = $file->delete();
+        if (file_exists($path) && $result) {
+            unlink($path);
+            return true;
         }
+        return false;
     }
 
     public static function files($location)
