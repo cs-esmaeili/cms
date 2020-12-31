@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\classes\FileManager;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Category;
+use App\Http\Controllers\FileManager;
 use App\Http\Controllers\Person;
 use App\Http\Controllers\Product;
 use App\Http\Middleware\CheckHeaders;
@@ -20,18 +20,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::post('/save', function (Request $request) {
-    // FileManager::assignFileToUser(1,1);
-    FileManager::saveFile($request, FileManager::location('person', 'public', ['person_id' => 1]), 'image', 'public');
-})->name('dwadwa');
-
-Route::any('/file/{hash}', function ($hash, Request $request) {
-    $file = FileManager::getFilePath(FileManager::getFile($hash, 'private', $request->bearerToken()));
-    if ($file == null)
-        return "Error";
-    return response()->file($file);
-})->name('file');
 
 Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
 
@@ -51,6 +39,17 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/deleterole', [Person::class, 'deleteRole'])->name('deleteRole');
         Route::post('/editrole', [Person::class, 'editRole'])->name('editRole');
         Route::post('/deletepermission', [Person::class, 'deletePermission'])->name('deletePermission');
+
+
+
+        Route::post('/saveFile', [FileManager::class, 'saveFile'])->name('saveFile');
+        Route::post('/saveFiles', [FileManager::class, 'saveFiles'])->name('saveFiles');
+
+
+
+
+
+
 
         Route::post('/createpost', [Post::class, 'createPost'])->name('createPost');
         Route::post('/postlist', [Post::class, 'postList'])->name('postList');

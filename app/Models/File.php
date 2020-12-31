@@ -9,7 +9,7 @@ class File extends Model
     protected $table = 'file';
     protected $primaryKey = 'file_id';
     protected $guarded = ['file_id'];
-    protected $fillable  = ['orginal_name', 'new_name', 'hash',  'location', 'type'];
+    protected $fillable  = ['orginal_name', 'new_name', 'hash', 'location', 'person_id', 'type'];
 
     public function persons()
     {
