@@ -25,19 +25,19 @@ class AdminSeeder extends Seeder
             'role_id' => 1,
             'status' => 1,
         ]);
-        $file = File::create([
-            'orginal_name' => 'firstFile',
-            'new_name' => '3aa77aae-bc9e-4e36-a00b-35b2027bfad0.jpg',
-            'hash' => "",
-            'location' => env('FILE_MANAGER_BASE_PUBLIC_Directory') . "Images/person/1/",
-            'type' => "public"
-        ]);
-        PersonInfo::create([
-            'person_id' => $obj->person_id,
-            'file_id' => $file->file_id,
-            'name' => env('ADMIN_NAME'),
-            'family' => env('ADMIN_FAMILY'),
-            'description' => "javad esmaeili is developer",
-        ]);
+        // $file = File::create([
+        //     'orginal_name' => 'firstFile',
+        //     'new_name' => '3aa77aae-bc9e-4e36-a00b-35b2027bfad0.jpg',
+        //     'hash' => "",
+        //     'location' => env('FILE_MANAGER_BASE_PUBLIC_Directory') . "Images/person/1/",
+        //     'type' => "public"
+        // ]);
+        // PersonInfo::create([
+        //     'person_id' => $obj->person_id,
+        //     'file_id' => $file->file_id,
+        //     'name' => env('ADMIN_NAME'),
+        //     'family' => env('ADMIN_FAMILY'),
+        //     'description' => "javad esmaeili is developer",
+        // ]);
     }
 }

@@ -7,7 +7,8 @@ import { Redirect } from "react-router-dom";
 import config from "../../config.json";
 import { useSelector, useDispatch } from "react-redux";
 import { setToken } from "../../actions/profile";
-import  Logout  from "../components/modals/Logout";
+import Logout from "../components/modals/Logout";
+import CreatePost from "../contents/CreatePost";
 
 const Main = () => {
 
@@ -27,9 +28,10 @@ const Main = () => {
                 :
                 <div id="wrapper">
                     {/* <Redirect to={config.web_url} /> */}
-                    <Content_wrapper />
+                    {/* <Content_wrapper />
                     <Sidebar />
-                    <Logout />
+                    <Logout /> */}
+                    <CreatePost />
                 </div>
             }
         </>
