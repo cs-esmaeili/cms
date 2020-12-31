@@ -45,6 +45,7 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/deleteFile', [FileManager::class, 'deleteFile'])->name('deleteFile');
         Route::post('/deleteFiles', [FileManager::class, 'deleteFiles'])->name('deleteFiles');
 
+
         Route::post('/createPost', [Post::class, 'createPost'])->name('createPost');
         Route::post('/postList', [Post::class, 'postList'])->name('postList');
         Route::post('/changeStatus', [Post::class, 'changeStatus'])->name('changeStatus');
