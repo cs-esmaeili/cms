@@ -38,53 +38,35 @@ class FM
 
     public static function saveFile($file, $type, $location, $uploader)
     {
-
         if (!file_exists($location) && !is_dir($location)) {
             mkdir($location,  0755, true);
         }
         $result = DB::transaction(function () use ($file, $type, $location, $uploader) {
             $newName =  Str::uuid() . "." .  $file->getClientOriginalExtension();
-            $result = $file->move($location, $newName);
             $hash = G::getHash($newName);
-            if ($result) {
-                $file =  File::create([
-                    "orginal_name" => $file->getClientOriginalName(),
-                    "new_name" => $newName,
-                    "hash" => $hash,
-                    "location" => $location,
-                    "person_id" => $uploader,
-                    "type" => $type,
-                ]);
-                return $file['file_id'];
-            } else {
-                return false;
-            }
+
+            $result = File::create([
+                "orginal_name" => $file->getClientOriginalName(),
+                "new_name" => $newName,
+                "hash" => $hash,
+                "location" => $location,
+                "person_id" => $uploader,
+                "type" => $type,
+            ]);
+            $file->move($location, $newName);
+            return $result['file_id'];
         });
         return $result;
     }
     public static function saveFiles($files, $type, $location, $uploader)
     {
-        if (!file_exists($location) && !is_dir($location)) {
-            mkdir($location,  0755, true);
-        }
         $output = [];
         for ($i = 0; $i < count($files); $i++) {
-            $newName = Str::uuid() . "." .  $files[$i]->getClientOriginalExtension();
-            $result =  $files[$i]->move($location, $newName);
-            $hash = G::getHash($newName);
-            if ($result) {
-                $file = File::create([
-                    "orginal_name" => $files[$i]->getClientOriginalName(),
-                    "new_name" => $newName,
-                    "hash" => $hash,
-                    "location" => $location,
-                    "person_id" => $uploader,
-                    "type" => $type,
-                ]);
-                $output[] = $file['file_id'];
-            } else {
+            $temp = self::saveFile($files[$i], $type, $location, $uploader);
+            if ($temp == false) {
                 return false;
             }
+            $output[] = $temp;
         }
         return $output;
     }
@@ -95,7 +77,7 @@ class FM
         foreach ($files as $key => $value) {
             $result = File::where('new_name', '=', $value)->get();
             if ($result->count() == 1) {
-                self::deleteFile($result[0]);
+                $result = self::deleteFile($result[0]);
             }
         }
         rmdir($location);

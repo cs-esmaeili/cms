@@ -7,9 +7,7 @@ use App\Http\classes\G;
 use App\Http\Requests\saveFile;
 use App\Http\Requests\saveFiles;
 use App\Models\File;
-use App\Models\Permission;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 class FileManager extends Controller
 {
@@ -66,5 +64,11 @@ class FileManager extends Controller
             }
         }
         return response(['statusText' => 'ok', 'message' => "فایل(ها) حذف شد!"], 200);
+    }
+
+    public function deleteFolder(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $result = FM::deleteFolder($content->path);
     }
 }
