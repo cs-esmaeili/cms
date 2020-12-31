@@ -58,17 +58,23 @@ class FM
         });
         return $result;
     }
-    public static function saveFiles($files, $type, $location, $uploader)
+    public static function deleteFile(File $file)
     {
-        $output = [];
-        for ($i = 0; $i < count($files); $i++) {
-            $temp = self::saveFile($files[$i], $type, $location, $uploader);
-            if ($temp == false) {
-                return false;
+        $result = DB::transaction(function () use ($file) {
+            $path = null;
+            $path =  $file['location'] . $file['new_name'];
+            if (file_exists($path)) {
+                $result = $file->delete();
+                if ($result) {
+                    unlink($path);
+                    return true;
+                } else {
+                    return false;
+                }
             }
-            $output[] = $temp;
-        }
-        return $output;
+            return false;
+        });
+        return $result;
     }
     public static function deleteFolder($location)
     {
@@ -97,25 +103,6 @@ class FM
         });
         return $result;
     }
-    public static function deleteFile(File $file)
-    {
-        $result = DB::transaction(function () use ($file) {
-            $path = null;
-            $path =  $file['location'] . $file['new_name'];
-            if (file_exists($path)) {
-                $result = $file->delete();
-                if ($result) {
-                    unlink($path);
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            return false;
-        });
-        return $result;
-    }
-
     public static function files($location)
     {
         $files = scandir($location);
@@ -130,8 +117,6 @@ class FM
     public static function linkGenerator($file_id)
     {
     }
-
-
     public static function getFile($hash, $type, $token = null)
     {
         if ($type == "public") {
@@ -149,7 +134,6 @@ class FM
             return "";
         }
     }
-
     public  static function assignFileToUser($file_id, $person_id)
     {
         $result = File_Person::create([

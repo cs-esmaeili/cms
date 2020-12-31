@@ -26,14 +26,15 @@ class FileManager extends Controller
     {
         $location = FM::location($request->path, json_decode($request->params, true),  $request->type);
         $person = G::getPersonFromToken($request->bearerToken());
-        $result = FM::saveFiles($request->file('file'), $request->type, $location, $person->person_id);
-        if ($result != false) {
-            return response(['statusText' => 'ok', 'message' => "فایل(ها) ذخیره شد"], 200);
-        } else {
-            return response(['statusText' => 'fail', 'message' =>  "فایل(ها) ذخیره نشد"], 200);
-        }
-    }
+        $files = $request->file('file');
 
+        $output = [];
+        for ($i = 0; $i < count($files); $i++) {
+            $result = FM::saveFile($files[$i], $request->type, $location, $person->person_id);
+            $output[] = $result;
+        }
+        return response(['statusText' => 'ok', 'list' => $output, 'message' => "فایل(ها) ذخیره شد"], 200);
+    }
     public function deleteFile(Request $request)
     {
         $content =  json_decode($request->getContent());
@@ -65,7 +66,6 @@ class FileManager extends Controller
         }
         return response(['statusText' => 'ok', 'message' => "فایل(ها) حذف شد!"], 200);
     }
-
     public function deleteFolder(Request $request)
     {
         $content =  json_decode($request->getContent());
