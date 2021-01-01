@@ -8,6 +8,7 @@ use App\Http\Requests\assignFileToUser;
 use App\Http\Requests\deleteFile;
 use App\Http\Requests\deleteFiles;
 use App\Http\Requests\deleteFolder;
+use App\Http\Requests\renameFolder;
 use App\Http\Requests\saveFile;
 use App\Http\Requests\saveFiles;
 use App\Http\Requests\unAssignFileFromUser;
@@ -100,6 +101,16 @@ class FileManager extends Controller
             return response(['statusText' => 'ok', 'message' => "دسترسی شخص به فایل حذف شد"], 200);
         } else {
             return response(['statusText' => 'fail', 'message' => "دسترسی شخص به فایل حذف نشد"], 200);
+        }
+    }
+    public function renameFolder(renameFolder $request)
+    {
+        $content =  json_decode($request->getContent());
+        $result = FM::renameDirectory($content->old_name, $content->new_name);
+        if ($result) {
+            return response(['statusText' => 'ok', 'message' => "نام پوشه تغییر کرد"], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' => "نام پوشه تغییر نکرد"], 200);
         }
     }
 }

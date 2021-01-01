@@ -154,10 +154,14 @@ class FM
     }
     public static function renameDirectory($old, $new)
     {
-        File::where('location', '=', $old . '/')->update([
-            'location' => $new . '/',
-        ]);
-        rename($old, $new);
+        $result = DB::transaction(function () use ($old, $new) {
+            File::where('location', '=', $old)->update([
+                'location' => $new,
+            ]);
+            rename($old, $new);
+            return true;
+        });
+        return $result;
     }
     public static function replaceFile($file_id, $request, $location, $uploadedKey,  $type)
     {

@@ -47,6 +47,7 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/deleteFolder', [FileManager::class, 'deleteFolder'])->name('deleteFolder');
         Route::post('/assignFileToUser', [FileManager::class, 'assignFileToUser'])->name('assignFileToUser');
         Route::post('/unAssignFileFromUser', [FileManager::class, 'unAssignFileFromUser'])->name('unAssignFileFromUser');
+        Route::post('/renameFolder', [FileManager::class, 'renameFolder'])->name('renameFolder');
 
 
         Route::post('/createPost', [Post::class, 'createPost'])->name('createPost');
