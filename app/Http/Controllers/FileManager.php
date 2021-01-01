@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\classes\FM;
 use App\Http\classes\G;
+use App\Http\Requests\assignFileToUser;
+use App\Http\Requests\deleteFile;
+use App\Http\Requests\deleteFiles;
+use App\Http\Requests\deleteFolder;
 use App\Http\Requests\saveFile;
 use App\Http\Requests\saveFiles;
+use App\Http\Requests\unAssignFileFromUser;
 use App\Models\File;
-use Illuminate\Http\Request;
 
 class FileManager extends Controller
 {
@@ -35,7 +39,7 @@ class FileManager extends Controller
         }
         return response(['statusText' => 'ok', 'list' => $output, 'message' => "فایل(ها) ذخیره شد"], 200);
     }
-    public function deleteFile(Request $request)
+    public function deleteFile(deleteFile $request)
     {
         $content =  json_decode($request->getContent());
         $result = File::where('new_name', '=', $content->file_name)->get();
@@ -50,9 +54,10 @@ class FileManager extends Controller
             return response(['statusText' => 'fail', 'message' => "فایل پیدا نشد"], 200);
         }
     }
-    public function deleteFiles(Request $request)
+    public function deleteFiles(deleteFiles $request)
     {
         $content =  json_decode($request->getContent());
+        $content = $content->files;
         for ($i = 0; $i < count($content); $i++) {
             $result = File::where('new_name', '=', $content[$i])->get();
             if ($result->count() == 1) {
@@ -66,7 +71,7 @@ class FileManager extends Controller
         }
         return response(['statusText' => 'ok', 'message' => "فایل(ها) حذف شد!"], 200);
     }
-    public function deleteFolder(Request $request)
+    public function deleteFolder(deleteFolder $request)
     {
         $content =  json_decode($request->getContent());
         $location = FM::location($content->path, (array)  $content->params,  $content->type);
@@ -77,7 +82,7 @@ class FileManager extends Controller
             return response(['statusText' => 'fail', 'message' => "پوشه حذف نشد"], 200);
         }
     }
-    public function assignFileToUser(Request $request)
+    public function assignFileToUser(assignFileToUser $request)
     {
         $content =  json_decode($request->getContent());
         $result = FM::assignFileToUser($content->file_id, $content->person_id);
@@ -87,7 +92,7 @@ class FileManager extends Controller
             return response(['statusText' => 'fail', 'message' => "دسترسی فایل به شخص داده نشد"], 200);
         }
     }
-    public function unAssignFileFromUser(Request $request)
+    public function unAssignFileFromUser(unAssignFileFromUser $request)
     {
         $content =  json_decode($request->getContent());
         $result = FM::unAssignFileFromUser($content->file_id, $content->person_id);
