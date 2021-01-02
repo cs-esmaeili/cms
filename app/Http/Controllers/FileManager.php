@@ -13,6 +13,7 @@ use App\Http\Requests\saveFile;
 use App\Http\Requests\saveFiles;
 use App\Http\Requests\unAssignFileFromUser;
 use App\Models\File;
+use Illuminate\Http\Request;
 
 class FileManager extends Controller
 {
@@ -112,5 +113,19 @@ class FileManager extends Controller
         } else {
             return response(['statusText' => 'fail', 'message' => "نام پوشه تغییر نکرد"], 200);
         }
+    }
+    public function publicFolderFiles(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $location = FM::location($content->path, (array) $content->params, 'public');
+        $files = FM::folderFilesLinks($location, 'public');
+        return $files;
+    }
+    public function privateFolderFiles(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $location = FM::location($content->path, (array) $content->params, 'private');
+        $files = FM::folderFilesLinks($location, $request->bearerToken());
+        return $files;
     }
 }

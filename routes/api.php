@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\classes\FM;
+use App\Http\classes\G;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Category;
 use App\Http\Controllers\FileManager;
@@ -7,6 +9,7 @@ use App\Http\Controllers\Person;
 use App\Http\Controllers\Product;
 use App\Http\Middleware\CheckHeaders;
 use App\Http\Middleware\CheckToken;
+use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,31 +51,43 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/assignFileToUser', [FileManager::class, 'assignFileToUser'])->name('assignFileToUser');
         Route::post('/unAssignFileFromUser', [FileManager::class, 'unAssignFileFromUser'])->name('unAssignFileFromUser');
         Route::post('/renameFolder', [FileManager::class, 'renameFolder'])->name('renameFolder');
+        Route::post('/publicFolderFiles', [FileManager::class, 'publicFolderFiles'])->name('publicFolderFiles');
+        Route::post('/privateFolderFiles', [FileManager::class, 'privateFolderFiles'])->name('privateFolderFiles');
+        Route::post('/privateFolderFiles', [FileManager::class, 'privateFolderFiles'])->name('privateFolderFiles');
 
+        Route::any('/file/{hash}', function ($hash, Request $request) {
+            $person = G::getPersonFromToken($request->bearerToken());
+            $file = $person->files()->where('hash', '=', $hash)->get();
+            if ($file->count() == 1) {
+                return response()->file($file[0]->location . $file[0]->new_name);
+            }else{
+                return response(['statusText' => 'fail', 'message' => "درخواست شما مجاز نیست"], 200);
+            }
+        })->name('privateFile');
 
-        Route::post('/createPost', [Post::class, 'createPost'])->name('createPost');
-        Route::post('/postList', [Post::class, 'postList'])->name('postList');
-        Route::post('/changeStatus', [Post::class, 'changeStatus'])->name('changeStatus');
-        Route::post('/deletePost', [Post::class, 'deletePost'])->name('deletePost');
-        Route::post('/editPost', [Post::class, 'editPost'])->name('editPost');
-        Route::post('/createMainCategory', [Category::class, 'createMainCategory'])->name('createMainCategory');
-        Route::post('/mainCategoryList', [Category::class, 'mainCategoryList'])->name('mainCategoryList');
-        Route::post('/editMainCategory', [Category::class, 'editMainCategory'])->name('editMainCategory');
-        Route::post('/deleteMainCtegory', [Category::class, 'deleteMainCtegory'])->name('deleteMainCtegory');
-        Route::post('/createSubCategory', [Category::class, 'createSubCategory'])->name('createSubCategory');
-        Route::post('/subCategoryList', [Category::class, 'subCategoryList'])->name('subCategoryList');
-        Route::post('/editsubcategory', [Category::class, 'editsubcategory'])->name('editsubcategory');
-        Route::post('/deleteSubCtegory', [Category::class, 'deleteSubCtegory'])->name('deleteSubCtegory');
-        Route::post('/createProduct', [Product::class, 'createProduct'])->name('createProduct');
-        Route::post('/productList', [Product::class, 'productList'])->name('productList');
-        Route::post('/deleteProduct', [Product::class, 'deleteProduct'])->name('deleteProduct');
-        Route::post('/editProducInfo', [Product::class, 'editProducInfo'])->name('editProducInfo');
-        Route::post('/productImageList', [Product::class, 'productImageList'])->name('productImageList');
-        Route::post('/deleteProductImage', [Product::class, 'deleteProductImage'])->name('deleteProductImage');
-        Route::post('/addProductImage', [Product::class, 'addProductImage'])->name('addProductImage');
-        Route::post('/postCategoryList', [Category::class, 'postCategoryList'])->name('postCategoryList');
-        Route::post('/createPostCategory', [Category::class, 'createPostCategory'])->name('createPostCategory');
-        Route::post('/editPostCategory', [Category::class, 'editPostCategory'])->name('editPostCategory');
-        Route::post('/changeData', [Home::class, 'changeData'])->name('changeData');
+        // Route::post('/createPost', [Post::class, 'createPost'])->name('createPost');
+        // Route::post('/postList', [Post::class, 'postList'])->name('postList');
+        // Route::post('/changeStatus', [Post::class, 'changeStatus'])->name('changeStatus');
+        // Route::post('/deletePost', [Post::class, 'deletePost'])->name('deletePost');
+        // Route::post('/editPost', [Post::class, 'editPost'])->name('editPost');
+        // Route::post('/createMainCategory', [Category::class, 'createMainCategory'])->name('createMainCategory');
+        // Route::post('/mainCategoryList', [Category::class, 'mainCategoryList'])->name('mainCategoryList');
+        // Route::post('/editMainCategory', [Category::class, 'editMainCategory'])->name('editMainCategory');
+        // Route::post('/deleteMainCtegory', [Category::class, 'deleteMainCtegory'])->name('deleteMainCtegory');
+        // Route::post('/createSubCategory', [Category::class, 'createSubCategory'])->name('createSubCategory');
+        // Route::post('/subCategoryList', [Category::class, 'subCategoryList'])->name('subCategoryList');
+        // Route::post('/editsubcategory', [Category::class, 'editsubcategory'])->name('editsubcategory');
+        // Route::post('/deleteSubCtegory', [Category::class, 'deleteSubCtegory'])->name('deleteSubCtegory');
+        // Route::post('/createProduct', [Product::class, 'createProduct'])->name('createProduct');
+        // Route::post('/productList', [Product::class, 'productList'])->name('productList');
+        // Route::post('/deleteProduct', [Product::class, 'deleteProduct'])->name('deleteProduct');
+        // Route::post('/editProducInfo', [Product::class, 'editProducInfo'])->name('editProducInfo');
+        // Route::post('/productImageList', [Product::class, 'productImageList'])->name('productImageList');
+        // Route::post('/deleteProductImage', [Product::class, 'deleteProductImage'])->name('deleteProductImage');
+        // Route::post('/addProductImage', [Product::class, 'addProductImage'])->name('addProductImage');
+        // Route::post('/postCategoryList', [Category::class, 'postCategoryList'])->name('postCategoryList');
+        // Route::post('/createPostCategory', [Category::class, 'createPostCategory'])->name('createPostCategory');
+        // Route::post('/editPostCategory', [Category::class, 'editPostCategory'])->name('editPostCategory');
+        // Route::post('/changeData', [Home::class, 'changeData'])->name('changeData');
     });
 });

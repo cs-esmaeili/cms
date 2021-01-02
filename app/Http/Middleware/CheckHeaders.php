@@ -35,19 +35,20 @@ class CheckHeaders
                         }
                     }
                     if ($bool) {
-                        return response(['statusText' => 'fail' , "meessage" => "header content-type most be application/json or multipart/form-data"], 406);
+                        return response(['statusText' => 'fail', "meessage" => "header content-type most be application/json or multipart/form-data"], 406);
                     }
                 }
             }
         }
         if ($request->header('content-type') == 'application/json' && !G::isJson($request->getContent())) {
-            return response(['statusText' => 'fail' , "meessage" => "content is not json"], 406);
+            return response(['statusText' => 'fail', "meessage" => "content is not json"], 406);
         }
-        return $next($request)
-            ->header('Access-Control-Allow-Origin', '*')
-            ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-            ->header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, X-Request-With')
-            ->header('Access-Control-Allow-Credentials', 'true')
-            ->header('content-type', 'application/json');
+        $response = $next($request);
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $response->headers->set('Access-Control-Allow-Credentials', 'true');
+        $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
+        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization, X-Requested-With, Application');
+
+        return $response;
     }
 }

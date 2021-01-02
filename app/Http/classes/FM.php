@@ -107,29 +107,45 @@ class FM
         unset($files[1]);
         return $files;
     }
-    public static function folderFilesLinks($location)
+    public static function folderFilesLinks($location, $token = null)
     {
-    }
-
-    public static function linkGenerator($file_id)
-    {
-    }
-    public static function getFile($hash, $type, $token = null)
-    {
-        if ($type == "public") {
-            if (file_exists($hash)) {
-                return env('APP_URL') . substr($hash, strpos($hash, 'public') + 7)  . scandir($hash)[2];
-            } else {
-                return null;
-            }
-        } else if ($type == "private") {
-            $person = G::getPersonFromToken($token);
-            $file = $person->files()->where('hash', '=', $hash)->get();
+        $files = self::files($location);
+        $outfiles = [];
+        foreach ($files as $key => $value) {
+            $file = File::where('new_name', '=', $value)->get();
             if ($file->count() == 1) {
-                return $file[0];
+                $file = $file[0];
+                if ($file->type == "public") {
+                    $outfiles[] = env('APP_URL') . substr($location, strpos($location, 'files/')) . $value;
+                } else if ($file->type == "private" || $token != null) {
+                    $person = G::getPersonFromToken($token);
+                    $file = $person->files()->where('new_name', '=', $value)->get();
+                    if ($file->count() == 1) {
+                        $outfiles[] = route('privateFile', ['hash' => $file[0]->hash]);
+                    }
+                }
+            } else {
+                return false;
             }
-            return "";
         }
+        return $outfiles;
+    }
+    public static function getPublicFile($name)
+    {
+        $file = File::where('new_name', '=', $name)->where('type', '=', 'public')->get();
+        if ($file->count() == 1) {
+            return $file[0];
+        }
+        return false;
+    }
+    public static function getPrivateFile($hash, $token)
+    {
+        $person = G::getPersonFromToken($token);
+        $file = $person->files()->where('hash', '=', $hash)->where('type', '=', 'private')->get();
+        if ($file->count() == 1) {
+            return $file[0];
+        }
+        return false;
     }
     public  static function assignFileToUser($file_id, $person_id)
     {
