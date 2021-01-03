@@ -179,16 +179,4 @@ class FM
         });
         return $result;
     }
-    public static function replaceFile($file_id, $request, $location, $uploadedKey,  $type)
-    {
-        $file = File::where('file_id', '=', $file_id)->get()[0];
-        if ($file->count() == 1) {
-            $status = self::saveFile($request, $location, $uploadedKey, $type, $file_id);
-            if ($status != false) {
-                unlink($file->location . $file->new_name);
-                return true;
-            }
-        }
-        return false;
-    }
 }
