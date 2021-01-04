@@ -52,8 +52,8 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/unAssignFileFromUser', [FileManager::class, 'unAssignFileFromUser'])->name('unAssignFileFromUser');
         Route::post('/renameFolder', [FileManager::class, 'renameFolder'])->name('renameFolder');
         Route::post('/publicFolderFiles', [FileManager::class, 'publicFolderFiles'])->name('publicFolderFiles');
-        Route::post('/privateFolderFiles', [FileManager::class, 'privateFolderFiles'])->name('privateFolderFiles');
-        Route::post('/privateFolderFiles', [FileManager::class, 'privateFolderFiles'])->name('privateFolderFiles');
+        Route::post('/publicFolderFilesLinks', [FileManager::class, 'publicFolderFilesLinks'])->name('publicFolderFilesLinks');
+        Route::post('/privateFolderFilesLinks', [FileManager::class, 'privateFolderFilesLinks'])->name('privateFolderFilesLinks');
 
         Route::any('/file/{hash}', function ($hash, Request $request) {
             $person = G::getPersonFromToken($request->bearerToken());

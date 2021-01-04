@@ -28,10 +28,10 @@ const Main = () => {
                 :
                 <div id="wrapper">
                     {/* <Redirect to={config.web_url} /> */}
-                    {/* <Content_wrapper />
+                    <Content_wrapper />
                     <Sidebar />
-                    <Logout /> */}
-                    <CreatePost />
+                    <Logout />
+                    {/* <CreatePost /> */}
                 </div>
             }
         </>

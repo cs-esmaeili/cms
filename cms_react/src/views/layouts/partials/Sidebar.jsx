@@ -19,6 +19,7 @@ const Sidebar = () => {
                     <i className="fas fa-fw fa-tachometer-alt"></i>
                 </a>
             </li>
+
             <li className="nav-item">
                 <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdmin"
                     aria-expanded="true" aria-controls="collapseAdmin">
@@ -42,6 +43,16 @@ const Sidebar = () => {
                         </Link>
                     </div>
                 </div>
+            </li>
+
+            <li className="nav-item">
+                <Link
+                    className="nav-link"
+                    to={config.web_url + "fileManager"}
+                >
+                    <span>فایل ها</span>
+                    <i className="fas fa-fw fa-tachometer-alt"></i>
+                </Link>
             </li>
 
             <hr className="sidebar-divider" />

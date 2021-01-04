@@ -114,14 +114,29 @@ class FileManager extends Controller
             return response(['statusText' => 'fail', 'message' => "نام پوشه تغییر نکرد"], 200);
         }
     }
-    public function publicFolderFiles(Request $request)
+    public function publicFolderFilesLinks(Request $request)
     {
         $content =  json_decode($request->getContent());
         $location = FM::location($content->path, (array) $content->params, 'public');
         $files = FM::folderFilesLinks($location, 'public');
-        return $files;
+        if ($files == false) {
+            return response(['statusText' => 'fail'], 200);
+        } else {
+            return response(['statusText' => 'ok', "list" => $files], 200);
+        }
     }
-    public function privateFolderFiles(Request $request)
+    public function publicFolderFiles(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $location = FM::location($content->path, [], 'public');
+        $files = FM::files($location);
+        if ($files == false) {
+            return response(['statusText' => 'fail'], 200);
+        } else {
+            return response(['statusText' => 'ok', "list" => array_values($files)], 200);
+        }
+    }
+    public function privateFolderFilesLinks(Request $request)
     {
         $content =  json_decode($request->getContent());
         $location = FM::location($content->path, (array) $content->params, 'private');
