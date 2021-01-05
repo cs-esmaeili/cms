@@ -131,7 +131,7 @@ class FileManager extends Controller
         $location = FM::location($content->path, [], 'public');
         $files = FM::files($location);
         if ($files == false) {
-            return response(['statusText' => 'fail'], 200);
+            return response(['statusText' => 'fail' , 'message' => "مسیر وجود ندارد"], 200);
         } else {
             return response(['statusText' => 'ok', "list" => array_values($files)], 200);
         }

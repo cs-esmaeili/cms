@@ -1,55 +1,69 @@
 import React, { useEffect, useState } from 'react';
 import { _publicFolderFiles } from './../../services/FileManager';
-import { chunk } from 'lodash';
+import useGenerator from "../../global/Idgenerator";
+import { toast } from 'react-toastify';
 
 const FileManager = () => {
 
     const [currentFolderFiles, setCurrentFolderFiles] = useState(null);
     const [currentPath, setCurrentPath] = useState("/");
-
-    const publicFolderFiles = async () => {
+    const [generateID] = useGenerator();
+    const publicFolderFiles = async (path) => {
         try {
             const data = {
-                path: currentPath,
+                path: path,
                 params: {}
             };
             const respons = await _publicFolderFiles(data);
 
             if (respons.data.statusText === "ok") {
                 setCurrentFolderFiles(respons.data.list);
+            }else{
+                toast(respons.data.message);
             }
         } catch (error) { }
     }
-
-
-
     useEffect(() => {
-        chunk()
-        publicFolderFiles();
+        publicFolderFiles(currentPath);
     }, []);
-
-
 
     return (
         <>
-            {currentFolderFiles != null &&
-                chunk(currentFolderFiles, 12).map((value, index) => {
-                    return (
-                        <>
-                            <div className="row">
-                                {value.map((value, index) =>
-                                    <>
-                                        <div className="col-1 text-truncate" style={{ margin: "10px", textAlign: "center" }}>
-                                            {(value.includes('.') ? <i class="fas fa-7x fa-file"></i> : <i class="fa fa-7x fa-folder" aria-hidden="true"></i>)}
-                                            <div>{value}</div>
-                                        </div>
-                                    </>
+            <div>
+                <input className="form-control" id="path" defaultValue={currentPath} onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        setCurrentPath(e.target.value);
+                        publicFolderFiles(e.target.value);
+                    }
+                }} />
+            </div>
+            <div className="row">
+                {currentFolderFiles != null &&
+                    currentFolderFiles.map((value, index) => {
+                        return (
+                            <div
+                                key={generateID()}
+                                onClick={() => {
+                                    setCurrentPath(currentPath + value + "/");
+                                    publicFolderFiles(currentPath + value + "/");
+                                    document.getElementById('path').value = (currentPath + value + "/");
+                                }}
+                                className="col-xl-1 col-lg-2 col-md-3 col-sm-4 text-truncate file"
+                                style={{
+                                    margin: "10px",
+                                    textAlign: "center",
+                                }}>
+                                {(value.includes('.') ?
+                                    <i className="fas fa-5x fa-file"></i>
+                                    :
+                                    <i className="fa fa-5x fa-folder" aria-hidden="true"></i>
                                 )}
+                                <div>{value}</div>
                             </div>
-                        </>
-                    );
-                })
-            }
+                        );
+                    })
+                }
+            </div>
         </>
     );
 }

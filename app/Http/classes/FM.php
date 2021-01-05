@@ -102,10 +102,13 @@ class FM
     }
     public static function files($location)
     {
-        $files = scandir($location);
-        unset($files[0]);
-        unset($files[1]);
-        return $files;
+        if(file_exists($location)){
+            $files = scandir($location);
+            unset($files[0]);
+            unset($files[1]);
+            return $files;
+        }
+        return false;
     }
     public static function folderFilesLinks($location, $token = null)
     {
