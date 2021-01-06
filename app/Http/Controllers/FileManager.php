@@ -84,6 +84,10 @@ class FileManager extends Controller
             return response(['statusText' => 'fail', 'message' => "پوشه حذف نشد"], 200);
         }
     }
+    public function deleteFolderOrFile(Request $request)
+    {
+        # code...
+    }
     public function assignFileToUser(assignFileToUser $request)
     {
         $content =  json_decode($request->getContent());
@@ -130,7 +134,7 @@ class FileManager extends Controller
         $content =  json_decode($request->getContent());
         $location = FM::location($content->path, [], 'public');
         $files = FM::files($location);
-        if ($files == false) {
+        if ($files === false) {
             return response(['statusText' => 'fail' , 'message' => "مسیر وجود ندارد"], 200);
         } else {
             return response(['statusText' => 'ok', "list" => array_values($files)], 200);
