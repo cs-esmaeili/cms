@@ -54,6 +54,7 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/publicFolderFiles', [FileManager::class, 'publicFolderFiles'])->name('publicFolderFiles');
         Route::post('/publicFolderFilesLinks', [FileManager::class, 'publicFolderFilesLinks'])->name('publicFolderFilesLinks');
         Route::post('/privateFolderFilesLinks', [FileManager::class, 'privateFolderFilesLinks'])->name('privateFolderFilesLinks');
+        Route::post('/deleteFolderOrFile', [FileManager::class, 'deleteFolderOrFile'])->name('deleteFolderOrFile');
 
         Route::any('/file/{hash}', function ($hash, Request $request) {
             $person = G::getPersonFromToken($request->bearerToken());
