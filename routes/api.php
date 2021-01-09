@@ -43,18 +43,36 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/editRole', [Person::class, 'editRole'])->name('editRole');
         Route::post('/deletePermission', [Person::class, 'deletePermission'])->name('deletePermission');
 
-        Route::post('/saveFile', [FileManager::class, 'saveFile'])->name('saveFile');
-        Route::post('/saveFiles', [FileManager::class, 'saveFiles'])->name('saveFiles');
-        Route::post('/deleteFile', [FileManager::class, 'deleteFile'])->name('deleteFile');
-        Route::post('/deleteFiles', [FileManager::class, 'deleteFiles'])->name('deleteFiles');
-        Route::post('/deleteFolder', [FileManager::class, 'deleteFolder'])->name('deleteFolder');
+
+        Route::post('/savePublicFile', [FileManager::class, 'savePublicFile'])->name('savePublicFile');
+        Route::post('/savePrivateFile', [FileManager::class, 'savePrivateFile'])->name('savePrivateFile');
+
+        Route::post('/savePublicFiles', [FileManager::class, 'savePublicFiles'])->name('savePublicFiles');
+        Route::post('/savePrivateFiles', [FileManager::class, 'savePrivateFiles'])->name('savePrivateFiles');
+
+        Route::post('/deletePublicFile', [FileManager::class, 'deletePublicFile'])->name('deletePublicFile');
+        Route::post('/deletePrivateFile', [FileManager::class, 'deletePrivateFile'])->name('deletePrivateFile');
+
+        Route::post('/deletePublicFiles', [FileManager::class, 'deletePublicFiles'])->name('deletePublicFiles');
+        Route::post('/deletePrivateFiles', [FileManager::class, 'deletePrivateFiles'])->name('deletePrivateFiles');
+
+        Route::post('/deletePublicFolder', [FileManager::class, 'deletePublicFolder'])->name('deletePublicFolder');
+        Route::post('/deletePrivateFolder', [FileManager::class, 'deletePrivateFolder'])->name('deletePrivateFolder');
+
         Route::post('/assignFileToUser', [FileManager::class, 'assignFileToUser'])->name('assignFileToUser');
         Route::post('/unAssignFileFromUser', [FileManager::class, 'unAssignFileFromUser'])->name('unAssignFileFromUser');
-        Route::post('/renameFolder', [FileManager::class, 'renameFolder'])->name('renameFolder');
+
+        Route::post('/renamePublicFolder', [FileManager::class, 'renamePublicFolder'])->name('renamePublicFolder');
+        Route::post('/renamePrivateFolder', [FileManager::class, 'renamePrivateFolder'])->name('renamePrivateFolder');
+
         Route::post('/publicFolderFiles', [FileManager::class, 'publicFolderFiles'])->name('publicFolderFiles');
+        Route::post('/privateFolderFiles', [FileManager::class, 'privateFolderFiles'])->name('privateFolderFiles');
+
         Route::post('/publicFolderFilesLinks', [FileManager::class, 'publicFolderFilesLinks'])->name('publicFolderFilesLinks');
         Route::post('/privateFolderFilesLinks', [FileManager::class, 'privateFolderFilesLinks'])->name('privateFolderFilesLinks');
-        Route::post('/deleteFolderOrFile', [FileManager::class, 'deleteFolderOrFile'])->name('deleteFolderOrFile');
+
+        Route::post('/deletePublicFolderOrFile', [FileManager::class, 'deletePublicFolderOrFile'])->name('deletePublicFolderOrFile');
+
 
         Route::any('/file/{hash}', function ($hash, Request $request) {
             $person = G::getPersonFromToken($request->bearerToken());

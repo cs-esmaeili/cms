@@ -15,7 +15,7 @@ use App\Http\Requests\unAssignFileFromUser;
 use App\Models\File;
 use Illuminate\Http\Request;
 
-class FileManager extends Controller //TODO bayad delete va... public va private jodabashe
+class FileManager extends Controller
 {
     public function savePublicFile(saveFile $request)
     {
@@ -151,7 +151,7 @@ class FileManager extends Controller //TODO bayad delete va... public va private
             return response(['statusText' => 'fail', 'message' => "پوشه حذف نشد"], 200);
         }
     }
-    public function deletePublicFolderOrFile(Request $request) //TODO
+    public function deletePublicFolderOrFile(Request $request)
     {
         $content =  json_decode($request->getContent());
         $list = $content->list;
@@ -161,10 +161,9 @@ class FileManager extends Controller //TODO bayad delete va... public va private
             if (str_contains($list[$i], '.')) {
                 $files[] = $list[$i];
             } else {
-                $folders[] = $list[$i];
+                $folders[] =  $content->path . $list[$i];
             }
         }
-
         for ($i = 0; $i < count($files); $i++) {
             $result = File::where('new_name', '=', $files[$i])->where('type', '=', 'public')->get();
             if ($result->count() == 1) {

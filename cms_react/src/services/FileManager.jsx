@@ -9,3 +9,10 @@ export const _publicFolderFiles = (data) => {
         }
     });
 };
+export const _deletePublicFolderOrFile = (data) => {
+    return http.post(`${config.api_url}deletePublicFolderOrFile`, JSON.stringify(data), {
+        headers: {
+            "Action": "deletePublicFolderOrFile",
+        }
+    });
+};

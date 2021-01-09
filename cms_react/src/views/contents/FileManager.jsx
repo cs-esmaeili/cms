@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { _publicFolderFiles } from './../../services/FileManager';
+import { _publicFolderFiles, _deletePublicFolderOrFile } from './../../services/FileManager';
 import useGenerator from "../../global/Idgenerator";
 import { toast } from 'react-toastify';
 
@@ -25,20 +25,19 @@ const FileManager = () => {
             }
         } catch (error) { }
     }
-    const deleteFilesAndFolder = () => {
+    const deleteFilesAndFolder = async () => {
         try {
             const data = {
-                path: path,
-                params: {}
+                path: currentPath,
+                list: selectedItems,
             };
-            const respons = await _publicFolderFiles(data);
+            console.log(data);
+            const respons = await _deletePublicFolderOrFile(data);
 
             if (respons.data.statusText === "ok") {
-                document.getElementById('path').value = path;
-                setCurrentFolderFiles(respons.data.list);
-            } else {
-                toast(respons.data.message);
+                publicFolderFiles(currentPath);
             }
+            toast(respons.data.message);
         } catch (error) { }
     }
     useEffect(() => {
@@ -78,12 +77,21 @@ const FileManager = () => {
                         let items = [];
                         for (let i = 0; i < files.length; i++) {
                             if (files[i].querySelector('div') !== null) {
-                                items.push(files[i].querySelector('div').innerHTML);
+                                if (files[i].querySelector('div').innerHTML.includes(".")) {
+                                    items.push(files[i].querySelector('div').innerHTML);
+                                } else {
+                                    items.push(files[i].querySelector('div').innerHTML);
+                                }
                             }
                         }
+
                         setSlectedItems(items);
                     }}> Select All </i>
-                    <i class="fa fa-trash m-2 customHover noSelect" style={{ cursor: "pointer" }} onClick={() => { }}> Delete </i>
+                    <i className="fa fa-trash m-2 customHover noSelect" style={(selectedItems === null) ? { pointerEvents: 'none' } : { cursor: "pointer" }} onClick={() => {
+                        if (selectedItems !== null) {
+                            deleteFilesAndFolder();
+                        }
+                    }}> Delete </i>
                 </div>
             </div>
             <div className="row listFiles">
@@ -92,15 +100,25 @@ const FileManager = () => {
                         return (
                             <div
                                 key={generateID()}
-                                onClick={() => {
-                                    setCurrentPath(currentPath + value + "/");
-                                    publicFolderFiles(currentPath + value + "/");
+
+                                onClick={(e) => {
+                                    if(e.shiftKey){
+                                        if (selectedItems == null) {
+                                            setSlectedItems(new Array(value));
+                                        } else {
+                                            setSlectedItems([...selectedItems, value]);
+                                        }
+                                    }else{
+                                        setSlectedItems(null);
+                                        setCurrentPath(currentPath + value + "/");
+                                        publicFolderFiles(currentPath + value + "/");
+                                    }
                                 }}
-                                className={(selectedItems !== null && selectedItems.includes(value) ?
+                                className={(selectedItems !== null && selectedItems.includes(value)) ?
                                     "col-xl-1 col-lg-2 col-md-3 col-sm-4 text-truncate customHover selectedItems"
                                     :
                                     "col-xl-1 col-lg-2 col-md-3 col-sm-4 text-truncate customHover"
-                                )}
+                                }
                                 style={{
                                     margin: "10px",
                                     textAlign: "center",
