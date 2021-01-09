@@ -17,9 +17,22 @@ export const _deletePublicFolderOrFile = (data) => {
     });
 };
 export const _createPublicFolder = (data) => {
+
     return http.post(`${config.api_url}createPublicFolder`, JSON.stringify(data), {
         headers: {
             "Action": "createPublicFolder",
+        }
+    });
+};
+export const _savePublicFiles = (data , uploadLisener , doSomething) => {
+    doSomething();
+    return http.post(`${config.api_url}savePublicFiles`, data, {
+        onUploadProgress: function (progressEvent) {
+            var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            uploadLisener(percentCompleted);
+        },
+        headers: {
+            "Action": "savePublicFiles",
         }
     });
 };

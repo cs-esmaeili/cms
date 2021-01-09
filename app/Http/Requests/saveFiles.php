@@ -26,9 +26,8 @@ class saveFiles extends FormRequest
         return [
             'path' => 'required',
             'params' => 'json',
-            'type' => 'required|in:public,private',
             'file' => 'required|array',
-            'file.*' => 'required|file',
+            'file.*' => 'required|file|image',
         ];
     }
 }

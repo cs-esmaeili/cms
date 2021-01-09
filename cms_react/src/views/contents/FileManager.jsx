@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { _publicFolderFiles, _deletePublicFolderOrFile, _createPublicFolder } from './../../services/FileManager';
+import { _publicFolderFiles, _deletePublicFolderOrFile, _createPublicFolder, _savePublicFiles } from './../../services/FileManager';
 import useGenerator from "../../global/Idgenerator";
 import { toast } from 'react-toastify';
+import UploadFile from './../components/modals/UploadFile';
 
 const FileManager = () => {
 
     const [currentFolderFiles, setCurrentFolderFiles] = useState(null);
     const [currentPath, setCurrentPath] = useState("/");
     const [selectedItems, setSlectedItems] = useState(null);
+    const [persent, setPersent] = useState(null);
     const [generateID] = useGenerator();
     const publicFolderFiles = async (path) => {
         try {
@@ -49,12 +51,40 @@ const FileManager = () => {
             toast(respons.data.message);
         } catch (error) { }
     }
+
+    const uploadFile = async (event) => {
+        event.preventDefault();
+        try {
+            let data = new FormData();
+            data.append("path", currentPath);
+            data.append("params", JSON.stringify([]));
+            for (let i = 0; i < event.target.files.length; i++) {
+                data.append("file[]", event.target.files[i]);
+            }
+            const respons = await _savePublicFiles(data, (persent) => {
+                setPersent(persent);
+                console.log(persent);
+                if (persent === 100) {
+                    document.getElementById('Modal_UploadFile_open').click();
+                    document.getElementById('uploaderProgress').style.width = "0%";
+                    setPersent(null);
+                }
+            }, () => document.getElementById('Modal_UploadFile_open').click());
+
+            if (respons.data.statusText === "ok") {
+                publicFolderFiles(currentPath);
+            }
+            toast(respons.data.message);
+        } catch (error) { }
+    }
+
     useEffect(() => {
         publicFolderFiles(currentPath);
     }, []);
 
     return (
         <>
+            <UploadFile persent={persent} />
             <div className="shadow p-3 mb-5 bg-white rounded">
                 <div className="row">
                     <input className="form-control" id="path" defaultValue={currentPath} onKeyDown={(e) => {
@@ -113,6 +143,20 @@ const FileManager = () => {
                             }} />
                         </ul>
                     </div>
+
+
+                    <label htmlFor="file">
+                        <i className="fas fa-upload m-2 customHover noSelect" style={{ cursor: "pointer" }}> Upload </i>
+                    </label>
+                    <input
+                        id="file"
+                        type="file"
+                        accept="image/*"
+                        aria-describedby="file"
+                        multiple
+                        style={{ display: "none" }}
+                        onChange={uploadFile}
+                    />
                 </div>
             </div>
             <div className="row listFiles">
