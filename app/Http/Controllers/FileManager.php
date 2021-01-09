@@ -184,6 +184,39 @@ class FileManager extends Controller
         }
         return response(['statusText' => 'ok', 'message' => "فایل/پوشه (ها) حذف شد"], 200);
     }
+    public function deletePrivateFolderOrFile(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $list = $content->list;
+        $folders = [];
+        $files = [];
+        for ($i = 0; $i < count($list); $i++) {
+            if (str_contains($list[$i], '.')) {
+                $files[] = $list[$i];
+            } else {
+                $folders[] =  $content->path . $list[$i];
+            }
+        }
+        for ($i = 0; $i < count($files); $i++) {
+            $result = File::where('new_name', '=', $files[$i])->where('type', '=', 'private')->get();
+            if ($result->count() == 1) {
+                $result = FM::deleteFile($result[0]);
+                if ($result == false) {
+                    return response(['statusText' => 'fail', 'message' => "فایل(ها) حذف نشد"], 200);
+                }
+            } else {
+                return response(['statusText' => 'fail', 'message' => "فایل(ها) پیدا نشد"], 200);
+            }
+        }
+        for ($i = 0; $i < count($folders); $i++) {
+            $location = FM::location($folders[$i], [],  'private');
+            $result = FM::deleteFolder($location);
+            if ($result === false) {
+                return response(['statusText' => 'fail', 'message' => "پوشه حذف نشد"], 200);
+            }
+        }
+        return response(['statusText' => 'ok', 'message' => "فایل/پوشه (ها) حذف شد"], 200);
+    }
     public function assignFileToUser(assignFileToUser $request)
     {
         $content =  json_decode($request->getContent());
@@ -266,6 +299,30 @@ class FileManager extends Controller
             return response(['statusText' => 'fail', 'message' => "مسیر وجود ندارد"], 200);
         } else {
             return response(['statusText' => 'ok', "list" => array_values($files)], 200);
+        }
+    }
+    public function createPublicFolder(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $location = FM::location($content->path, [], 'public');
+        $result = FM::createFolder($location);
+        if ($result === false) {
+            return response(['statusText' => 'fail', 'message' => "پوشه ساخته نشد"], 200);
+        } else if ($result === true) {
+            return response(['statusText' => 'ok', 'message' => "پوشه ساخته شد"], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' => "پوشه ای با این نام وجود دارد"], 200);
+        }
+    }
+    public function createPrivateFolder(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $location = FM::location($content->path, [], 'private');
+        $result = FM::createFolder($location);
+        if ($result === false) {
+            return response(['statusText' => 'fail', 'message' => "پوشه ساخته نشد"], 200);
+        } else {
+            return response(['statusText' => 'ok', 'message' => "پوشه ساخته شد"], 200);
         }
     }
 }

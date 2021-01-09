@@ -102,7 +102,7 @@ class FM
     }
     public static function files($location)
     {
-        if(file_exists($location)){
+        if (file_exists($location)) {
             $files = scandir($location);
             unset($files[0]);
             unset($files[1]);
@@ -181,5 +181,12 @@ class FM
             return true;
         });
         return $result;
+    }
+    public static function createFolder($location)
+    {
+        if(file_exists($location)){
+            return "file exist";
+        }
+        return mkdir($location,  0755, true);
     }
 }

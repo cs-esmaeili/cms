@@ -16,3 +16,10 @@ export const _deletePublicFolderOrFile = (data) => {
         }
     });
 };
+export const _createPublicFolder = (data) => {
+    return http.post(`${config.api_url}createPublicFolder`, JSON.stringify(data), {
+        headers: {
+            "Action": "createPublicFolder",
+        }
+    });
+};

@@ -72,6 +72,10 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/privateFolderFilesLinks', [FileManager::class, 'privateFolderFilesLinks'])->name('privateFolderFilesLinks');
 
         Route::post('/deletePublicFolderOrFile', [FileManager::class, 'deletePublicFolderOrFile'])->name('deletePublicFolderOrFile');
+        Route::post('/deletePrivateFolderOrFile', [FileManager::class, 'deletePrivateFolderOrFile'])->name('deletePrivateFolderOrFile');
+
+        Route::post('/createPublicFolder', [FileManager::class, 'createPublicFolder'])->name('createPublicFolder');
+        Route::post('/createPrivateFolder', [FileManager::class, 'createPrivateFolder'])->name('createPrivateFolder');
 
 
         Route::any('/file/{hash}', function ($hash, Request $request) {

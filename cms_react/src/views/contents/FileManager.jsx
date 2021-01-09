@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { _publicFolderFiles, _deletePublicFolderOrFile } from './../../services/FileManager';
+import { _publicFolderFiles, _deletePublicFolderOrFile, _createPublicFolder } from './../../services/FileManager';
 import useGenerator from "../../global/Idgenerator";
 import { toast } from 'react-toastify';
 
@@ -16,7 +16,6 @@ const FileManager = () => {
                 params: {}
             };
             const respons = await _publicFolderFiles(data);
-
             if (respons.data.statusText === "ok") {
                 document.getElementById('path').value = path;
                 setCurrentFolderFiles(respons.data.list);
@@ -31,9 +30,19 @@ const FileManager = () => {
                 path: currentPath,
                 list: selectedItems,
             };
-            console.log(data);
             const respons = await _deletePublicFolderOrFile(data);
-
+            if (respons.data.statusText === "ok") {
+                publicFolderFiles(currentPath);
+            }
+            toast(respons.data.message);
+        } catch (error) { }
+    }
+    const createFolder = async (path) => {
+        try {
+            const data = {
+                path,
+            };
+            const respons = await _createPublicFolder(data);
             if (respons.data.statusText === "ok") {
                 publicFolderFiles(currentPath);
             }
@@ -92,6 +101,18 @@ const FileManager = () => {
                             deleteFilesAndFolder();
                         }
                     }}> Delete </i>
+
+                    <div className="dropdown">
+                        <i className="fas fa-folder-plus m-2 customHover noSelect" data-bs-toggle="dropdown" aria-expanded="false" style={{ cursor: "pointer" }} > NewFolder </i>
+                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <input type="text" onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    createFolder(currentPath + e.target.value);
+                                    e.target.value = "";
+                                }
+                            }} />
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div className="row listFiles">
@@ -102,13 +123,13 @@ const FileManager = () => {
                                 key={generateID()}
 
                                 onClick={(e) => {
-                                    if(e.shiftKey){
+                                    if (e.shiftKey) {
                                         if (selectedItems == null) {
                                             setSlectedItems(new Array(value));
                                         } else {
                                             setSlectedItems([...selectedItems, value]);
                                         }
-                                    }else{
+                                    } else {
                                         setSlectedItems(null);
                                         setCurrentPath(currentPath + value + "/");
                                         publicFolderFiles(currentPath + value + "/");
