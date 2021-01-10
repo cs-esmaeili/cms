@@ -3,6 +3,7 @@ import { _publicFolderFiles, _deletePublicFolderOrFile, _createPublicFolder, _sa
 import useGenerator from "../../global/Idgenerator";
 import { toast } from 'react-toastify';
 import UploadFile from './../components/modals/UploadFile';
+import FileDetails from '../components/modals/FileDetails';
 
 const FileManager = () => {
 
@@ -63,11 +64,12 @@ const FileManager = () => {
             }
             const respons = await _savePublicFiles(data, (persent) => {
                 setPersent(persent);
-                console.log(persent);
                 if (persent === 100) {
-                    document.getElementById('Modal_UploadFile_open').click();
-                    document.getElementById('uploaderProgress').style.width = "0%";
                     setPersent(null);
+                    setTimeout(() => {
+                        document.getElementById('Modal_UploadFile_open').click()
+                        document.getElementById('uploaderProgress').style.width = "0%";
+                    }, 500);
                 }
             }, () => document.getElementById('Modal_UploadFile_open').click());
 
@@ -84,6 +86,7 @@ const FileManager = () => {
 
     return (
         <>
+            <FileDetails />
             <UploadFile persent={persent} />
             <div className="shadow p-3 mb-5 bg-white rounded">
                 <div className="row">
@@ -174,9 +177,13 @@ const FileManager = () => {
                                             setSlectedItems([...selectedItems, value]);
                                         }
                                     } else {
-                                        setSlectedItems(null);
-                                        setCurrentPath(currentPath + value + "/");
-                                        publicFolderFiles(currentPath + value + "/");
+                                        if (value.includes('.')) {
+                                            document.getElementById('Modal_FileDetails_open').click();
+                                        } else {
+                                            setSlectedItems(null);
+                                            setCurrentPath(currentPath + value + "/");
+                                            publicFolderFiles(currentPath + value + "/");
+                                        }
                                     }
                                 }}
                                 className={(selectedItems !== null && selectedItems.includes(value)) ?

@@ -77,6 +77,9 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/createPublicFolder', [FileManager::class, 'createPublicFolder'])->name('createPublicFolder');
         Route::post('/createPrivateFolder', [FileManager::class, 'createPrivateFolder'])->name('createPrivateFolder');
 
+        Route::post('/publicFileInformation', [FileManager::class, 'publicFileInformation'])->name('publicFileInformation');
+        Route::post('/privateFileInformation', [FileManager::class, 'privateFileInformation'])->name('privateFileInformation');
+
 
         Route::any('/file/{hash}', function ($hash, Request $request) {
             $person = G::getPersonFromToken($request->bearerToken());

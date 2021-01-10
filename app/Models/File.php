@@ -15,4 +15,8 @@ class File extends Model
     {
         return $this->belongsToMany(Person::class, 'file_person', 'file_id', 'person_id');
     }
+    public function uploader()
+    {
+        return $this->belongsTo(Person::class, 'person_id', 'person_id');
+    }
 }

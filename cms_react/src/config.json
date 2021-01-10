@@ -2,5 +2,5 @@
     "app_name": "Emeral",
     "api_url": "http://127.0.0.1/cms/api/admin/",
     "web_url": "/dashboard/",
-    "logo_url": "http://127.0.0.1/cms/files/Images/global/logo.jpg"
+    "logo_url": "http://127.0.0.1/cms/system/logo.png"
 }

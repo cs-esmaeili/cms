@@ -325,4 +325,28 @@ class FileManager extends Controller
             return response(['statusText' => 'ok', 'message' => "پوشه ساخته شد"], 200);
         }
     }
+    public function publicFileInformation(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $result = FM::getPublicFile($content->name , ['orginal_name' , 'new_name' , 'location' , 'person_id' , 'created_at']);
+        $person = $result->uploader->informations();
+        dd($person);
+        $result['person'] = $person;
+        unset($result['person_id']);
+        if ($result === false) {
+            return response(['statusText' => 'fail', 'message' => "اطلاعات فایل پیدا نشد"], 200);
+        } else {
+            return response(['statusText' => 'ok', "list" => $result], 200);
+        }
+    }
+    public function privateFileInformation(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $result = FM::getPublicFile($content->name , []);
+        if ($result === false) {
+            return response(['statusText' => 'fail', 'message' => "اطلاعات فایل پیدا نشد"], 200);
+        } else {
+            return response(['statusText' => 'ok', "list" => $result], 200);
+        }
+    }
 }

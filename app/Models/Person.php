@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\classes\FileManager;
+use App\Http\classes\FM;
 use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
@@ -54,11 +55,11 @@ class Person extends Model
                 'role' => $this->role->name,
                 'role_id' => $this->role->role_id,
                 'description' => $personinfo->description,
-                'image' => FileManager::getFile(FileManager::location('person', 'public', ['person_id' => $this->person_id]), 'public'),
+                'image' => FM::getPublicFileLink($personinfo->file),
             ];
-        }else{
+        } else {
+            return null;
             // return $this;
         }
-
     }
 }

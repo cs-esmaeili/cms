@@ -133,9 +133,9 @@ class FM
         }
         return $outfiles;
     }
-    public static function getPublicFile($name)
+    public static function getPublicFile($name, $items)
     {
-        $file = File::where('new_name', '=', $name)->where('type', '=', 'public')->get();
+        $file = File::where('new_name', '=', $name)->where('type', '=', 'public')->get($items);
         if ($file->count() == 1) {
             return $file[0];
         }
@@ -184,9 +184,15 @@ class FM
     }
     public static function createFolder($location)
     {
-        if(file_exists($location)){
+        if (file_exists($location)) {
             return "file exist";
         }
         return mkdir($location,  0755, true);
+    }
+    public static function getPublicFileLink($file)
+    {
+        $base = env('APP_URL');
+        $continue = substr($file->location, strpos($file->location, "public/") + strlen("public/")) . $file->new_name;
+        return $base . $continue;
     }
 }

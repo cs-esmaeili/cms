@@ -1,12 +1,7 @@
-import React, { useRef } from "react";
-import { setRef } from "../../../global/globalRefs";
-
 const Modal = ({ obj_id, children, title, footer, close, size = null }) => {
-    const ref = useRef();
     return (
         <div >
-            <button data-toggle="modal" data-target={"#" + obj_id} id={obj_id + "_btn"} ref={ref} style={{ display: "none" }}></button>
-            {setRef(ref)}
+            <button id={obj_id + "_open"} data-toggle="modal" data-target={"#" + obj_id} style={{ display: "none" }}></button>
             <div className="modal fade" id={obj_id} role="dialog" aria-labelledby="ModalLabel" aria-hidden="true" data-backdrop={(!close) ? "static" : "true"}
                 data-keyboard={(!close) ? "false" : "true"}>
                 <div className="modal-dialog modal-dialog-centered " role="document" style={{ minWidth: size }}>
