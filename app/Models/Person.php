@@ -52,9 +52,9 @@ class Person extends Model
                 'username' => $this->username,
                 'name' => $personinfo->name,
                 'family' => $personinfo->family,
+                'description' => $personinfo->description,
                 'role' => $this->role->name,
                 'role_id' => $this->role->role_id,
-                'description' => $personinfo->description,
                 'image' => FM::getPublicFileLink($personinfo->file),
             ];
         } else {

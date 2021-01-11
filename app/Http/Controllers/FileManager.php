@@ -328,25 +328,27 @@ class FileManager extends Controller
     public function publicFileInformation(Request $request)
     {
         $content =  json_decode($request->getContent());
-        $result = FM::getPublicFile($content->name , ['orginal_name' , 'new_name' , 'location' , 'person_id' , 'created_at']);
-        $person = $result->uploader->informations();
-        dd($person);
-        $result['person'] = $person;
-        unset($result['person_id']);
+        $result = FM::getPublicFile($content->name);
+        $file =  $result->get(['orginal_name', 'new_name', 'person_id', 'created_at'])->toArray()[0];
+        $file['link'] = FM::getPublicFileLink($result);
+        $file['uploader'] = $result->uploader->informations();
         if ($result === false) {
             return response(['statusText' => 'fail', 'message' => "اطلاعات فایل پیدا نشد"], 200);
         } else {
-            return response(['statusText' => 'ok', "list" => $result], 200);
+            return response(['statusText' => 'ok', "file" => $file], 200);
         }
     }
     public function privateFileInformation(Request $request)
     {
         $content =  json_decode($request->getContent());
-        $result = FM::getPublicFile($content->name , []);
+        $result = FM::getPrivateFile($content->name,  $request->bearerToken());
+        $file =  $result->get(['orginal_name', 'new_name', 'person_id', 'created_at'])->toArray()[0];
+        $file['link'] = FM::getPublicFileLink($result); //TODO bayad baraye private ye method to FM neveshte she
+        $file['uploader'] = $result->uploader->informations();
         if ($result === false) {
             return response(['statusText' => 'fail', 'message' => "اطلاعات فایل پیدا نشد"], 200);
         } else {
-            return response(['statusText' => 'ok', "list" => $result], 200);
+            return response(['statusText' => 'ok', "file" => $file], 200);
         }
     }
 }

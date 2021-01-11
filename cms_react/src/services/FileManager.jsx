@@ -24,6 +24,14 @@ export const _createPublicFolder = (data) => {
         }
     });
 };
+export const _publicFileInformation = (data) => {
+
+    return http.post(`${config.api_url}publicFileInformation`, JSON.stringify(data), {
+        headers: {
+            "Action": "publicFileInformation",
+        }
+    });
+};
 export const _savePublicFiles = (data , uploadLisener , doSomething) => {
     doSomething();
     return http.post(`${config.api_url}savePublicFiles`, data, {

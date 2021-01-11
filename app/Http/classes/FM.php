@@ -133,9 +133,9 @@ class FM
         }
         return $outfiles;
     }
-    public static function getPublicFile($name, $items)
+    public static function getPublicFile($name)
     {
-        $file = File::where('new_name', '=', $name)->where('type', '=', 'public')->get($items);
+        $file = File::where('new_name', '=', $name)->where('type', '=', 'public')->get();
         if ($file->count() == 1) {
             return $file[0];
         }

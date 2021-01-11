@@ -86,7 +86,7 @@ const FileManager = () => {
 
     return (
         <>
-            <FileDetails />
+            <FileDetails item={selectedItems} />
             <UploadFile persent={persent} />
             <div className="shadow p-3 mb-5 bg-white rounded">
                 <div className="row">
@@ -178,6 +178,7 @@ const FileManager = () => {
                                         }
                                     } else {
                                         if (value.includes('.')) {
+                                            setSlectedItems([value]);
                                             document.getElementById('Modal_FileDetails_open').click();
                                         } else {
                                             setSlectedItems(null);
