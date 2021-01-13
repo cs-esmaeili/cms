@@ -91,6 +91,9 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
             }
         })->name('privateFile');
 
+        Route::post('/categoryList', [Category::class, 'categoryList'])->name('categoryList');
+
+
         // Route::post('/createPost', [Post::class, 'createPost'])->name('createPost');
         // Route::post('/postList', [Post::class, 'postList'])->name('postList');
         // Route::post('/changeStatus', [Post::class, 'changeStatus'])->name('changeStatus');

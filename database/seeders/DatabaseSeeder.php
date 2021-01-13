@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Role_Permission;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,6 +18,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             RolePermissionSeeder::class,
             AdminSeeder::class,
+            CategorySeeder::class,
         ]);
     }
 }

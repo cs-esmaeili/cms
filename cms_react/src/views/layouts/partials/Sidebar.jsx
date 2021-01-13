@@ -54,6 +54,15 @@ const Sidebar = () => {
                     <i className="fas fa-fw fa-tachometer-alt"></i>
                 </Link>
             </li>
+            <li className="nav-item">
+                <Link
+                    className="nav-link"
+                    to={config.web_url + "Category"}
+                >
+                    <span>دسته بندی</span>
+                    <i className="fas fa-fw fa-tachometer-alt"></i>
+                </Link>
+            </li>
 
             <hr className="sidebar-divider" />
             <div className="sidebar-heading">

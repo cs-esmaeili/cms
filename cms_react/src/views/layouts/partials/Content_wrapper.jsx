@@ -7,6 +7,7 @@ import { Switch, Route } from "react-router-dom";
 import config from "../../../config.json";
 import Role_Permissions from "../../contents/Role_Permissions";
 import FileManager from './../../contents/FileManager';
+import Category from './../../contents/Category';
 
 const Content_wrapper = () => {
     return (
@@ -15,6 +16,9 @@ const Content_wrapper = () => {
                 <Navbar />
                 <div className="container-fluid">
                     <Switch>
+                        <Route path={[config.web_url + "Category"]}>
+                            <Category />
+                        </Route>
                         <Route path={[config.web_url + "FileManager"]}>
                             <FileManager />
                         </Route>

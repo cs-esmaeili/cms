@@ -16,8 +16,8 @@ class CreateCategoryTable extends Migration
         Schema::create('category', function (Blueprint $table) {
             $table->id('category_id');
             $table->timestamps();
-            $table->string('name' , 255);
-            $table->tinyInteger('type');
+            $table->string('name', 255);
+            $table->string('type', 255);
             $table->foreignId('file_id');
             $table->foreign('file_id')->references('file_id')->on('file');
             $table->integer('parent_id')->nullable(0);
