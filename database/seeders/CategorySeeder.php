@@ -28,14 +28,14 @@ class CategorySeeder extends Seeder
                     'file_id' => 1,
                     'parent_id' => $id->category_id,
                 ]);
-                // for ($c = 0; $c < 2; $c++) {
-                //     Category::create([
-                //         'name' => "2 sub " . $c,
-                //         'type' => "ماستی",
-                //         'file_id' => 1,
-                //         'parent_id' => $id1->category_id,
-                //     ]);
-                // }
+                for ($c = 0; $c < 2; $c++) {
+                    Category::create([
+                        'name' => "2 sub " . $c,
+                        'type' => "ماستی",
+                        'file_id' => 1,
+                        'parent_id' => $id1->category_id,
+                    ]);
+                }
             }
         }
     }
