@@ -16,3 +16,10 @@ export const _addCategory = (data) => {
         }
     });
 };
+export const _deleteCategory = (data) => {
+    return http.post(`${config.api_url}deleteCategory`, JSON.stringify(data), {
+        headers: {
+            "Action": "deleteCategory",
+        }
+    });
+};

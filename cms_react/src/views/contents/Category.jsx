@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { _addCategory, _categoryList } from './../../services/Category';
+import { _addCategory, _categoryList, _deleteCategory } from './../../services/Category';
 import useGenerator from "../../global/Idgenerator";
 import { toast } from 'react-toastify';
 
@@ -54,7 +54,10 @@ const Category = () => {
                 );
                 items = [...items, result];
             } else {
-                let element = <li key={generateID()} className="list-group-item">{array[index].name}</li>;
+                let element = <li key={generateID()} className="list-group-item d-flex justify-content-between">
+                    <i class="fa fa-trash" aria-hidden="true" onClick={() => deleteCategory(array[index].category_id)}></i>
+                    {array[index].name}
+                </li >;
                 items = [...items, element];
                 PureList = [...PureList, array[index]];
             }
@@ -72,12 +75,23 @@ const Category = () => {
                 file_id,
                 parent_id
             };
-            console.log(data);
             const respons = await _addCategory(data);
             if (respons.data.statusText === "ok") {
                 setName("");
                 setType("");
                 setFile_id("");
+                getCtegorys();
+            }
+            toast(respons.data.message);
+        } catch (error) { }
+    }
+    const deleteCategory = async (category_id) => {
+        try {
+            const data = {
+                category_id,
+            };
+            const respons = await _deleteCategory(data);
+            if (respons.data.statusText === "ok") {
                 getCtegorys();
             }
             toast(respons.data.message);

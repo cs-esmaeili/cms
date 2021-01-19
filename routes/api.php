@@ -93,6 +93,7 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
 
         Route::post('/categoryList', [Category::class, 'categoryList'])->name('categoryList');
         Route::post('/addCategory', [Category::class, 'addCategory'])->name('addCategory');
+        Route::post('/deleteCategory', [Category::class, 'deleteCategory'])->name('deleteCategory');
 
 
         // Route::post('/createPost', [Post::class, 'createPost'])->name('createPost');

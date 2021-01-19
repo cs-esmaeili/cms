@@ -66,4 +66,14 @@ class Category extends Controller
             return response(['statusText' => 'fail', "message" => "دسته بندی ساخته نشد"], 200);
         }
     }
+    public function deleteCategory(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $result = ModelsCategory::where('category_id' ,'=', $content->category_id)->Orwhere('parent_id' ,'=', $content->category_id)->delete();
+        if ($result) {
+            return response(['statusText' => 'ok', "message" => "دسته بندی حذف شد"], 200);
+        } else {
+            return response(['statusText' => 'fail', "message" => "دسته بندی حذف نشد"], 200);
+        }
+    }
 }
