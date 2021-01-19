@@ -23,7 +23,7 @@ class CategorySeeder extends Seeder
             ]);
             for ($b = 0; $b < 2; $b++) {
                 $id1 = Category::create([
-                    'name' => "1 sub " . $b,
+                    'name' => "sub " . $b,
                     'type' => "ماستی",
                     'file_id' => 1,
                     'parent_id' => $id->category_id,

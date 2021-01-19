@@ -24,7 +24,6 @@ class Category extends Controller
                 continue;
             }
             $temp =  $this->categoryChilds($all[$i], $all);
-            // dd($temp['indexs']);
             foreach ($temp['indexs'] as $value) {
                 $indexs[] = $value;
             }
@@ -51,5 +50,20 @@ class Category extends Controller
             $category = array($category, $items);
         }
         return ['category' => $category, 'indexs' => $indexs];
+    }
+    public function addCategory(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $result = ModelsCategory::create([
+            'name' => $content->name,
+            'type' => $content->type,
+            'file_id' => $content->file_id,
+            'parent_id' => $content->parent_id,
+        ]);
+        if ($result->count() > 0) {
+            return response(['statusText' => 'ok', "message" => "دسته بندی ساخته شد"], 200);
+        } else {
+            return response(['statusText' => 'fail', "message" => "دسته بندی ساخته نشد"], 200);
+        }
     }
 }
