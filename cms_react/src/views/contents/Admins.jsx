@@ -106,7 +106,6 @@ const Admins = () => {
         data.append("oldUsername", oldUsername);
         data.append("description", description);
         data.append("image", event.target.imageUrl.files[0]);
-        console.log("handelSubmit1");
         if (validator.current.allValid()) {
             try {
                 if (selecting) {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\classes\FileManager;
+use App\Http\classes\FM;
 use App\Http\classes\G;
 use App\Http\Requests\addPermission;
 use App\Http\Requests\addRole;
@@ -14,6 +15,7 @@ use App\Http\Requests\editRole;
 use App\Http\Requests\missingPermissionss;
 use App\Http\Requests\permissions;
 use App\Http\Requests\rolePermissions;
+use App\Models\File;
 use App\Models\Permission;
 use App\Models\Person as ModelsPerson;
 use App\Models\PersonInfo;
@@ -120,22 +122,21 @@ class Person extends Controller
             $result =  DB::transaction(function () use ($request) {
                 $token_id = G::newToken($request->username)['token_id'];
                 $person = ModelsPerson::create([
-                    "username" => G::changeWords($request->username),
-                    "password" => G::getHash(G::changeWords($request->password)),
-                    "role_id" => $request->role_id,
-                    "token_id" => $token_id,
-                    "status" => 1,
+                    'username' => G::changeWords($request->username),
+                    'password' => G::getHash(G::changeWords($request->password)),
+                    'role_id' => $request->role_id,
+                    'token_id' => $token_id,
+                    'status' => 1,
                 ]);
-                $file_id = FileManager::saveFile($request, FileManager::location('person', 'public', ['person_id' => $person->person_id]), 'image', 'public');
-                if ($request->info) {
-                    PersonInfo::create([
-                        'file_id' => $file_id,
-                        'person_id' => $person->person_id,
-                        "name" => $request->name,
-                        "family" => $request->family,
-                        "description" => $request->description,
-                    ]);
-                }
+                $location = FM::location('person', ['person_id' => $person->person_id],  'public');
+                $file_id = FM::saveFile($request->file('image'), 'public', $location, $person->person_id);
+                PersonInfo::create([
+                    'file_id' => $file_id,
+                    'person_id' => $person->person_id,
+                    'name' => $request->name,
+                    'family' => $request->family,
+                    'description' => $request->description,
+                ]);
                 return response(['statusText' => 'ok', 'message' => "حساب ساخته شد"], 201);
             });
             return $result;
@@ -159,8 +160,14 @@ class Person extends Controller
 
 
             if ($request->hasFile('image')) {
-                $file_id = $search[0]->personInfo->file_id;
-                FileManager::replaceFile($file_id, $request, FileManager::location('person', 'public', ['person_id' => $request->person_id]), 'image', 'public');
+                $file = $search[0]->personInfo->file;
+
+                $location = FM::location('person', ['person_id' => $request->person_id],  'public');
+                $file_id = FM::saveFile($request->file('image'), 'public', $location, $request->person_id);
+                PersonInfo::where('person_info_id', '=', $search[0]->personInfo->person_info_id)->update([
+                    'file_id' => $file_id
+                ]);
+                FM::deleteFile($file);
             }
             return response(['statusText' => 'ok', 'message' => "تغییرات ذخیره شد"], 201);
         }

@@ -10,7 +10,7 @@ export const _Admins = () => {
 };
 
 export const _AdminRoles = () => {
-    return http.post(`${config.api_url}adminroles`, {}, {
+    return http.post(`${config.api_url}adminRoles`, {}, {
         headers: {
             "Action": "adminRoles",
         }
@@ -24,7 +24,7 @@ export const _Roles = () => {
     });
 };
 export const _RolePermissions = (data) => {
-    return http.post(`${config.api_url}rolepermissions`, JSON.stringify(data), {
+    return http.post(`${config.api_url}rolePermissions`, JSON.stringify(data), {
         headers: {
             "Action": "rolePermissions",
         }
@@ -32,7 +32,7 @@ export const _RolePermissions = (data) => {
 };
 
 export const _DeletePermission = (data) => {
-    return http.post(`${config.api_url}deletepermission`, JSON.stringify(data), {
+    return http.post(`${config.api_url}deletePermission`, JSON.stringify(data), {
         headers: {
             "Action": "deletePermission",
         }
@@ -40,7 +40,7 @@ export const _DeletePermission = (data) => {
 };
 
 export const _DeleteRole = (data) => {
-    return http.post(`${config.api_url}deleterole`, JSON.stringify(data), {
+    return http.post(`${config.api_url}deleteRole`, JSON.stringify(data), {
         headers: {
             "Action": "deleteRole",
         }
@@ -48,7 +48,7 @@ export const _DeleteRole = (data) => {
 };
 
 export const _AddPermission = (data) => {
-    return http.post(`${config.api_url}addpermission`, JSON.stringify(data), {
+    return http.post(`${config.api_url}addPermission`, JSON.stringify(data), {
         headers: {
             "Action": "addPermission",
         }
@@ -56,7 +56,7 @@ export const _AddPermission = (data) => {
 };
 
 export const _AddRole = (data) => {
-    return http.post(`${config.api_url}addrole`, JSON.stringify(data), {
+    return http.post(`${config.api_url}addRole`, JSON.stringify(data), {
         headers: {
             "Action": "addRole",
         }
@@ -64,7 +64,7 @@ export const _AddRole = (data) => {
 };
 
 export const _MissingPermissions = (data) => {
-    return http.post(`${config.api_url}missingpermissions`, JSON.stringify(data), {
+    return http.post(`${config.api_url}missingPermissions`, JSON.stringify(data), {
         headers: {
             "Action": "missingPermissions",
         }
@@ -73,7 +73,7 @@ export const _MissingPermissions = (data) => {
 
 
 export const _CreatePerson = (data) => {
-    return http.post(`${config.api_url}createperson`, data, {
+    return http.post(`${config.api_url}createPerson`, data, {
         headers: {
             "Action": "createPerson",
         }
@@ -81,7 +81,7 @@ export const _CreatePerson = (data) => {
 };
 
 export const _EditPerson = (data) => {
-    return http.post(`${config.api_url}editperson`, data, {
+    return http.post(`${config.api_url}editPerson`, data, {
         headers: {
             "Action": "editPerson",
         }

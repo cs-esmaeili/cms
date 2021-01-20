@@ -108,7 +108,6 @@ const Category = () => {
                 {category != null && elements(category)}
             </div>
             <form className="m-2" onSubmit={addCategory}>
-
                 <div className="card shadow">
                     <div className="card-header">
                         <h6 className="font-weight-bold text-primary">دسترسی ها</h6>
@@ -148,8 +147,6 @@ const Category = () => {
                         </div>
                     </div>
                 </div>
-
-
             </form>
         </div>
     );

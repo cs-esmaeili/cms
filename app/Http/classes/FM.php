@@ -18,7 +18,7 @@ class FM
             $baseDir = env('FILE_MANAGER_BASE_PRIVATE_Directory');
         }
         $templates = [
-            'post' => "Images/Post/{post_id}/",
+            'person' => "person/{person_id}/",
         ];
         $location  =   $baseDir;
         if (array_key_exists($key, $templates)) {
