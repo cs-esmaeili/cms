@@ -6,6 +6,7 @@ use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Category;
 use App\Http\Controllers\FileManager;
 use App\Http\Controllers\Person;
+use App\Http\Controllers\Post;
 use App\Http\Controllers\Product;
 use App\Http\Middleware\CheckHeaders;
 use App\Http\Middleware\CheckToken;
@@ -91,16 +92,20 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
             }
         })->name('privateFile');
 
-        Route::post('/categoryList', [Category::class, 'categoryList'])->name('categoryList');
+        Route::post('/categoryListPyramid', [Category::class, 'categoryListPyramid'])->name('categoryListPyramid');
+        Route::post('/categoryListPure', [Category::class, 'categoryListPure'])->name('categoryListPure');
         Route::post('/addCategory', [Category::class, 'addCategory'])->name('addCategory');
         Route::post('/deleteCategory', [Category::class, 'deleteCategory'])->name('deleteCategory');
 
+
+        Route::post('/createPost', [Post::class, 'createPost'])->name('createPost');
 
         // Route::post('/createPost', [Post::class, 'createPost'])->name('createPost');
         // Route::post('/postList', [Post::class, 'postList'])->name('postList');
         // Route::post('/changeStatus', [Post::class, 'changeStatus'])->name('changeStatus');
         // Route::post('/deletePost', [Post::class, 'deletePost'])->name('deletePost');
         // Route::post('/editPost', [Post::class, 'editPost'])->name('editPost');
+
         // Route::post('/createMainCategory', [Category::class, 'createMainCategory'])->name('createMainCategory');
         // Route::post('/mainCategoryList', [Category::class, 'mainCategoryList'])->name('mainCategoryList');
         // Route::post('/editMainCategory', [Category::class, 'editMainCategory'])->name('editMainCategory');

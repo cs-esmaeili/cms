@@ -57,31 +57,43 @@ const Sidebar = () => {
             <li className="nav-item">
                 <Link
                     className="nav-link"
-                    to={config.web_url + "Category"}
+                    to={config.web_url + "category"}
                 >
                     <span>دسته بندی</span>
                     <i className="fas fa-fw fa-tachometer-alt"></i>
                 </Link>
             </li>
 
+            <li className="nav-item">
+                <Link
+                    className="nav-link"
+                    data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo"
+                >
+                    <span>مطالب</span>
+                    <i className="fas fa-fw fa-cog"></i>
+                </Link>
+                <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div className="bg-white py-2 collapse-inner rounded">
+                        <Link
+                            className="collapse-item"
+                            to={config.web_url + "createPost"}
+                        >
+                            مطلب جدید
+                        </Link>
+                        <Link
+                            className="collapse-item"
+                            to={config.web_url + "postList"}
+                        >
+                            لیست مطالب
+                        </Link>
+                    </div>
+                </div>
+            </li>
             <hr className="sidebar-divider" />
             <div className="sidebar-heading">
                 خط اتصال
         </div>
-            <li className="nav-item">
-                <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <span>اجزا</span>
-                    <i className="fas fa-fw fa-cog"></i>
-                </a>
-                <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div className="bg-white py-2 collapse-inner rounded">
-                        <h6 className="collapse-header">اجزا شخصی سازی شده</h6>
-                        <a className="collapse-item" href="buttons.html">دکمه ها</a>
-                        <a className="collapse-item" href="cards.html">کارت ها</a>
-                    </div>
-                </div>
-            </li>
 
             <li className="nav-item">
                 <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"

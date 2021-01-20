@@ -16,6 +16,7 @@ const FileDetails = ({ item }) => {
                 name: item[0],
             };
             const respons = await _publicFileInformation(data);
+            console.log(respons);
             if (respons.data.statusText === "ok") {
                 setInformation(respons.data.file);
             } else {
@@ -38,13 +39,20 @@ const FileDetails = ({ item }) => {
                                 <div>{information.new_name + " : نام فعلی"}</div>
                                 <div>{information.created_at + " : زمان آپلود"}</div>
                                 <div id="image_size"></div>
-                                <button type="button" className="btn btn-info" onClick={() => {
+                                <button type="button" className="btn btn-info m-2" onClick={() => {
                                     navigator.clipboard.writeText(information.link).then(function () {
                                         toast("لینک کپی شد");
                                     }, function (err) {
                                         console.error('Async: Could not copy text: ', err);
                                     });
-                                }} >کپی کردن لینک</button>
+                                }} >Link</button>
+                                <button type="button" className="btn btn-info m-2" onClick={() => {
+                                    navigator.clipboard.writeText(information.file_id).then(function () {
+                                        toast("لینک کپی شد");
+                                    }, function (err) {
+                                        console.error('Async: Could not copy text: ', err);
+                                    });
+                                }} >ID</button>
                             </div>
                             <div className="col-xl-8 col-lg-8  col-md-12 col-sm-12" style={{ borderStyle: "solid" }}>
                                 <img id="file_image" className="img-fluid" src={information.link} alt="error" onLoad={(e) => {

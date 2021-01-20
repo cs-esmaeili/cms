@@ -1,10 +1,17 @@
 import http from "./httpServices";
 import config from "../config.json";
 
-export const _categoryList = () => {
-    return http.post(`${config.api_url}categoryList`, {}, {
+export const _categoryListPyramid = () => {
+    return http.post(`${config.api_url}categoryListPyramid`, {}, {
         headers: {
-            "Action": "categoryList",
+            "Action": "categoryListPyramid",
+        }
+    });
+};
+export const _categoryListPure = () => {
+    return http.post(`${config.api_url}categoryListPure`, {}, {
+        headers: {
+            "Action": "categoryListPure",
         }
     });
 };

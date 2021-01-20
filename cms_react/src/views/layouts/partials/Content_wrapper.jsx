@@ -8,6 +8,7 @@ import config from "../../../config.json";
 import Role_Permissions from "../../contents/Role_Permissions";
 import FileManager from './../../contents/FileManager';
 import Category from './../../contents/Category';
+import CreatePost from "../../contents/CreatePost";
 
 const Content_wrapper = () => {
     return (
@@ -16,7 +17,10 @@ const Content_wrapper = () => {
                 <Navbar />
                 <div className="container-fluid">
                     <Switch>
-                        <Route path={[config.web_url + "Category"]}>
+                        <Route path={[config.web_url + "createPost"]}>
+                            <CreatePost />
+                        </Route>
+                        <Route path={[config.web_url + "category"]}>
                             <Category />
                         </Route>
                         <Route path={[config.web_url + "FileManager"]}>

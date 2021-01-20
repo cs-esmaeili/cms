@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class Category extends Controller
 {
-    public function categoryList(Request $request)
+    public function categoryListPyramid(Request $request)
     {
         $all = ModelsCategory::all();
         $list = [];
@@ -51,6 +51,11 @@ class Category extends Controller
         }
         return ['category' => $category, 'indexs' => $indexs];
     }
+    public function categoryListPure()
+    {
+        $result = ModelsCategory::all();
+        return response(['statusText' => 'ok', "list" => $result], 200);
+    }
     public function addCategory(Request $request)
     {
         $content =  json_decode($request->getContent());
@@ -69,7 +74,7 @@ class Category extends Controller
     public function deleteCategory(Request $request)
     {
         $content =  json_decode($request->getContent());
-        $result = ModelsCategory::where('category_id' ,'=', $content->category_id)->Orwhere('parent_id' ,'=', $content->category_id)->delete();
+        $result = ModelsCategory::where('category_id', '=', $content->category_id)->Orwhere('parent_id', '=', $content->category_id)->delete();
         if ($result) {
             return response(['statusText' => 'ok', "message" => "دسته بندی حذف شد"], 200);
         } else {

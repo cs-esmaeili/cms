@@ -20,6 +20,8 @@ class CreatePostTable extends Migration
             $table->foreign('person_id')->references('person_id')->on('person');
             $table->foreignId('category_id');
             $table->foreign('category_id')->references('category_id')->on('category');
+            $table->foreignId('image');
+            $table->foreign('image')->references('file_id')->on('file');
             $table->boolean('status')->default(0);
             $table->string('title', 255)->unique();
             $table->mediumText('description');

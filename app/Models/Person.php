@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Http\classes\FileManager;
 use App\Http\classes\FM;
 use Illuminate\Database\Eloquent\Model;
 

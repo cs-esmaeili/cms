@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    public $timestamps = true;
     protected $table = 'post';
     protected $primaryKey = 'post_id';
     protected $guarded = ['post_id'];
-    protected $fillable  = ['person_id', 'category_id', 'status', 'title', 'body', 'description', 'meta_keywords'];
+    protected $fillable  = ['person_id', 'category_id', 'image', 'status', 'title', 'body', 'description', 'meta_keywords'];
 
     public function person()
     {

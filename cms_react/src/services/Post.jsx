@@ -1,8 +1,8 @@
 import http from "./httpServices";
 import config from "../config.json";
 
-export const _CreatePost = (data) => {
-    return http.post(`${config.api_url}createpost`, data, { headers: {
+export const _createPost = (data) => {
+    return http.post(`${config.api_url}createPost`, data, { headers: {
         "Action": "createPost",
     }});
 };

@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import { _addCategory, _categoryList, _deleteCategory } from './../../services/Category';
+import { _addCategory, _deleteCategory, _categoryListPyramid, _categoryListPure } from './../../services/Category';
 import useGenerator from "../../global/Idgenerator";
 import { toast } from 'react-toastify';
 
 const Category = () => {
 
 
-    const [category, setCategory] = useState(null);
+    const [categoryPyramid, setCategoryPyramid] = useState(null);
+    const [categoryPure, setCategoryPure] = useState(null);
 
     const [name, setName] = useState(null);
     const [type, setType] = useState(null);
@@ -14,18 +15,23 @@ const Category = () => {
     const [parent_id, setParent_id] = useState(0);
 
     const [generateID] = useGenerator();
-    let PureList = [];
 
-    const getCtegorys = async () => {
-
+    const getCtegorysPyramid = async () => {
         try {
-            const respons = await _categoryList();
+            const respons = await _categoryListPyramid();
             if (respons.data.statusText === "ok") {
-                setCategory(respons.data.list);
+                setCategoryPyramid(respons.data.list);
             }
         } catch (error) { }
     }
-
+    const getCtegorysPure = async () => {
+        try {
+            const respons = await _categoryListPure();
+            if (respons.data.statusText === "ok") {
+                setCategoryPure(respons.data.list);
+            }
+        } catch (error) { }
+    }
     const elements = (array) => {
         let outPut = [];
         let checker = () => array.every(v => Array.isArray(v));
@@ -33,7 +39,7 @@ const Category = () => {
             let items = [];
             if (Array.isArray(array[index])) {
                 let result = (
-                    (array === category)
+                    (array === categoryPyramid)
                         ?
                         <div key={generateID()} className="col-3">
                             <ul key={generateID()} className="list-group">
@@ -59,7 +65,6 @@ const Category = () => {
                     {array[index].name}
                 </li >;
                 items = [...items, element];
-                PureList = [...PureList, array[index]];
             }
             outPut = [...outPut, items];
         }
@@ -80,7 +85,7 @@ const Category = () => {
                 setName("");
                 setType("");
                 setFile_id("");
-                getCtegorys();
+                getCtegorysPyramid();
             }
             toast(respons.data.message);
         } catch (error) { }
@@ -92,20 +97,21 @@ const Category = () => {
             };
             const respons = await _deleteCategory(data);
             if (respons.data.statusText === "ok") {
-                getCtegorys();
+                getCtegorysPyramid();
             }
             toast(respons.data.message);
         } catch (error) { }
     }
 
     useEffect(() => {
-        getCtegorys();
+        getCtegorysPyramid();
+        getCtegorysPure();
     }, []);
 
     return (
         <div>
             <div className="row m-2 justify-content-end">
-                {category != null && elements(category)}
+                {categoryPyramid != null && elements(categoryPyramid)}
             </div>
             <form className="m-2" onSubmit={addCategory}>
                 <div className="card shadow">
@@ -137,7 +143,7 @@ const Category = () => {
                                     <label htmlFor="parentSelect">مجموعه مورد نظر</label>
                                     <select className="form-control" id="parentSelect" onChange={(e) => setParent_id(e.target.value)}>
                                         <option value="0">مجموعه جدید</option>
-                                        {category != null && PureList.map(element => <option value={element.category_id}>{element.name}</option>)}
+                                        {categoryPyramid != null && categoryPure.map(element => <option value={element.category_id}>{element.name}</option>)}
                                     </select>
                                 </div>
                             </div>

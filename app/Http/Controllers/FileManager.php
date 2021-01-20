@@ -329,7 +329,7 @@ class FileManager extends Controller
     {
         $content =  json_decode($request->getContent());
         $result = FM::getPublicFile($content->name);
-        $file =  $result->get(['orginal_name', 'new_name', 'person_id', 'created_at'])->toArray()[0];
+        $file =  $result->get(['orginal_name', 'new_name', 'person_id', 'created_at', 'file_id'])->toArray()[0];
         $file['link'] = FM::getPublicFileLink($result);
         $file['uploader'] = $result->uploader->informations();
         if ($result === false) {
@@ -342,7 +342,7 @@ class FileManager extends Controller
     {
         $content =  json_decode($request->getContent());
         $result = FM::getPrivateFile($content->name,  $request->bearerToken());
-        $file =  $result->get(['orginal_name', 'new_name', 'person_id', 'created_at'])->toArray()[0];
+        $file =  $result->get(['orginal_name', 'new_name', 'person_id', 'created_at', 'file_id'])->toArray()[0];
         $file['link'] = FM::getPublicFileLink($result); //TODO bayad baraye private ye method to FM neveshte she
         $file['uploader'] = $result->uploader->informations();
         if ($result === false) {

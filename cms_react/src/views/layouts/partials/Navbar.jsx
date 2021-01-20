@@ -135,7 +135,7 @@ const Navbar = () => {
                                 <div className="small text-gray-500">Chicken the Dog · 2w</div>
                             </div>
                             <div className="dropdown-list-image mr-3">
-                                <img className="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                <img className="rounded-circle" src="http://127.0.0.1/cms/system/logo.png"
                                     alt="" />
                                 <div className="status-indicator bg-success"></div>
                             </div>
