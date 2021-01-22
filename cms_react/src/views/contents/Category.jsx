@@ -9,9 +9,9 @@ const Category = () => {
     const [categoryPyramid, setCategoryPyramid] = useState(null);
     const [categoryPure, setCategoryPure] = useState(null);
 
-    const [name, setName] = useState(null);
-    const [type, setType] = useState(null);
-    const [file_id, setFile_id] = useState(null);
+    const [name, setName] = useState('');
+    const [type, setType] = useState('');
+    const [file_id, setFile_id] = useState('');
     const [parent_id, setParent_id] = useState(0);
 
     const [generateID] = useGenerator();
@@ -61,7 +61,7 @@ const Category = () => {
                 items = [...items, result];
             } else {
                 let element = <li key={generateID()} className="list-group-item d-flex justify-content-between">
-                    <i class="fa fa-trash" aria-hidden="true" onClick={() => deleteCategory(array[index].category_id)}></i>
+                    <i className="fa fa-trash" aria-hidden="true" onClick={() => deleteCategory(array[index].category_id)}></i>
                     {array[index].name}
                 </li >;
                 items = [...items, element];
@@ -123,32 +123,32 @@ const Category = () => {
                             <div className="col-3">
                                 <div className="form-group">
                                     <label htmlFor="fileId">ای دی فایل</label>
-                                    <input className="form-control" id="fileId" value={file_id} onChange={(e) => setFile_id(e.target.value)} />
+                                    <input className="form-control" id="fileId" style={{ textAlign: "right" }} value={file_id} onChange={(e) => setFile_id(e.target.value)} />
                                 </div>
                             </div>
                             <div className="col-3">
                                 <div className="form-group">
                                     <label htmlFor="categoryName">نام دسته بندی</label>
-                                    <input className="form-control" id="categoryName" value={name} onChange={(e) => setName(e.target.value)} />
+                                    <input className="form-control" id="categoryName" style={{ textAlign: "right" }} value={name} onChange={(e) => setName(e.target.value)} />
                                 </div>
                             </div>
                             <div className="col-3">
                                 <div className="form-group">
                                     <label htmlFor="categoryType">نوع دسته بندی</label>
-                                    <input className="form-control" id="categoryType" value={type} onChange={(e) => setType(e.target.value)} />
+                                    <input className="form-control" id="categoryType" style={{ textAlign: "right" }} value={type} onChange={(e) => setType(e.target.value)} />
                                 </div>
                             </div>
                             <div className="col-3">
                                 <div className="form-group">
                                     <label htmlFor="parentSelect">مجموعه مورد نظر</label>
-                                    <select className="form-control" id="parentSelect" onChange={(e) => setParent_id(e.target.value)}>
+                                    <select className="form-control" id="parentSelect" style={{ direction: "rtl" }} onChange={(e) => setParent_id(e.target.value)}>
                                         <option value="0">مجموعه جدید</option>
-                                        {categoryPyramid != null && categoryPure.map(element => <option value={element.category_id}>{element.name}</option>)}
+                                        {categoryPyramid != null && categoryPure.map(element => <option value={element.category_id} key={generateID()}>{element.name}</option>)}
                                     </select>
                                 </div>
                             </div>
                             <div className="col-12 m-2" style={{ textAlign: "center" }}>
-                                <button type="submit" class="btn btn-success">ساخت دسته بندی</button>
+                                <button type="submit" className="btn btn-success">ساخت دسته بندی</button>
                             </div>
                         </div>
                     </div>

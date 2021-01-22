@@ -7,7 +7,7 @@ import { _DeletePermission } from './../../services/Person';
 import AddPermission from './../components/modals/AddPermission';
 import DeleteRole from '../components/modals/DeleteRole.jsx';
 
-const Role_Permissions = () => {
+const RolePermissions = () => {
 
     const [roles, setRoles] = useState(null);
     const [permissions, setPermissions] = useState(null);
@@ -171,4 +171,4 @@ const Role_Permissions = () => {
         </>
     );
 }
-export default Role_Permissions;
+export default RolePermissions;

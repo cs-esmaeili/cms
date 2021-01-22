@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getValidator, rules } from '../../../global/validator_rules';
 import { setCookie } from '../../../global/cookie';
 import config from "../../../config.json";
@@ -34,13 +34,16 @@ const Login = ({ history }) => {
                     setShow(true);
                 }
             } catch (error) {
-                //console.log(error);
             }
         } else {
             validator.current.showMessages();
             setForceUpdate(!forceUpdate);
         }
     };
+
+    useEffect(() => {
+        history.replace(config.web_url + "logIn");
+    }, []);
 
     return (
         <div className="container-fluid bg-gradient-primary" style={{ height: "100vh" }}>

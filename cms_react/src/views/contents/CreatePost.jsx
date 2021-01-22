@@ -3,7 +3,7 @@ import JoditEditor from "jodit-react";
 import { _createPost } from './../../services/Post';
 import { toast } from 'react-toastify';
 import { _categoryListPure } from "../../services/Category";
-
+import useGenerator from "../../global/Idgenerator";
 const CreatePost = () => {
 
     const editor = useRef(null)
@@ -13,10 +13,7 @@ const CreatePost = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [meta_keywords, setMeta_keywords] = useState('');
-
-    const config = {
-        readonly: false
-    }
+    const [generateID] = useGenerator();
     const getCtegorysPure = async () => {
         try {
             const respons = await _categoryListPure();
@@ -51,6 +48,9 @@ const CreatePost = () => {
     }
     useEffect(() => {
         getCtegorysPure();
+        return () => {
+
+        }
     }, []);
     return (
         <>
@@ -63,7 +63,7 @@ const CreatePost = () => {
                             </div>
                             <div className="card-body" >
                                 <select className="form-control justify-content-center" style={{ direction: "rtl" }} onChange={(e) => setCategory_id(e.target.value)}>
-                                    {categoryPure != null && categoryPure.map(element => <option value={element.category_id}>{element.name}</option>)}
+                                    {categoryPure != null && categoryPure.map(element => <option key={generateID()} value={element.category_id}>{element.name}</option>)}
                                 </select>
                             </div>
                         </div>
@@ -123,7 +123,9 @@ const CreatePost = () => {
                                 <JoditEditor
                                     ref={editor}
                                     value=""
-                                    config={config}
+                                    config={{
+                                        readonly: false
+                                    }}
                                     tabIndex={1} // tabIndex of textarea
                                     onBlur={newContent => { }} // preferred to use only this option to update the content for performance reasons
                                     onChange={newContent => { }}

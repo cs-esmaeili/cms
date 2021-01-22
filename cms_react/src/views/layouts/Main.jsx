@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import { getCookie } from "../../global/cookie";
 import Login from "./Login/Login";
-import Content_wrapper from "./partials/Content_wrapper";
 import Sidebar from "./partials/Sidebar";
-import { Redirect } from "react-router-dom";
-import config from "../../config.json";
 import { useSelector, useDispatch } from "react-redux";
 import { setToken } from "../../actions/profile";
 import Logout from "../components/modals/Logout";
-import CreatePost from "../contents/CreatePost";
+import ContentWrapper from './partials/ContentWrapper';
 
 const Main = () => {
 
@@ -27,11 +24,9 @@ const Main = () => {
                 <Login />
                 :
                 <div id="wrapper">
-                    {/* <Redirect to={config.web_url} /> */}
-                    <Content_wrapper />
+                    <ContentWrapper />
                     <Sidebar />
                     <Logout />
-                    {/* <CreatePost /> */}
                 </div>
             }
         </>

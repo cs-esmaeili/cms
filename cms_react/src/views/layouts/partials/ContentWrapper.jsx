@@ -1,16 +1,16 @@
 import React from "react";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
-import Sampledata from "../../contents/Sampledata";
 import Admins from "../../contents/Admins";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route , Redirect } from "react-router-dom";
 import config from "../../../config.json";
-import Role_Permissions from "../../contents/Role_Permissions";
-import FileManager from './../../contents/FileManager';
-import Category from './../../contents/Category';
+import RolePermissions from "../../contents/RolePermissions";
+import FileManager from '../../contents/FileManager';
+import Category from '../../contents/Category';
 import CreatePost from "../../contents/CreatePost";
+import Dashboard from './../../contents/Dashboard';
 
-const Content_wrapper = () => {
+const ContentWrapper = () => {
     return (
         <div id="content-wrapper" className="d-flex flex-column">
             <div id="content">
@@ -23,17 +23,18 @@ const Content_wrapper = () => {
                         <Route path={[config.web_url + "category"]}>
                             <Category />
                         </Route>
-                        <Route path={[config.web_url + "FileManager"]}>
+                        <Route path={[config.web_url + "fileManager"]}>
                             <FileManager />
                         </Route>
-                        <Route path={[config.web_url + "role_permissions"]}>
-                            <Role_Permissions />
+                        <Route path={[config.web_url + "rolePermissions"]}>
+                            <RolePermissions />
                         </Route>
                         <Route path={[config.web_url + "admins"]}>
                             <Admins />
                         </Route>
                         <Route path={[config.web_url]}>
-                            <Sampledata />
+                            <Redirect to={config.web_url} />
+                            <Dashboard />
                         </Route>
                     </Switch>
                 </div>
@@ -42,4 +43,4 @@ const Content_wrapper = () => {
         </div>
     );
 }
-export default Content_wrapper;
+export default ContentWrapper;
