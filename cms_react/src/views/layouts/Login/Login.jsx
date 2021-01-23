@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { getValidator, rules } from '../../../global/validator_rules';
-import { setCookie } from '../../../global/cookie';
+import { getCookie, setCookie } from '../../../global/cookie';
 import config from "../../../config.json";
 import { LogIn } from "../../../services/Authorization";
 import { useDispatch } from "react-redux";
@@ -49,7 +49,9 @@ const Login = ({ history, relogin = false }) => {
     };
 
     useEffect(() => {
-        history.replace(config.web_url + "logIn");
+        if(getCookie('token') === null){
+            history.replace(config.web_url + "logIn");
+        }
     }, []);
 
     return (
