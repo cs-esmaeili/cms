@@ -5,24 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\classes\G;
 use App\Http\Requests\logIn;
 use App\Http\Requests\logOut;
-use App\Models\Permission;
 use App\Models\Person;
 use App\Models\Token;
-use Illuminate\Routing\Route;
+use Illuminate\Http\Request;
 
 class Authentication extends Controller
 {
-    public function test()
-    {
-        $text = Route::getRoutes()->get();
-        foreach ($text as $route) {
-            if (array_key_exists('as', $route->action)) {
-                Permission::create([
-                    'name' => $route->action['as'],
-                ]);
-            }
-        }
-    }
     public function logIn(logIn $request)
     {
         $content =  json_decode($request->getContent());
@@ -34,12 +22,11 @@ class Authentication extends Controller
                 return response(['status' => 'disabel'], 200);
             }
             $token = $person->token;
-            $token = G::newToken($person->person_id, $token->token_id, 1)['token'];
-            return response(['statusText' => 'ok', 'token' => $token, 'information' => $person->informations(), 'permissions' => $person->role->permissions()->select(['name'])->get()->toArray()], 200);
+            $token = G::newToken($person->person_id, $token->token_id, 30)['token'];
+            return response(['statusText' => 'ok', 'token' => $token], 200);
         }
         return response(['statusText' => 'fail'], 200);
     }
-
     public function logOut(logOut $request)
     {
         $content =  json_decode($request->getContent());

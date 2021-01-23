@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { _addCategory, _deleteCategory, _categoryListPyramid, _categoryListPure } from './../../services/Category';
 import useGenerator from "../../global/Idgenerator";
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 
 const Category = () => {
 
@@ -13,7 +14,7 @@ const Category = () => {
     const [type, setType] = useState('');
     const [file_id, setFile_id] = useState('');
     const [parent_id, setParent_id] = useState(0);
-
+    const permission = useSelector(state => state.profile.permissions).includes('category_page');
     const [generateID] = useGenerator();
 
     const getCtegorysPyramid = async () => {
@@ -107,54 +108,61 @@ const Category = () => {
         getCtegorysPyramid();
         getCtegorysPure();
     }, []);
-
-    return (
-        <div>
-            <div className="row m-2 justify-content-end">
-                {categoryPyramid != null && elements(categoryPyramid)}
+    if (permission === false) {
+        return (
+            <div class="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+                <div>شما به این قسمت دسترسی ندارید</div>
             </div>
-            <form className="m-2" onSubmit={addCategory}>
-                <div className="card shadow">
-                    <div className="card-header">
-                        <h6 className="font-weight-bold text-primary">دسترسی ها</h6>
-                    </div>
-                    <div className="card-body" >
-                        <div className="row" >
-                            <div className="col-3">
-                                <div className="form-group">
-                                    <label htmlFor="fileId">ای دی فایل</label>
-                                    <input className="form-control" id="fileId" style={{ textAlign: "right" }} value={file_id} onChange={(e) => setFile_id(e.target.value)} />
+        );
+    } else {
+        return (
+            <div>
+                <div className="row m-2 justify-content-end">
+                    {categoryPyramid != null && elements(categoryPyramid)}
+                </div>
+                <form className="m-2" onSubmit={addCategory}>
+                    <div className="card shadow">
+                        <div className="card-header">
+                            <h6 className="font-weight-bold text-primary">دسترسی ها</h6>
+                        </div>
+                        <div className="card-body" >
+                            <div className="row" >
+                                <div className="col-3">
+                                    <div className="form-group">
+                                        <label htmlFor="fileId">ای دی فایل</label>
+                                        <input className="form-control" id="fileId" style={{ textAlign: "right" }} value={file_id} onChange={(e) => setFile_id(e.target.value)} />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="col-3">
-                                <div className="form-group">
-                                    <label htmlFor="categoryName">نام دسته بندی</label>
-                                    <input className="form-control" id="categoryName" style={{ textAlign: "right" }} value={name} onChange={(e) => setName(e.target.value)} />
+                                <div className="col-3">
+                                    <div className="form-group">
+                                        <label htmlFor="categoryName">نام دسته بندی</label>
+                                        <input className="form-control" id="categoryName" style={{ textAlign: "right" }} value={name} onChange={(e) => setName(e.target.value)} />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="col-3">
-                                <div className="form-group">
-                                    <label htmlFor="categoryType">نوع دسته بندی</label>
-                                    <input className="form-control" id="categoryType" style={{ textAlign: "right" }} value={type} onChange={(e) => setType(e.target.value)} />
+                                <div className="col-3">
+                                    <div className="form-group">
+                                        <label htmlFor="categoryType">نوع دسته بندی</label>
+                                        <input className="form-control" id="categoryType" style={{ textAlign: "right" }} value={type} onChange={(e) => setType(e.target.value)} />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="col-3">
-                                <div className="form-group">
-                                    <label htmlFor="parentSelect">مجموعه مورد نظر</label>
-                                    <select className="form-control" id="parentSelect" style={{ direction: "rtl" }} onChange={(e) => setParent_id(e.target.value)}>
-                                        <option value="0">مجموعه جدید</option>
-                                        {categoryPyramid != null && categoryPure.map(element => <option value={element.category_id} key={generateID()}>{element.name}</option>)}
-                                    </select>
+                                <div className="col-3">
+                                    <div className="form-group">
+                                        <label htmlFor="parentSelect">مجموعه مورد نظر</label>
+                                        <select className="form-control" id="parentSelect" style={{ direction: "rtl" }} onChange={(e) => setParent_id(e.target.value)}>
+                                            <option value="0">مجموعه جدید</option>
+                                            {categoryPyramid != null && categoryPure.map(element => <option value={element.category_id} key={generateID()}>{element.name}</option>)}
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="col-12 m-2" style={{ textAlign: "center" }}>
-                                <button type="submit" className="btn btn-success">ساخت دسته بندی</button>
+                                <div className="col-12 m-2" style={{ textAlign: "center" }}>
+                                    <button type="submit" className="btn btn-success">ساخت دسته بندی</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </div>
-    );
+                </form>
+            </div>
+        );
+    }
 }
 export default Category;

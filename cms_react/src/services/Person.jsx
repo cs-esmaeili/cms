@@ -87,3 +87,11 @@ export const _EditPerson = (data) => {
         }
     });
 };
+
+export const _personProfile = () => {
+    return http.post(`${config.api_url}personProfile`, {}, {
+        headers: {
+            "Action": "personProfile",
+        }
+    });
+};

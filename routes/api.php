@@ -30,7 +30,10 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
     Route::post('/login', [Authentication::class, 'Login'])->name('Login');
     Route::post('/logout', [Authentication::class, 'Logout'])->name('Logout');
 
+
     Route::middleware([CheckToken::class])->group(function () {
+
+        Route::post('/personProfile', [Person::class, 'personProfile'])->name('personProfile');
         Route::post('/admins', [Person::class, 'admins'])->name('admins');
         Route::post('/adminRoles', [Person::class, 'adminRoles'])->name('adminRoles');
         Route::post('/createPerson', [Person::class, 'createPerson'])->name('createPerson');

@@ -23,7 +23,7 @@ class G
     }
     public static function timeNow($hours = 0)
     {
-        return  Carbon::now()->addHours($hours)->format('Y-m-d H:i:s');
+        return  Carbon::now()->addMinutes($hours)->format('Y-m-d H:i:s');
     }
 
     public static function newToken($unicData, $token_id = -1, $time = 0)

@@ -1,8 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import config from "../../../config.json";
+import { useSelector } from 'react-redux'
 
 const Sidebar = () => {
+
+    const permission = useSelector(state => state.profile.permissions);
+
+
     return (
         <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -22,74 +27,89 @@ const Sidebar = () => {
                 </Link>
             </li>
 
-            <li className="nav-item">
-                <div className="nav-link collapsed" data-toggle="collapse" data-target="#collapseAdmin"
-                    aria-expanded="true" aria-controls="collapseAdmin" style={{ cursor: "pointer" }}>
-                    <span>مدیریت</span>
-                    <i className="fas fa-fw fa-cog"></i>
-                </div>
-                <div id="collapseAdmin" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div className="bg-white py-2 collapse-inner rounded">
-                        <h6 className="collapse-header">اجزا شخصی سازی شده</h6>
-                        <Link
-                            className="collapse-item"
-                            to={config.web_url + "admins"}
-                        >
-                            حساب ها
-                        </Link>
-                        <Link
-                            className="collapse-item"
-                            to={config.web_url + "rolePermissions"}
-                        >
-                            قوانین و نقش ها
-                        </Link>
+            {(permission.includes('admins_page') || permission.includes('rolePermissions_page')) &&
+                <li className="nav-item">
+                    <div className="nav-link collapsed" data-toggle="collapse" data-target="#collapseAdmin"
+                        aria-expanded="true" aria-controls="collapseAdmin" style={{ cursor: "pointer" }}>
+                        <span>مدیریت</span>
+                        <i className="fas fa-fw fa-cog"></i>
                     </div>
-                </div>
-            </li>
-
-            <li className="nav-item">
-                <Link
-                    className="nav-link"
-                    to={config.web_url + "fileManager"}
-                >
-                    <span>فایل ها</span>
-                    <i className="fas fa-fw fa-tachometer-alt"></i>
-                </Link>
-            </li>
-            <li className="nav-item">
-                <Link
-                    className="nav-link"
-                    to={config.web_url + "category"}
-                >
-                    <span>دسته بندی</span>
-                    <i className="fas fa-fw fa-tachometer-alt"></i>
-                </Link>
-            </li>
-
-            <li className="nav-item">
-                <div className="nav-link"
-                    data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo" style={{ cursor: "pointer" }}>
-                    <span>مطالب</span>
-                    <i className="fas fa-fw fa-cog"></i>
-                </div>
-                <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div className="bg-white py-2 collapse-inner rounded">
-                        <Link
-                            className="collapse-item"
-                            to={config.web_url + "createPost"}
-                        >
-                            مطلب جدید
+                    <div id="collapseAdmin" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            <h6 className="collapse-header">اجزا شخصی سازی شده</h6>
+                            {permission.includes('admins_page') &&
+                                <Link
+                                    className="collapse-item"
+                                    to={config.web_url + "admins"}
+                                >
+                                    حساب ها
                         </Link>
-                        <Link
-                            className="collapse-item"
-                            to={config.web_url + "postList"}
-                        >
-                            لیست مطالب
+                            }
+                            {permission.includes('rolePermissions_page') &&
+                                <Link
+                                    className="collapse-item"
+                                    to={config.web_url + "rolePermissions"}
+                                >
+                                    قوانین و نقش ها
                         </Link>
+                            }
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            }
+            {permission.includes('fileManager_page') &&
+                <li className="nav-item">
+                    <Link
+                        className="nav-link"
+                        to={config.web_url + "fileManager"}
+                    >
+                        <span>فایل ها</span>
+                        <i className="fas fa-fw fa-tachometer-alt"></i>
+                    </Link>
+                </li>
+            }
+            {permission.includes('category_page') &&
+                <li className="nav-item">
+                    <Link
+                        className="nav-link"
+                        to={config.web_url + "category"}
+                    >
+                        <span>دسته بندی</span>
+                        <i className="fas fa-fw fa-tachometer-alt"></i>
+                    </Link>
+                </li>
+            }
+
+            {(permission.includes('createPost_page') || permission.includes('postList_page')) &&
+                <li className="nav-item">
+                    <div className="nav-link"
+                        data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo" style={{ cursor: "pointer" }}>
+                        <span>مطالب</span>
+                        <i className="fas fa-fw fa-cog"></i>
+                    </div>
+                    <div id="collapseTwo" className="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div className="bg-white py-2 collapse-inner rounded">
+                            {permission.includes('createPost_page') &&
+                                <Link
+                                    className="collapse-item"
+                                    to={config.web_url + "createPost"}
+                                >
+                                    مطلب جدید
+                           </Link>
+                            }
+                            {permission.includes('postList_page') &&
+                                <Link
+                                    className="collapse-item"
+                                    to={config.web_url + "postList"}
+                                >
+                                    لیست مطالب
+                        </Link>
+                            }
+                        </div>
+                    </div>
+                </li>
+            }
             <hr className="sidebar-divider d-none d-md-block" />
 
             <div className="text-center d-none d-md-inline">

@@ -26,6 +26,16 @@ use Illuminate\Support\Facades\DB;
 
 class Person extends Controller
 {
+    public function personProfile(Request $request)
+    {
+        $person = G::getPersonFromToken($request->bearerToken());
+        $permission = $person->role->permissions()->select(['name'])->get()->toArray();
+        $permission_new = [];
+        foreach ($permission as $value) {
+            $permission_new[] = $value['name'];
+        }
+        return response(['statusText' => 'ok', 'information' => $person->informations(), 'permissions' => $permission_new], 200);
+    }
     public function admins()
     {
         $persons = ModelsPerson::all();

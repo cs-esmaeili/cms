@@ -4,7 +4,7 @@ import { setCookie } from '../../../global/cookie';
 import config from "../../../config.json";
 import { LogIn } from "../../../services/Authorization";
 import { useDispatch } from "react-redux";
-import { setToken } from "../../../actions/profile";
+import { setProfileData, setToken } from "../../../actions/profile";
 import { withRouter } from "react-router-dom";
 import './Login.css';
 

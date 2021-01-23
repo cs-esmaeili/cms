@@ -6,3 +6,8 @@ export const setToken = (token) => {
         await dispatch({ type: "SETTOKEN", payload: token });
     };
 };
+export const setProfileData = (data) => {
+    return async (dispatch, getState) => {
+        await dispatch({ type: "SETPROFILEDATA", payload: data });
+    };
+};
