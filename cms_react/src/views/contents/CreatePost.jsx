@@ -1,20 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
 import JoditEditor from "jodit-react";
-import { _createPost } from './../../services/Post';
+import { _createPost, _updatePost } from './../../services/Post';
 import { toast } from 'react-toastify';
 import { _categoryListPure } from "../../services/Category";
 import useGenerator from "../../global/Idgenerator";
 import { useSelector } from 'react-redux';
 
-const CreatePost = () => {
+const CreatePost = ({ edit = false, data = null, onSubmit = null }) => {
 
     const editor = useRef(null)
-    const [category_id, setCategory_id] = useState(null);
+    const [category_id, setCategory_id] = useState((edit) ? data.category_id : null);
     const [categoryPure, setCategoryPure] = useState(null);
-    const [image, setImage] = useState('');
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [meta_keywords, setMeta_keywords] = useState('');
+    const [image, setImage] = useState((edit) ? data.image : '');
+    const [title, setTitle] = useState((edit) ? data.title : '');
+    const [description, setDescription] = useState((edit) ? data.description : '');
+    const [meta_keywords, setMeta_keywords] = useState((edit) ? data.meta_keywords : '');
     const [generateID] = useGenerator();
     const permission = useSelector(state => state.profile.permissions).includes('createPost_page');
 
@@ -29,7 +29,8 @@ const CreatePost = () => {
     }
     const createPost = async (status) => {
         try {
-            const data = {
+            const obj = {
+                post_id: (edit ? data.post_id : ''),
                 category_id,
                 image,
                 title,
@@ -38,24 +39,38 @@ const CreatePost = () => {
                 meta_keywords,
                 status
             };
-            const respons = await _createPost(data);
-            console.log(respons.data.statusText);
+            let respons = null;
+            if (edit) {
+                respons = await _updatePost(obj);
+            } else {
+                respons = await _createPost(obj);
+            }
             if (respons.data.statusText === "ok") {
-                setCategory_id(categoryPure[0].category_id);
-                setImage("");
-                setTitle("");
-                setDescription("");
-                setMeta_keywords("");
+                if (edit) {
+                    onSubmit();
+                    document.getElementById('Modal_EditPost_open').click();
+                } else {
+                    setCategory_id(categoryPure[0].category_id);
+                    setImage("");
+                    setTitle("");
+                    setDescription("");
+                    setMeta_keywords("");
+                }
             }
             toast(respons.data.message);
         } catch (error) { }
     }
     useEffect(() => {
         getCtegorysPure();
-        return () => {
-
+        if (edit) {
+            setCategory_id((edit) ? data.category_id : null);
+            setCategoryPure(null);
+            setImage((edit) ? data.image : '');
+            setTitle((edit) ? data.title : '');
+            setDescription((edit) ? data.description : '');
+            setMeta_keywords((edit) ? data.meta_keywords : '');
         }
-    }, []);
+    }, [data]);
 
     if (permission === false) {
         return (
@@ -134,7 +149,7 @@ const CreatePost = () => {
                                 <div className="card-body" >
                                     <JoditEditor
                                         ref={editor}
-                                        value=""
+                                        value={edit ? data.body : ""}
                                         config={{
                                             readonly: false
                                         }}
@@ -146,25 +161,29 @@ const CreatePost = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="row m-2">
-                        <div className="col-xl-4 col-lg-12 col-md-12 col-sm-12  mb-2">
-                            <div className="card shadow">
-                                <div className="card-header">
+                    <div className="row m-2 justify-content-center">
+                        {(edit === false) &&
+                            <>
+                                <div className="col-xl-4 col-lg-12 col-md-12 col-sm-12  mb-2">
+                                    <div className="card shadow">
+                                        <div className="card-header">
+                                        </div>
+                                        <div className="card-body" >
+                                            <button type="button" className="btn btn-danger" style={{ width: "100%" }}>حذف</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="card-body" >
-                                    <button type="button" className="btn btn-danger" style={{ width: "100%" }}>حذف</button>
+                                <div className="col-xl-4 col-lg-12 col-md-12 col-sm-12  mb-2">
+                                    <div className="card shadow">
+                                        <div className="card-header">
+                                        </div>
+                                        <div className="card-body" >
+                                            <button type="button" className="btn btn-warning" style={{ width: "100%" }} onClick={() => createPost(1)}>ثبت و انشار</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="col-xl-4 col-lg-12 col-md-12 col-sm-12  mb-2">
-                            <div className="card shadow">
-                                <div className="card-header">
-                                </div>
-                                <div className="card-body" >
-                                    <button type="button" className="btn btn-warning" style={{ width: "100%" }} onClick={() => createPost(1)}>ثبت و انشار</button>
-                                </div>
-                            </div>
-                        </div>
+                            </>
+                        }
                         <div className="col-xl-4 col-lg-12 col-md-12 col-sm-12  mb-2">
                             <div className="card shadow">
                                 <div className="card-header">

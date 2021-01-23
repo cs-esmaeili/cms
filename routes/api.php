@@ -90,7 +90,7 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
             $file = $person->files()->where('hash', '=', $hash)->get();
             if ($file->count() == 1) {
                 return response()->file($file[0]->location . $file[0]->new_name);
-            }else{
+            } else {
                 return response(['statusText' => 'fail', 'message' => "درخواست شما مجاز نیست"], 200);
             }
         })->name('privateFile');
@@ -102,31 +102,9 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
 
 
         Route::post('/createPost', [Post::class, 'createPost'])->name('createPost');
-
-        // Route::post('/createPost', [Post::class, 'createPost'])->name('createPost');
-        // Route::post('/postList', [Post::class, 'postList'])->name('postList');
-        // Route::post('/changeStatus', [Post::class, 'changeStatus'])->name('changeStatus');
-        // Route::post('/deletePost', [Post::class, 'deletePost'])->name('deletePost');
-        // Route::post('/editPost', [Post::class, 'editPost'])->name('editPost');
-
-        // Route::post('/createMainCategory', [Category::class, 'createMainCategory'])->name('createMainCategory');
-        // Route::post('/mainCategoryList', [Category::class, 'mainCategoryList'])->name('mainCategoryList');
-        // Route::post('/editMainCategory', [Category::class, 'editMainCategory'])->name('editMainCategory');
-        // Route::post('/deleteMainCtegory', [Category::class, 'deleteMainCtegory'])->name('deleteMainCtegory');
-        // Route::post('/createSubCategory', [Category::class, 'createSubCategory'])->name('createSubCategory');
-        // Route::post('/subCategoryList', [Category::class, 'subCategoryList'])->name('subCategoryList');
-        // Route::post('/editsubcategory', [Category::class, 'editsubcategory'])->name('editsubcategory');
-        // Route::post('/deleteSubCtegory', [Category::class, 'deleteSubCtegory'])->name('deleteSubCtegory');
-        // Route::post('/createProduct', [Product::class, 'createProduct'])->name('createProduct');
-        // Route::post('/productList', [Product::class, 'productList'])->name('productList');
-        // Route::post('/deleteProduct', [Product::class, 'deleteProduct'])->name('deleteProduct');
-        // Route::post('/editProducInfo', [Product::class, 'editProducInfo'])->name('editProducInfo');
-        // Route::post('/productImageList', [Product::class, 'productImageList'])->name('productImageList');
-        // Route::post('/deleteProductImage', [Product::class, 'deleteProductImage'])->name('deleteProductImage');
-        // Route::post('/addProductImage', [Product::class, 'addProductImage'])->name('addProductImage');
-        // Route::post('/postCategoryList', [Category::class, 'postCategoryList'])->name('postCategoryList');
-        // Route::post('/createPostCategory', [Category::class, 'createPostCategory'])->name('createPostCategory');
-        // Route::post('/editPostCategory', [Category::class, 'editPostCategory'])->name('editPostCategory');
-        // Route::post('/changeData', [Home::class, 'changeData'])->name('changeData');
+        Route::post('/postList', [Post::class, 'postList'])->name('postList');
+        Route::post('/deletePost', [Post::class, 'deletePost'])->name('deletePost');
+        Route::post('/changePostStatus', [Post::class, 'changePostStatus'])->name('changePostStatus');
+        Route::post('/updatePost', [Post::class, 'updatePost'])->name('updatePost');
     });
 });

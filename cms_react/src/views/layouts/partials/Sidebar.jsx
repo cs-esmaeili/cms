@@ -4,10 +4,7 @@ import config from "../../../config.json";
 import { useSelector } from 'react-redux'
 
 const Sidebar = () => {
-
     const permission = useSelector(state => state.profile.permissions);
-
-
     return (
         <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <a className="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -26,7 +23,6 @@ const Sidebar = () => {
                     <i className="fas fa-fw fa-tachometer-alt"></i>
                 </Link>
             </li>
-
             {(permission.includes('admins_page') || permission.includes('rolePermissions_page')) &&
                 <li className="nav-item">
                     <div className="nav-link collapsed" data-toggle="collapse" data-target="#collapseAdmin"
@@ -43,7 +39,7 @@ const Sidebar = () => {
                                     to={config.web_url + "admins"}
                                 >
                                     حساب ها
-                        </Link>
+                                 </Link>
                             }
                             {permission.includes('rolePermissions_page') &&
                                 <Link
@@ -51,7 +47,7 @@ const Sidebar = () => {
                                     to={config.web_url + "rolePermissions"}
                                 >
                                     قوانین و نقش ها
-                        </Link>
+                                 </Link>
                             }
                         </div>
                     </div>
@@ -79,7 +75,6 @@ const Sidebar = () => {
                     </Link>
                 </li>
             }
-
             {(permission.includes('createPost_page') || permission.includes('postList_page')) &&
                 <li className="nav-item">
                     <div className="nav-link"
@@ -96,7 +91,7 @@ const Sidebar = () => {
                                     to={config.web_url + "createPost"}
                                 >
                                     مطلب جدید
-                           </Link>
+                                </Link>
                             }
                             {permission.includes('postList_page') &&
                                 <Link
@@ -104,14 +99,13 @@ const Sidebar = () => {
                                     to={config.web_url + "postList"}
                                 >
                                     لیست مطالب
-                        </Link>
+                               </Link>
                             }
                         </div>
                     </div>
                 </li>
             }
             <hr className="sidebar-divider d-none d-md-block" />
-
             <div className="text-center d-none d-md-inline">
                 <button className="rounded-circle border-0" id="sidebarToggle"></button>
             </div>

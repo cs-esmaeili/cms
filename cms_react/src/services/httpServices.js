@@ -13,7 +13,6 @@ axios.interceptors.response.use((response) => {
     return response;
 }, (error) => {
     if (error.response.data.meessage === "token expired" || error.response.data.meessage === "token is wrong") {
-        console.log("s");
         document.getElementById('Modal_RelogIn_open').click();
         return Promise.reject(error);
     }

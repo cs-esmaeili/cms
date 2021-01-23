@@ -6,25 +6,25 @@ export const _createPost = (data) => {
         "Action": "createPost",
     }});
 };
-export const _PostList = () => {
-    return http.post(`${config.api_url}postlist`, {}, { headers: {
+export const _postList = () => {
+    return http.post(`${config.api_url}postList`, {}, { headers: {
         "Action": "postList",
     }});
 };
 
-export const _ChangeStatus = (data) => {
-    return http.post(`${config.api_url}changestatus`, JSON.stringify(data), { headers: {
-        "Action": "changeStatus",
+export const _changePostStatus = (data) => {
+    return http.post(`${config.api_url}changePostStatus`, JSON.stringify(data), { headers: {
+        "Action": "changePostStatus",
     }});
 };
 
-export const _DeletePost = (data) => {
-    return http.post(`${config.api_url}deletepost`, JSON.stringify(data), { headers: {
+export const _deletePost = (data) => {
+    return http.post(`${config.api_url}deletePost`, JSON.stringify(data), { headers: {
         "Action": "deletePost",
     }});
 };
-export const _EditPost = (data) => {
-    return http.post(`${config.api_url}editpost`, data, { headers: {
-        "Action": "editPost",
+export const _updatePost = (data) => {
+    return http.post(`${config.api_url}updatePost`, data, { headers: {
+        "Action": "updatePost",
     }});
 };

@@ -38,5 +38,8 @@ class PermissionSeeder extends Seeder
         Permission::create([
             'name' => 'rolePermissions_page',
         ]);
+        Permission::create([
+            'name' => 'postList_page',
+        ]);
     }
 }

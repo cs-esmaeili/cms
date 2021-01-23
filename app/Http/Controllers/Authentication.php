@@ -7,7 +7,6 @@ use App\Http\Requests\logIn;
 use App\Http\Requests\logOut;
 use App\Models\Person;
 use App\Models\Token;
-use Illuminate\Http\Request;
 
 class Authentication extends Controller
 {
