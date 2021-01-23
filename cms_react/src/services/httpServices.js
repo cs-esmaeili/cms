@@ -12,12 +12,13 @@ if (token) axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 axios.interceptors.response.use((response) => {
     return response;
 }, (error) => {
-    if (error.response.data.description === "token expired" || error.response.data.description === "token is wrong") {
-        //  getRef("Modal_Token_btn").current.click();
+    if (error.response.data.meessage === "token expired" || error.response.data.meessage === "token is wrong") {
+        console.log("s");
+        document.getElementById('Modal_RelogIn_open').click();
         return Promise.reject(error);
     }
-    if (error.response.data.description === "permission denid") {
-        // getRef("Modal_Permission_btn").current.click();
+    if (error.response.data.meessage === "permission denid") {
+        document.getElementById('Modal_PermissionDenid_open').click();
         return Promise.reject(error);
     }
     const expectedErrors =

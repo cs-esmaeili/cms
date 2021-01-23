@@ -4,11 +4,11 @@ import { setCookie } from '../../../global/cookie';
 import config from "../../../config.json";
 import { LogIn } from "../../../services/Authorization";
 import { useDispatch } from "react-redux";
-import { setProfileData, setToken } from "../../../actions/profile";
+import { setToken } from "../../../actions/profile";
 import { withRouter } from "react-router-dom";
 import './Login.css';
 
-const Login = ({ history }) => {
+const Login = ({ history, relogin = false }) => {
     const [username, Setusername] = useState("");
     const [password, Setpassword] = useState("");
     const [show, setShow] = useState(true);
@@ -29,7 +29,14 @@ const Login = ({ history }) => {
                 if (respons.data.statusText === "ok") {
                     setCookie(30, 'token', respons.data.token);
                     await dispatch(setToken(respons.data.token));
-                    history.replace(config.web_url);
+                    setTimeout(() => {
+                        document.getElementById('Modal_RelogIn_open').click();
+                    }, (30 * 60 * 1000));
+                    if (relogin) {
+                        document.getElementById('Modal_RelogIn_open').click();
+                    } else {
+                        history.replace(config.web_url);
+                    }
                 } else {
                     setShow(true);
                 }
@@ -46,9 +53,9 @@ const Login = ({ history }) => {
     }, []);
 
     return (
-        <div className="container-fluid bg-gradient-primary" style={{ height: "100vh" }}>
-            <div className="row h-100 align-items-center justify-content-center">
-                <div className="col-xl-3 col-lg-4 col-md-4 col-sm-6">
+        <div className={(relogin === false) ? "container-fluid bg-gradient-primary" : ""} style={(relogin === false) ? { height: "100vh" } : { height: "100%" }}>
+            <div className={(relogin === false) ? "row h-100 align-items-center justify-content-center" : ""}>
+                <div className={(relogin) ? "col-12" : "col-xl-3 col-lg-4 col-md-4 col-sm-6"} >
                     <div className="card mb-4 py-3 border-bottom-danger">
                         <div className="card-body test">
                             <img className="img-fluid" src={config.logo_url} alt="cant load" style={{ borderRadius: "50%", padding: "inherit" }} />
@@ -88,8 +95,6 @@ const Login = ({ history }) => {
                                         rules('password')
                                     )}
                                 </div>
-
-
                                 {show
                                     ? <div className="alert alert-danger" role="alert" style={{ textAlign: "center" }}>
                                         نام کاربری یا رمز عبور اشتباه است
@@ -108,4 +113,4 @@ const Login = ({ history }) => {
     );
 }
 
-export default withRouter(Login);;
+export default withRouter(Login);

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setToken } from "../../actions/profile";
 import Logout from "../components/modals/Logout";
 import ContentAndSidebar from "./partials/ContentAndSidebar";
+import RelogIn from './../components/modals/RelogIn';
 
 const Main = () => {
     const token = useSelector((state) => state.token);
@@ -18,10 +19,10 @@ const Main = () => {
                 <Login />
                 :
                 <div id="wrapper">
+                    <RelogIn />
                     <ContentAndSidebar />
                     <Logout />
                 </div>
-
             }
         </>
     );

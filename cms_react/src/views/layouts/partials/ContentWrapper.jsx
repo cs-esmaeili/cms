@@ -2,13 +2,14 @@ import React from "react";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import Admins from "../../contents/Admins";
-import { Switch, Route , Redirect } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import config from "../../../config.json";
 import RolePermissions from "../../contents/RolePermissions";
 import FileManager from '../../contents/FileManager';
 import Category from '../../contents/Category';
 import CreatePost from "../../contents/CreatePost";
 import Dashboard from './../../contents/Dashboard';
+import PermissionDenid from './../../components/modals/PermissionDenid';
 
 const ContentWrapper = () => {
     return (
@@ -16,6 +17,7 @@ const ContentWrapper = () => {
             <div id="content">
                 <Navbar />
                 <div className="container-fluid">
+                    <PermissionDenid />
                     <Switch>
                         <Route path={[config.web_url + "createPost"]}>
                             <CreatePost />

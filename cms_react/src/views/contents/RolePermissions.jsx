@@ -13,7 +13,7 @@ const RolePermissions = () => {
     const [roles, setRoles] = useState(null);
     const [permissions, setPermissions] = useState(null);
     const [selectedRole, setSelectedRole] = useState(null);
-    const permission = useSelector(state => state.profile.permissions).includes('rolePermission_page');
+    const permission = useSelector(state => state.profile.permissions).includes('rolePermissions_page');
     const roleColumens = (row, generateID, selfActive) => {
         return (
             <>

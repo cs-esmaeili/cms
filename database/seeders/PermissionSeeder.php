@@ -23,5 +23,20 @@ class PermissionSeeder extends Seeder
                 ]);
             }
         }
+        Permission::create([
+            'name' => 'admins_page',
+        ]);
+        Permission::create([
+            'name' => 'category_page',
+        ]);
+        Permission::create([
+            'name' => 'createPost_page',
+        ]);
+        Permission::create([
+            'name' => 'fileManager_page',
+        ]);
+        Permission::create([
+            'name' => 'rolePermissions_page',
+        ]);
     }
 }
