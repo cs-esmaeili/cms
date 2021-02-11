@@ -14,7 +14,7 @@ class KeyValue extends Controller
             'key' => $content->key,
             'value' => json_encode($content->value),
         ]);
-        if ($result->count() > 1) {
+        if ($result->count() > 0) {
             return response(['statusText' => 'ok', "message" => "مقدار اضافه شد"], 200);
         } else {
             return response(['statusText' => 'fail', "message" => "مقدار اضافه نشد"], 200);

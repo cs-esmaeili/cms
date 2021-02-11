@@ -111,5 +111,10 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/deleteKey', [KeyValue::class, 'deleteKey'])->name('deleteKey');
 
         Route::post('/sliderImages', [IndexPage::class, 'sliderImages'])->name('sliderImages');
+        Route::post('/popularPosts', [IndexPage::class, 'popularPosts'])->name('popularPosts');
+        Route::post('/lastVideo', [IndexPage::class, 'lastVideo'])->name('lastVideo');
+        Route::post('/top3Recent', [IndexPage::class, 'top3Recent'])->name('top3Recent');
+        Route::post('/latestScreenshots', [IndexPage::class, 'latestScreenshots'])->name('latestScreenshots');
+        Route::post('/latestPictures', [IndexPage::class, 'latestPictures'])->name('latestPictures');
     });
 });
