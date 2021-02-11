@@ -5,12 +5,12 @@ use App\Http\classes\G;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Category;
 use App\Http\Controllers\FileManager;
+use App\Http\Controllers\IndexPage;
+use App\Http\Controllers\KeyValue;
 use App\Http\Controllers\Person;
 use App\Http\Controllers\Post;
-use App\Http\Controllers\Product;
 use App\Http\Middleware\CheckHeaders;
 use App\Http\Middleware\CheckToken;
-use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -106,5 +106,10 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/deletePost', [Post::class, 'deletePost'])->name('deletePost');
         Route::post('/changePostStatus', [Post::class, 'changePostStatus'])->name('changePostStatus');
         Route::post('/updatePost', [Post::class, 'updatePost'])->name('updatePost');
+
+        Route::post('/addKey', [KeyValue::class, 'addKey'])->name('addKey');
+        Route::post('/deleteKey', [KeyValue::class, 'deleteKey'])->name('deleteKey');
+
+        Route::post('/sliderImages', [IndexPage::class, 'sliderImages'])->name('sliderImages');
     });
 });
