@@ -10,33 +10,47 @@
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- START: Styles -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7cOpen+Sans:400,700" rel="stylesheet"
         type="text/css">
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href={{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}>
+
     <!-- FontAwesome -->
-    <script defer src="assets/vendor/fontawesome-free/js/all.js"></script>
-    <script defer src="assets/vendor/fontawesome-free/js/v4-shims.js"></script>
+    <script defer src={{ asset('assets/vendor/fontawesome-free/js/all.js') }}></script>
+    <script defer src={{ asset('assets/vendor/fontawesome-free/js/v4-shims.js') }}></script>
+
     <!-- IonIcons -->
     <link rel="stylesheet" href={{ asset('assets/vendor/ionicons/css/ionicons.min.css') }}>
+
     <!-- Flickity -->
     <link rel="stylesheet" href={{ asset('assets/vendor/flickity/dist/flickity.min.css') }}>
+
     <!-- Photoswipe -->
     <link rel="stylesheet" type="text/css" href={{ asset('assets/vendor/photoswipe/dist/photoswipe.css') }}>
     <link rel="stylesheet" type="text/css"
         href={{ asset('assets/vendor/photoswipe/dist/default-skin/default-skin.css') }}>
+
     <!-- Seiyria Bootstrap Slider -->
     <link rel="stylesheet" href={{ asset('assets/vendor/bootstrap-slider/dist/css/bootstrap-slider.min.css') }}>
+
     <!-- Summernote -->
     <link rel="stylesheet" type="text/css" href={{ asset('assets/vendor/summernote/dist/summernote-bs4.css') }}>
+
     <!-- GoodGames -->
     <link rel="stylesheet" href={{ asset('assets/css/goodgames.css') }}>
+
     <!-- Custom Styles -->
     <link rel="stylesheet" href={{ asset('assets/css/custom.css') }}>
+
     <!-- END: Styles -->
+
     <!-- jQuery -->
-    <script href={{ asset('assets/vendor/jquery/dist/jquery.min.js') }}></script>
+    <script src={{ asset('assets/vendor/jquery/dist/jquery.min.js') }}></script>
+
 </head>
 <!--
     Additional Classes:
@@ -45,34 +59,28 @@
 
 <body>
     @include('layout.header')
-    <!--
-    START: Navbar Mobile
-    Additional Classes:
-        .nk-navbar-left-side
-        .nk-navbar-right-side
-        .nk-navbar-lg
-        .nk-navbar-overlay-content
--->
-    <div id="nk-nav-mobile" class="nk-navbar nk-navbar-side nk-navbar-right-side nk-navbar-overlay-content d-lg-none">
-        <div class="nano">
-            <div class="nano-content">
-                <a href="index.html" class="nk-nav-logo">
-                    <img src="assets/images/logo.png" alt="" width="120">
-                </a>
-                <div class="nk-navbar-mobile-content">
-                    <ul class="nk-nav">
-                        <!-- Here will be inserted menu from [data-mobile-menu="#nk-nav-mobile"] -->
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- END: Navbar Mobile -->
     <div class="nk-main">
+        <div style="z-index: -1; position: absolute; top: -10px">
+            <video width="100%" poster="http://emeral.ir/" autoplay muted playsinline loop>
+                <source src={{ asset('system/header.mp4') }} type="video/mp4">
+            </video>
+        </div>
+        <div id="my_header"></div>
         <div class="nk-gap-2"></div>
-        <div class="container">
+        <div class="nk-gap-2"></div>
+        <div class="nk-gap-2"></div>
+        <div class="nk-gap-2"></div>
+        <div class="nk-gap-2"></div>
+        <div class="nk-gap-2"></div>
+        <div class="nk-gap-2"></div>
+        <div class="nk-gap-2"></div>
+        <div class="nk-gap-2"></div>
+        <div class="nk-gap-2"></div>
+        <div class="nk-gap-2"></div>
+        <div class="nk-gap-2"></div>
+        <div class="nk-gap-2"></div>
+        <div class="container" style="background-color: #171e22;">
             @yield('content')
-
         </div>
         <div class="nk-gap-4"></div>
         @include('layout.footer')
@@ -154,50 +162,77 @@
     </div>
     <!-- END: Login Modal -->
     <!-- START: Scripts -->
+
     <!-- Object Fit Polyfill -->
-    <script src={{ asset("assets/vendor/object-fit-images/dist/ofi.min.js") }}></script>
+    <script src={{ asset('assets/vendor/object-fit-images/dist/ofi.min.js') }}></script>
+
     <!-- GSAP -->
-    <script src={{ asset("assets/vendor/gsap/src/minified/TweenMax.min.js") }}></script>
-    <script src={{ asset("assets/vendor/gsap/src/minified/plugins/ScrollToPlugin.min.js") }}></script>
+    <script src={{ asset('assets/vendor/gsap/src/minified/TweenMax.min.js') }}></script>
+    <script src={{ asset('assets/vendor/gsap/src/minified/plugins/ScrollToPlugin.min.js') }}></script>
+
     <!-- Popper -->
-    <script src={{ asset("assets/vendor/popper.js/dist/umd/popper.min.js") }}></script>
+    <script src={{ asset('assets/vendor/popper.js/dist/umd/popper.min.js') }}></script>
+
     <!-- Bootstrap -->
-    <script src={{ asset("assets/vendor/bootstrap/dist/js/bootstrap.min.js") }}></script>
+    <script src={{ asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js') }}></script>
+
     <!-- Sticky Kit -->
-    <script src={{ asset("assets/vendor/sticky-kit/dist/sticky-kit.min.js") }}></script>
+    <script src={{ asset('assets/vendor/sticky-kit/dist/sticky-kit.min.js') }}></script>
+
     <!-- Jarallax -->
-    <script src={{ asset("assets/vendor/jarallax/dist/jarallax.min.js") }}></script>
-    <script src={{ asset("assets/vendor/jarallax/dist/jarallax-video.min.js") }}></script>
+    <script src={{ asset('assets/vendor/jarallax/dist/jarallax.min.js') }}></script>
+    <script src={{ asset('assets/vendor/jarallax/dist/jarallax-video.min.js') }}></script>
+
     <!-- imagesLoaded -->
-    <script src={{ asset("assets/vendor/imagesloaded/imagesloaded.pkgd.min.js") }}></script>
+    <script src={{ asset('assets/vendor/imagesloaded/imagesloaded.pkgd.min.js') }}></script>
+
     <!-- Flickity -->
-    <script src={{ asset("assets/vendor/flickity/dist/flickity.pkgd.min.js") }}></script>
+    <script src={{ asset('assets/vendor/flickity/dist/flickity.pkgd.min.js') }}></script>
+
     <!-- Photoswipe -->
-    <script src={{ asset("assets/vendor/photoswipe/dist/photoswipe.min.js") }}></script>
-    <script src={{ asset("assets/vendor/photoswipe/dist/photoswipe-ui-default.min.js") }}></script>
+    <script src={{ asset('assets/vendor/photoswipe/dist/photoswipe.min.js') }}></script>
+    <script src={{ asset('assets/vendor/photoswipe/dist/photoswipe-ui-default.min.js') }}></script>
+
     <!-- Jquery Validation -->
-    <script src={{ asset("assets/vendor/jquery-validation/dist/jquery.validate.min.js") }}></script>
+    <script src={{ asset('assets/vendor/jquery-validation/dist/jquery.validate.min.js') }}></script>
+
     <!-- Jquery Countdown + Moment -->
-    <script src={{ asset("assets/vendor/jquery-countdown/dist/jquery.countdown.min.js") }}></script>
-    <script src={{ asset("assets/vendor/moment/min/moment.min.js") }}></script>
-    <script src={{ asset("assets/vendor/moment-timezone/builds/moment-timezone-with-data.min.js") }}></script>
+    <script src={{ asset('assets/vendor/jquery-countdown/dist/jquery.countdown.min.js') }}></script>
+    <script src={{ asset('assets/vendor/moment/min/moment.min.js') }}></script>
+    <script src={{ asset('assets/vendor/moment-timezone/builds/moment-timezone-with-data.min.js') }}></script>
+
     <!-- Hammer.js -->
-    <script src={{ asset("assets/vendor/hammerjs/hammer.min.js") }}></script>
+    <script src={{ asset('assets/vendor/hammerjs/hammer.min.js') }}></script>
+
     <!-- NanoSroller -->
-    <script src={{ asset("assets/vendor/nanoscroller/bin/javascripts/jquery.nanoscroller.js") }}></script>
+    <script src={{ asset('assets/vendor/nanoscroller/bin/javascripts/jquery.nanoscroller.js') }}></script>
+
     <!-- SoundManager2 -->
-    <script src={{ asset("assets/vendor/soundmanager2/script/soundmanager2-nodebug-jsmin.js") }}></script>
+    <script src={{ asset('assets/vendor/soundmanager2/script/soundmanager2-nodebug-jsmin.js') }}></script>
+
     <!-- Seiyria Bootstrap Slider -->
-    <script src={{ asset("assets/vendor/bootstrap-slider/dist/bootstrap-slider.min.js") }}></script>
+    <script src={{ asset('assets/vendor/bootstrap-slider/dist/bootstrap-slider.min.js') }}></script>
+
     <!-- Summernote -->
-    <script src={{ asset("assets/vendor/summernote/dist/summernote-bs4.min.js") }}></script>
+    <script src={{ asset('assets/vendor/summernote/dist/summernote-bs4.min.js') }}></script>
+
     <!-- WWW.MELLATWEB.COM Share -->
-    <script src={{ asset("assets/plugins/nk-share/nk-share.js") }}></script>
+    <script src={{ asset('assets/plugins/nk-share/nk-share.js') }}></script>
+
     <!-- GoodGames -->
-    <script src={{ asset("assets/js/goodgames.min.js") }}></script>
-    <script src={{ asset("assets/js/goodgames-init.js") }}></script>
+    <script src={{ asset('assets/js/goodgames.min.js') }}></script>
+    <script src={{ asset('assets/js/goodgames-init.js') }}></script>
     <!-- END: Scripts -->
 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+    </script>
     @yield('script')
 </body>
 

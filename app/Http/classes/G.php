@@ -133,4 +133,17 @@ class G
         }
         return $outPut;
     }
+    public  static function converToShamsi($created_at)
+    {
+        $date = date_create($created_at);
+        $time =  date_format($date, "Y/m/d");
+        $arr_parts = explode('/', $time);
+        $gYear  = $arr_parts[0];
+        $gMonth = $arr_parts[1];
+        $gDay   = $arr_parts[2];
+        $current_jdate = jdf::gregorian_to_jalali($gYear, $gMonth, $gDay, '/');
+
+
+        return $current_jdate;
+    }
 }

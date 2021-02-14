@@ -1,1 +1,22 @@
 /* PLACE YOU CUSTOM STYLES IN THIS FILE */
+#my_footer {
+    display: block;
+    width: 100%;
+    background: linear-gradient(180deg, rgba(17, 17, 17, 0) 11.13%, #1110 79.52%), url(http://127.0.0.1/cms/system/footer.png);
+    background-position: center top;
+    background-size: 100% auto;
+    background-repeat: no-no-repeat;
+}
+
+#my_header {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 500px;
+    display: block;
+    width: 100%;
+    background: linear-gradient(0deg, #171e22, rgba(255, 253, 253, 0));
+    background-position: center top;
+    background-size: 100% auto;
+    background-repeat: no-no-repeat;
+}

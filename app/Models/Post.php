@@ -19,4 +19,8 @@ class Post extends Model
     {
         return $this->hasOne(Category::class, 'category_id', 'category_id');
     }
+    public function imageUrl()
+    {
+        return $this->belongsTo(File::class, 'image', 'file_id');
+    }
 }
