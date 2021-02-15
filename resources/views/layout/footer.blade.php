@@ -15,8 +15,7 @@
                                         placeholder="Email *">
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" class="form-control required" name="name"
-                                        placeholder="Name *">
+                                    <input type="text" class="form-control required" name="name" placeholder="Name *">
                                 </div>
                             </div>
                             <div class="nk-gap"></div>

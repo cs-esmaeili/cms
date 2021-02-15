@@ -8,15 +8,31 @@
     background-repeat: no-no-repeat;
 }
 
-#my_header {
+.nav_color {
+    background-color: rgba(0, 0, 0, 0.57) !important;
+}
+
+.header_animation {
+    position: relative;
+    width: 100%;
+}
+
+.header_animation:after {
+    content: '';
     position: absolute;
-    top: 0px;
-    left: 0px;
-    padding: 500px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, #171e22a8, #171E2214);
+}
+.content_background {
+    /* background: linear-gradient(180deg, #171E22, #171E22); */
+    background-image: url(http://127.0.0.1/cms/system/body_background.png);
+    position: relative;
     display: block;
     width: 100%;
-    background: linear-gradient(0deg, #171e22, rgba(255, 253, 253, 0));
+    overflow: visible;
     background-position: center top;
-    background-size: 100% auto;
-    background-repeat: no-no-repeat;
+    background-repeat: no-repeat;
 }

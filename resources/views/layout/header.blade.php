@@ -1,13 +1,5 @@
 <header class="nk-header nk-header-opaque">
-    <!--
-    START: Navbar
-
-    Additional Classes:
-        .nk-navbar-sticky
-        .nk-navbar-transparent
-        .nk-navbar-autohide
--->
-    <nav class="nk-navbar nk-navbar-top nk-navbar-sticky nk-navbar-autohide">
+    <nav class="nk-navbar nk-navbar-top nk-navbar-sticky nk-navbar-autohide nav_color">
         <div class="container">
             <div class="nk-nav-table">
 
