@@ -133,18 +133,18 @@ class FM
         }
         return $outfiles;
     }
-    public static function getPublicFile($name)
+    public static function getPublicFile($name, $items)
     {
-        $file = File::where('new_name', '=', $name)->where('type', '=', 'public')->get();
+        $file = File::where('new_name', '=', $name)->where('type', '=', 'public')->get($items);
         if ($file->count() == 1) {
             return $file[0];
         }
         return false;
     }
-    public static function getPrivateFile($hash, $token)
+    public static function getPrivateFile($hash, $token, $items)
     {
         $person = G::getPersonFromToken($token);
-        $file = $person->files()->where('hash', '=', $hash)->where('type', '=', 'private')->get();
+        $file = $person->files()->where('hash', '=', $hash)->where('type', '=', 'private')->get($items);
         if ($file->count() == 1) {
             return $file[0];
         }

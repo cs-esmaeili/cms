@@ -4,7 +4,7 @@
             <div class="nk-nav-table">
 
                 <a href="index.html" class="nk-nav-logo">
-                    <img src="assets/images/logo.png" alt="GoodGames" width="199">
+                    <img src={{asset('system/logo_header_site.png')}} alt="GoodGames" width="199">
                 </a>
 
                 <ul class="nk-nav nk-nav-right d-none d-lg-table-cell" data-nav-mobile="#nk-nav-mobile">
@@ -162,7 +162,6 @@
 
                         </a>
                         <ul class="dropdown">
-
                             <li>
                                 <a href="store.html">
                                     Store

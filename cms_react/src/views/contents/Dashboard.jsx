@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Table from './../components/Table';
 import { _addKey, _deleteKey } from './../../services/Key_Value';
 import { toast } from 'react-toastify';
-import { _sliderImages, _popularPosts, _lastVideo, _top3Recent, _latestScreenshots , _latestPictures } from './../../services/IndexPage';
+import { _sliderImages, _popularPosts, _lastVideo, _top3Recent, _latestScreenshots, _latestPictures } from './../../services/IndexPage';
 
 
 const Dashboard = () => {
@@ -114,6 +114,12 @@ const Dashboard = () => {
                     <i className="fa fa-trash" aria-hidden="true" style={{ cursor: "pointer" }} onClick={() => deleteKey(row.key_value_id)}></i>
                 </th>
                 <th key={generateID()} scope="col" className="text-center">{JSON.parse(row.value).url}</th>
+                {('url_target' in JSON.parse(row.value)) &&
+                    <th key={generateID()} scope="col" className="text-center">{JSON.parse(row.value).url_target}</th>
+                }
+                {('description' in JSON.parse(row.value)) &&
+                    <th key={generateID()} scope="col" className="text-center">{JSON.parse(row.value).description}</th>
+                }
             </>
         );
     }
@@ -135,6 +141,25 @@ const Dashboard = () => {
                 <div className="col-6">
                     <div className="card shadow">
                         <div className="card-header">
+                            <h6 className="font-weight-bold text-primary">مطالب پر بازدید</h6>
+                        </div>
+                        <div className="card-body" >
+                            <input className="form-control mb-2" style={{ textAlign: "right" }} onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    addKey('indexPage', { location: 2, post_id: e.target.value });
+                                    e.target.value = "";
+                                }
+                            }} />
+                            <Table titles={[
+                                "عملیات",
+                                "post_id",
+                            ]} data={popularPosts} select={false} columens={columensPopularPosts} />
+                        </div>
+                    </div>
+                </div>
+                <div className="col-6">
+                    <div className="card shadow">
+                        <div className="card-header">
                             <h6 className="font-weight-bold text-primary">اسلایدر</h6>
                         </div>
                         <div className="card-body" >
@@ -151,25 +176,6 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-6">
-                    <div className="card shadow">
-                        <div className="card-header">
-                            <h6 className="font-weight-bold text-primary">پست های پربازدید</h6>
-                        </div>
-                        <div className="card-body" >
-                            <input className="form-control mb-2" style={{ textAlign: "right" }} onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    addKey('indexPage', { location: 2, post_id: e.target.value });
-                                    e.target.value = "";
-                                }
-                            }} />
-                            <Table titles={[
-                                "عملیات",
-                                "post_id",
-                            ]} data={popularPosts} select={false} columens={columensPopularPosts} />
-                        </div>
-                    </div>
-                </div>
             </div>
             <div className="row m-2">
                 <div className="col-6">
@@ -178,15 +184,20 @@ const Dashboard = () => {
                             <h6 className="font-weight-bold text-primary">آخرین ویدیو</h6>
                         </div>
                         <div className="card-body" >
-                            <input className="form-control mb-2" style={{ textAlign: "right" }} onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    addKey('indexPage', { location: 3, url: e.target.value });
-                                    e.target.value = "";
-                                }
-                            }} />
+                            <form onSubmit={(e) => {
+                                e.preventDefault();
+                                addKey('indexPage', { location: 3, url: e.target.url.value, url_target: e.target.url_target.value });
+                                e.target.url.value = "";
+                                e.target.url_target.value = "";
+                            }}>
+                                <input className="form-control mb-2" name="url" />
+                                <input className="form-control mb-2" name="url_target" />
+                                <button type="submit" className="btn btn-success" style={{ width: "100%" }}>ثبت</button>
+                            </form>
                             <Table titles={[
                                 "عملیات",
                                 "url",
+                                "url_target",
                             ]} data={lastVideo} select={false} columens={columensSliderImages} />
                         </div>
                     </div>
@@ -194,7 +205,7 @@ const Dashboard = () => {
                 <div className="col-6">
                     <div className="card shadow">
                         <div className="card-header">
-                            <h6 className="font-weight-bold text-primary">برترین پست ها</h6>
+                            <h6 className="font-weight-bold text-primary">مطالب پیشنهادی</h6>
                         </div>
                         <div className="card-body" >
                             <input className="form-control mb-2" style={{ textAlign: "right" }} onKeyDown={(e) => {
@@ -218,15 +229,20 @@ const Dashboard = () => {
                             <h6 className="font-weight-bold text-primary">اخرین اسکرین شات ها</h6>
                         </div>
                         <div className="card-body" >
-                            <input className="form-control mb-2" style={{ textAlign: "right" }} onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    addKey('indexPage', { location: 5, url: e.target.value });
-                                    e.target.value = "";
-                                }
-                            }} />
+                            <form onSubmit={(e) => {
+                                e.preventDefault();
+                                addKey('indexPage', { location: 5, url: e.target.url.value, description: e.target.description.value });
+                                e.target.url.value = "";
+                                e.target.description.value = "";
+                            }}>
+                                <input className="form-control mb-2" name="url" />
+                                <input className="form-control mb-2" name="description" style={{ textAlign: "right" }} />
+                                <button type="submit" className="btn btn-success" style={{ width: "100%" }}>ثبت</button>
+                            </form>
                             <Table titles={[
                                 "عملیات",
                                 "url",
+                                "description",
                             ]} data={latestScreenshots} select={false} columens={columensSliderImages} />
                         </div>
                     </div>
@@ -237,15 +253,20 @@ const Dashboard = () => {
                             <h6 className="font-weight-bold text-primary">آخرین تصاویر</h6>
                         </div>
                         <div className="card-body" >
-                            <input className="form-control mb-2" style={{ textAlign: "right" }} onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    addKey('indexPage', { location: 6, url: e.target.value });
-                                    e.target.value = "";
-                                }
-                            }} />
+                            <form onSubmit={(e) => {
+                                e.preventDefault();
+                                addKey('indexPage', { location: 6, url: e.target.url.value, description: e.target.description.value });
+                                e.target.url.value = "";
+                                e.target.description.value = "";
+                            }}>
+                                <input className="form-control mb-2" name="url" />
+                                <input className="form-control mb-2" name="description" style={{ textAlign: "right" }} />
+                                <button type="submit" className="btn btn-success" style={{ width: "100%" }}>ثبت</button>
+                            </form>
                             <Table titles={[
                                 "عملیات",
                                 "url",
+                                "description",
                             ]} data={latestPictures} select={false} columens={columensSliderImages} />
                         </div>
                     </div>

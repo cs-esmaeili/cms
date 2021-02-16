@@ -26,6 +26,7 @@
     height: 100%;
     background: linear-gradient(0deg, #171e22a8, #171E2214);
 }
+
 .content_background {
     /* background: linear-gradient(180deg, #171E22, #171E22); */
     background-image: url(http://127.0.0.1/cms/system/body_background.png);
@@ -35,4 +36,111 @@
     overflow: visible;
     background-position: center top;
     background-repeat: no-repeat;
+}
+
+.nk-decorated-h-2::after {
+    -webkit-box-flex: 20px;
+    -ms-flex: 20px;
+    flex: 20px;
+    width: 20px;
+    min-width: 20px;
+}
+
+.nk-decorated-h-2::before {
+    content: "";
+    display: block;
+    -webkit-box-flex: 100;
+    -ms-flex: 100;
+    flex: 100;
+    border-bottom: 4px solid;
+    -webkit-transform: translateY(-10px);
+    -ms-transform: translateY(-10px);
+    transform: translateY(-10px);
+}
+
+.nk-decorated-h-2::after,
+.nk-decorated-h-2::before {
+    border-bottom-color: #293139;
+}
+
+.nk-widget-highlighted .nk-widget-title::after {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 32px;
+    right: 30px;
+    left: 1px;
+    height: 3px;
+    background-color: #fff;
+    z-index: -1;
+}
+
+.nk-news-box .nk-news-box-item .nk-news-box-item-img {
+    float: right;
+    width: 100px;
+    margin-left: 20px;
+    overflow: hidden;
+    text-align: right;
+    margin-right: 0;
+}
+
+.nk-news-box .nk-news-box-item {
+    text-align: right;
+    padding: 10px;
+    cursor: pointer;
+    -webkit-transition: .15s color, .15s background-color;
+    -o-transition: .15s color, .15s background-color;
+    transition: .15s color, .15s background-color;
+}
+
+.nano {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-align: right;
+}
+
+.nk-news-box .nk-news-box-each-info .nk-news-box-item-date {
+    float: left;
+    margin-top: 5px;
+    font-size: .9em;
+}
+
+.nk-blog-post {
+    margin-bottom: 30px;
+    text-align: right;
+}
+
+.nk-widget-post,
+.nk-widget-post-2 {
+    padding-right: 110px;
+    padding-left: 0;
+}
+
+.nk-widget-post .nk-post-image,
+.nk-widget-post-2 .nk-post-image {
+    float: right;
+    width: 90px;
+    margin-right: -110px;
+    overflow: hidden;
+    -webkit-transition: opacity .15s ease-in-out;
+    -o-transition: opacity .15s ease-in-out;
+    transition: opacity .15s ease-in-out;
+}
+
+.nk-widget-highlighted .nk-widget-content {
+    padding: 20px 23px;
+    background-color: #232930;
+    border: 1px solid #293139;
+    text-align: right;
+    direction: rtl;
+}
+
+.nk-navbar .nk-nav .dropdown>li>a {
+    display: block;
+    padding: 17px 6px;
+    padding-left: 64px;
+    /* padding-right: 0; */
+    text-align: right;
 }

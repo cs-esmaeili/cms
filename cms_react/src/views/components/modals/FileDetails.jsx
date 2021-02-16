@@ -8,15 +8,11 @@ const FileDetails = ({ item }) => {
     const [information, setInformation] = useState(null);
 
     const publicFileInformation = async () => {
-        if (item == null) {
-            return;
-        }
+        console.log(item);
+        if (item == null) { return; }
         try {
-            const data = {
-                name: item[0],
-            };
+            const data = { name: item[0] };
             const respons = await _publicFileInformation(data);
-            console.log(respons);
             if (respons.data.statusText === "ok") {
                 setInformation(respons.data.file);
             } else {
@@ -48,7 +44,7 @@ const FileDetails = ({ item }) => {
                                 }} >Link</button>
                                 <button type="button" className="btn btn-info m-2" onClick={() => {
                                     navigator.clipboard.writeText(information.file_id).then(function () {
-                                        toast("لینک کپی شد");
+                                        toast("کپی شد id");
                                     }, function (err) {
                                         console.error('Async: Could not copy text: ', err);
                                     });

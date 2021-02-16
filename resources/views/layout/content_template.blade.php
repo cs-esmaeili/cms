@@ -61,7 +61,7 @@
         <!-- END: Image Slider -->
         <!-- START: Latest News -->
         <div class="nk-gap-2"></div>
-        <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Latest</span> News</span></h3>
+        <h3 class="nk-decorated-h-2"><span><span class="text-main-1"> مطالب </span>پربازدید</span></h3>
         <div class="nk-gap"></div>
         <div class="nk-news-box">
             <div class="nk-news-box-list">
@@ -69,27 +69,26 @@
                     <div class="nano-content">
                         @for ($i = 0; $i < count($data['posts']); $i++)
                             @php
-                                // echo($data['posts'][$i]);
+                                $item = json_decode($data['posts'][$i]);
                             @endphp
                             <div
                                 class={{ $i == 0 ? 'nk-news-box-item nk-news-box-item-active' : 'nk-news-box-item' }}>
                                 <div class="nk-news-box-item-img">
-                                    <img src={{ json_decode($data['posts'][$i])->image }}
-                                        alt={{ json_decode($data['posts'][$i])->title }} />
+                                    <img src={{ $item->image }} alt={{ $item->title }} />
                                 </div>
-                                <img src={{ json_decode($data['posts'][$i])->image }}
-                                    alt="Smell magic in the air. Or maybe barbecue" class="nk-news-box-item-full-img">
-                                <h3 class="nk-news-box-item-title">{{ json_decode($data['posts'][$i])->title }}</h3>
+                                <img src={{ $item->image }} alt="Smell magic in the air. Or maybe barbecue"
+                                    class="nk-news-box-item-full-img">
+                                <h3 class="nk-news-box-item-title">{{ $item->title }}</h3>
                                 <span class="nk-news-box-item-categories">
                                     <span
                                         class="bg-main-4">{{ json_decode($data['posts'][0])->category->name }}</span>
                                 </span>
                                 <div class="nk-news-box-item-text">
-                                    <p>{{ json_decode($data['posts'][$i])->description }}</p>
+                                    <p>{{ $item->description }}</p>
                                 </div>
                                 <a href="blog-article.html" class="nk-news-box-item-url">Read More</a>
                                 <div class="nk-news-box-item-date"><span
-                                        class="fa fa-calendar"></span>{{ json_decode($data['posts'][$i])->time }}
+                                        class="fa fa-calendar"></span>{{ $item->time }}
                                 </div>
                             </div>
                         @endfor
@@ -99,24 +98,27 @@
             </div>
             <div class="nk-news-box-each-info">
                 <div class="nano">
-                    <div class="nano-content">
-                        <!-- There will be inserted info about selected news-->
-                        <div class="nk-news-box-item-image">
-                            <img src={{ json_decode($data['posts'][0])->image }}
-                                alt={{ json_decode($data['posts'][0])->title }}>
-                            <span class="nk-news-box-item-categories">
-                                <span class="bg-main-4">{{ json_decode($data['posts'][0])->category->name }}</span>
-                            </span>
+                    @if (count($data['posts']) != null)
+                        @php
+                            $item = json_decode($data['posts'][0]);
+                        @endphp
+                        <div class="nano-content">
+                            <!-- There will be inserted info about selected news-->
+                            <div class="nk-news-box-item-image">
+                                <img src={{ $item->image }} alt={{ $item->title }}>
+                                <span class="nk-news-box-item-categories">
+                                    <span class="bg-main-4">{{ $item->category->name }}</span>
+                                </span>
+                            </div>
+                            <h3 class="nk-news-box-item-title">{{ $item->title }}</h3>
+                            <div class="nk-news-box-item-text">
+                                <p>{{ $item->description }}</p>
+                            </div>
+                            <a href="blog-article.html" class="nk-news-box-item-url">Read More</a>
+                            <div class="nk-news-box-item-date"><span class="fa fa-calendar"></span>{{ $item->time }}
+                            </div>
                         </div>
-                        <h3 class="nk-news-box-item-title">{{ json_decode($data['posts'][0])->title }}</h3>
-                        <div class="nk-news-box-item-text">
-                            <p>{{ json_decode($data['posts'][0])->description }}</p>
-                        </div>
-                        <a href="blog-article.html" class="nk-news-box-item-url">Read More</a>
-                        <div class="nk-news-box-item-date"><span
-                                class="fa fa-calendar"></span>{{ json_decode($data['posts'][0])->time }}
-                        </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>

@@ -1,110 +1,65 @@
 @extends('layout.main')
 @section('content')
-  <!-- START: Latest Posts -->
-  <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Latest</span> Posts</span></h3>
-  <div class="nk-gap"></div>
-  <div class="nk-blog-grid">
-      <div class="row">
-          @for ($i = 0; $i < count($data['latestPosts']); $i++)
-              <div class="col-md-6">
-                  <div class="nk-blog-post">
-                      <a href="blog-article.html" class="nk-post-img">
-                          <img style="max-width: 350px; max-height: 197px;"
-                              src={{ json_decode($data['posts'][$i])->image }}
-                              alt={{ json_decode($data['posts'][$i])->title }}>
-                          {{-- <span class="nk-post-comments-count">13</span> --}}
-                      </a>
-                      <div class="nk-gap"></div>
-                      <h2 class="nk-post-title h4"><a
-                              href="blog-article.html">{{ json_decode($data['posts'][$i])->title }}</a>
-                      </h2>
-                      {{-- <div class="nk-post-by">
+    <!-- START: Latest Posts -->
+    <h3 class="nk-decorated-h-2"><span><span class="text-main-1"> آخرین </span> مطالب</span></h3>
+    <div class="nk-gap"></div>
+    <div class="nk-blog-grid">
+        <div class="row">
+            @for ($i = 0; $i < count($data['latestPosts']); $i++)
+                <div class="col-md-6">
+                    <div class="nk-blog-post">
+                        <a href="blog-article.html" class="nk-post-img">
+                            <img style="max-width: 350px; max-height: 197px;"
+                                src={{ json_decode($data['posts'][$i])->image }}
+                                alt={{ json_decode($data['posts'][$i])->title }}>
+                            {{-- <span class="nk-post-comments-count">13</span> --}}
+                        </a>
+                        <div class="nk-gap"></div>
+                        <h2 class="nk-post-title h4"><a
+                                href="blog-article.html">{{ json_decode($data['posts'][$i])->title }}</a>
+                        </h2>
+                        {{-- <div class="nk-post-by">
                   <img src="assets/images/avatar-3.jpg" alt="Wolfenstein" class="rounded-circle"
                       width="35">
                   by <a href="https://nkdev.info">Wolfenstein</a> in Jul 23, 2018
               </div> --}}
-                      <div class="nk-gap"></div>
-                      <div class="nk-post-text">
-                          <p>{{ json_decode($data['posts'][$i])->description }}</p>
-                      </div>
-                      <div class="nk-gap"></div>
-                      <a href="blog-article.html"
-                          class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Read
-                          More</a>
-                  </div>
-              </div>
-          @endfor
-      </div>
-  </div>
-  <!-- END: Latest Posts -->
-  <!-- START: Latest Pictures -->
-  <div class="nk-gap"></div>
-  <h2 class="nk-decorated-h-2 h3"><span><span class="text-main-1">Latest</span> Pictures</span></h2>
-  <div class="nk-gap"></div>
-  <div class="nk-popup-gallery">
-      <div class="row vertical-gap">
-          <div class="col-lg-4 col-md-6">
-              <div class="nk-gallery-item-box">
-                  <a href="assets/images/gallery-1.jpg" class="nk-gallery-item" data-size="1016x572">
-                      <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
-                      <img src="assets/images/gallery-1-thumb.jpg" alt="">
-                  </a>
-                  <div class="nk-gallery-item-description">
-                      <h4>Called Let</h4>
-                      Divided thing, land it evening earth winged whose great after. Were grass night.
-                      To Air itself saw bring fly fowl. Fly years behold spirit day greater of wherein
-                      winged and form. Seed open don't thing midst created dry every greater divided
-                      of, be man is. Second Bring stars fourth gathering he hath face morning fill.
-                      Living so second darkness. Moveth were male. May creepeth. Be tree fourth.
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-              <div class="nk-gallery-item-box">
-                  <a href="assets/images/gallery-2.jpg" class="nk-gallery-item" data-size="1188x594">
-                      <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
-                      <img src="assets/images/gallery-2-thumb.jpg" alt="">
-                  </a>
-                  <div class="nk-gallery-item-description">
-                      Seed open don't thing midst created dry every greater divided of, be man is.
-                      Second Bring stars fourth gathering he hath face morning fill. Living so second
-                      darkness. Moveth were male. May creepeth. Be tree fourth.
-                  </div>
-              </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-              <div class="nk-gallery-item-box">
-                  <a href="assets/images/gallery-3.jpg" class="nk-gallery-item" data-size="625x350">
-                      <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
-                      <img src="assets/images/gallery-3-thumb.jpg" alt="">
-                  </a>
-              </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-              <div class="nk-gallery-item-box">
-                  <a href="assets/images/gallery-4.jpg" class="nk-gallery-item" data-size="873x567">
-                      <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
-                      <img src="assets/images/gallery-4-thumb.jpg" alt="">
-                  </a>
-              </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-              <div class="nk-gallery-item-box">
-                  <a href="assets/images/gallery-5.jpg" class="nk-gallery-item" data-size="471x269">
-                      <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
-                      <img src="assets/images/gallery-5-thumb.jpg" alt="">
-                  </a>
-              </div>
-          </div>
-          <div class="col-lg-4 col-md-6">
-              <div class="nk-gallery-item-box">
-                  <a href="assets/images/gallery-6.jpg" class="nk-gallery-item" data-size="472x438">
-                      <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
-                      <img src="assets/images/gallery-6-thumb.jpg" alt="">
-                  </a>
-              </div>
-          </div>
-      </div>
-  </div>
-  <!-- END: Latest Pictures -->
-  @endsection
+                        <div class="nk-gap"></div>
+                        <div class="nk-post-text">
+                            <p>{{ json_decode($data['posts'][$i])->description }}</p>
+                        </div>
+                        <div class="nk-gap"></div>
+                        <a href="blog-article.html"
+                            class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Read
+                            More</a>
+                    </div>
+                </div>
+            @endfor
+        </div>
+    </div>
+    <!-- END: Latest Posts -->
+    <!-- START: Latest Pictures -->
+    <div class="nk-gap"></div>
+    <h2 class="nk-decorated-h-2 h3"><span><span class="text-main-1"> آخرین </span> تصاویر </span></h2>
+    <div class="nk-gap"></div>
+    <div class="nk-popup-gallery">
+        <div class="row vertical-gap">
+            @for ($i = 0; $i < count($data['lastPictures']); $i++)
+                @php
+                    $item = json_decode($data['lastPictures'][$i]);
+                @endphp
+                <div class="col-lg-4 col-md-6">
+                    <div class="nk-gallery-item-box">
+                        <a href={{ $item->url }} class="nk-gallery-item" data-size="1016x572">
+                            <div class="nk-gallery-item-overlay"><span class="ion-eye"></span></div>
+                            <img src={{ $item->url }} alt="">
+                        </a>
+                        <div class="nk-gallery-item-description">
+                            {{ $item->description }}
+                        </div>
+                    </div>
+                </div>
+            @endfor
+        </div>
+    </div>
+    <!-- END: Latest Pictures -->
+@endsection

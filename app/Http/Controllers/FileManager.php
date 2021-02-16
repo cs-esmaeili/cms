@@ -328,9 +328,10 @@ class FileManager extends Controller
     public function publicFileInformation(Request $request)
     {
         $content =  json_decode($request->getContent());
-        $result = FM::getPublicFile($content->name);
-        $file =  $result->get(['orginal_name', 'new_name', 'person_id', 'created_at', 'file_id'])->toArray()[0];
+        $result = FM::getPublicFile($content->name , ['orginal_name', 'new_name', 'person_id', 'created_at', 'file.file_id' , 'location']);
+        $file =  $result->toArray();
         $file['link'] = FM::getPublicFileLink($result);
+        unset($file['location']);
         $file['uploader'] = $result->uploader->informations();
         if ($result === false) {
             return response(['statusText' => 'fail', 'message' => "اطلاعات فایل پیدا نشد"], 200);
@@ -341,9 +342,10 @@ class FileManager extends Controller
     public function privateFileInformation(Request $request)
     {
         $content =  json_decode($request->getContent());
-        $result = FM::getPrivateFile($content->name,  $request->bearerToken());
-        $file =  $result->get(['orginal_name', 'new_name', 'person_id', 'created_at', 'file_id'])->toArray()[0];
+        $result = FM::getPrivateFile($content->name,  $request->bearerToken() , ['orginal_name', 'new_name', 'person_id', 'created_at', 'file_id' , 'location']);
+        $file =  $result->toArray();
         $file['link'] = FM::getPublicFileLink($result); //TODO bayad baraye private ye method to FM neveshte she
+        unset($file['location']);
         $file['uploader'] = $result->uploader->informations();
         if ($result === false) {
             return response(['statusText' => 'fail', 'message' => "اطلاعات فایل پیدا نشد"], 200);

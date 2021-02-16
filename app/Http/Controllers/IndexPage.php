@@ -46,21 +46,33 @@ class IndexPage extends Controller
         $result = Key_Value::where('key', '=', 'indexPage')->get();
         $silder = [];
         $posts = [];
-        $latestPosts = [];
+        $oferPosts = [];
+        $lastVideo = [];
+        $lastScreenShots = [];
+        $lastPictures = [];
+        $lastPosts = Post::orderBy('post_id', 'desc')->take(6)->get();
+
         foreach ($result as $key => $value) {
             if (str_contains($value, '\"location\": 1')) {
                 $silder[] = $value;
             } else if (str_contains($value, '\"location\": 2')) {
                 $post_id = json_decode($value->value)->post_id;
                 $posts[] = $post_id;
+            } else if (str_contains($value, '\"location\": 3')) {
+                $decode = json_decode($value->value);
+                $lastVideo['url'] = $decode->url;
+                $lastVideo['url_target'] = $decode->url_target;
             } else if (str_contains($value, '\"location\": 4')) {
                 $post_id = json_decode($value->value)->post_id;
-                $latestPosts[] = $post_id;
+                $oferPosts[] = $post_id;
+            } else if (str_contains($value, '\"location\": 5')) {
+                $lastScreenShots[] = $value->value;
+            } else if (str_contains($value, '\"location\": 6')) {
+                $lastPictures[] = $value->value;
             }
         }
-
         $posts = Post::whereIn('post_id', $posts)->get();
-        $latestPosts = Post::whereIn('post_id', $latestPosts)->get();
+        $oferPosts = Post::whereIn('post_id', $oferPosts)->get();
         for ($i = 0; $i < count($posts); $i++) {
             $temp = $posts[$i]->imageUrl;
             $temp = FM::getPublicFileLink($temp);
@@ -71,17 +83,19 @@ class IndexPage extends Controller
             $posts[$i]['category'] = $temp;
             $posts[$i]['time'] = G::converToShamsi($posts[$i]['created_at']);
         }
-        for ($i = 0; $i < count($latestPosts); $i++) {
-            $temp = $latestPosts[$i]->imageUrl;
+        for ($i = 0; $i < count($oferPosts); $i++) {
+            $temp = $oferPosts[$i]->imageUrl;
             $temp = FM::getPublicFileLink($temp);
-            $latestPosts[$i]['image'] = $temp;
-            unset($latestPosts[$i]['imageUrl']);
-            $temp =  $latestPosts[$i]->category;
-            unset($latestPosts[$i]['category_id']);
-            $latestPosts[$i]['category'] = $temp;
-            $latestPosts[$i]['time'] = G::converToShamsi($posts[$i]['created_at']);
+            $oferPosts[$i]['image'] = $temp;
+            unset($oferPosts[$i]['imageUrl']);
+            $temp =  $oferPosts[$i]->category;
+            unset($oferPosts[$i]['category_id']);
+            $oferPosts[$i]['category'] = $temp;
+            $oferPosts[$i]['time'] = G::converToShamsi($posts[$i]['created_at']);
         }
-        $data = ['slider' => $silder, 'posts' => $posts, 'latestPosts' => $latestPosts];
+
+
+        $data = ['slider' => $silder, 'posts' => $posts, 'oferPosts' => $oferPosts, 'lastVideo' => $lastVideo, 'latestPosts' => $lastPosts, 'lastScreenShots' => $lastScreenShots, 'lastPictures' => $lastPictures];
         return view('contents.index', ['data' => $data]);
     }
 }
