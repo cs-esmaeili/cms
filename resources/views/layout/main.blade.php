@@ -56,7 +56,15 @@
 <body>
     @include('layout.background')
     @include('layout.header')
-    @include('layout.content_template')
+
+    @if (Route::currentRouteNamed('indexPageView'))
+        @include('templates.index_template')
+    @elseif(Route::currentRouteNamed('postPage'))
+        @include('templates.post_template')
+    @endif
+
+
+
     @include('layout.footer')
 </body>
 <!-- START: Scripts -->

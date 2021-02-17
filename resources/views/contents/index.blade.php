@@ -7,31 +7,7 @@
         <div class="row">
             @for ($i = 0; $i < count($data['latestPosts']); $i++)
                 <div class="col-md-6">
-                    <div class="nk-blog-post">
-                        <a href="blog-article.html" class="nk-post-img">
-                            <img style="max-width: 350px; max-height: 197px;"
-                                src={{ json_decode($data['posts'][$i])->image }}
-                                alt={{ json_decode($data['posts'][$i])->title }}>
-                            {{-- <span class="nk-post-comments-count">13</span> --}}
-                        </a>
-                        <div class="nk-gap"></div>
-                        <h2 class="nk-post-title h4"><a
-                                href="blog-article.html">{{ json_decode($data['posts'][$i])->title }}</a>
-                        </h2>
-                        {{-- <div class="nk-post-by">
-                  <img src="assets/images/avatar-3.jpg" alt="Wolfenstein" class="rounded-circle"
-                      width="35">
-                  by <a href="https://nkdev.info">Wolfenstein</a> in Jul 23, 2018
-              </div> --}}
-                        <div class="nk-gap"></div>
-                        <div class="nk-post-text">
-                            <p>{{ json_decode($data['posts'][$i])->description }}</p>
-                        </div>
-                        <div class="nk-gap"></div>
-                        <a href="blog-article.html"
-                            class="nk-btn nk-btn-rounded nk-btn-color-dark-3 nk-btn-hover-color-main-1">Read
-                            More</a>
-                    </div>
+                    @component('components.post_card', ['data' => $data['posts'][$i]])@endcomponent
                 </div>
             @endfor
         </div>

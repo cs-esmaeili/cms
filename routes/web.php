@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\IndexPage;
+use App\Http\Controllers\PostPage;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('');
-});
 Route::get('/', [IndexPage::class, 'indexPageView'])->name('indexPageView');
+Route::get('/post/{post_id}', [PostPage::class, 'postPageView'])->name('postPage');
+
+// Route::any('/post/{post_id}', function (Request $request) {
+// })->name('postPage');

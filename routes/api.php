@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\classes\FM;
 use App\Http\classes\G;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Category;

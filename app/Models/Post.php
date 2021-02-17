@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\classes\FM;
+use App\Http\classes\G;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -22,5 +24,15 @@ class Post extends Model
     public function imageUrl()
     {
         return $this->belongsTo(File::class, 'image', 'file_id');
+    }
+    public function postFullData()
+    {
+        $post = $this->toArray();
+        $temp = FM::getPublicFileLink($this->imageUrl);
+        $this['image'] = $temp;
+        $temp = $this->category;
+        $this['category'] = $temp;
+        $this['person'] = $this->person->informations();
+        $this['time'] = G::converToShamsi($post['created_at']);
     }
 }

@@ -128,7 +128,7 @@
                 @yield('content')
             </div>
             <div class="col-lg-4">
-                @include('layout.sidebar')
+                @include('components.sidebar')
             </div>
         </div>
     </div>
