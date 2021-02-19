@@ -7,7 +7,7 @@
         <div class="row">
             @for ($i = 0; $i < count($data['latestPosts']); $i++)
                 <div class="col-md-6">
-                    @component('components.post_card', ['data' => $data['posts'][$i]])@endcomponent
+                    @component('components.post_card_v', ['data' => $data['posts'][$i]])@endcomponent
                 </div>
             @endfor
         </div>

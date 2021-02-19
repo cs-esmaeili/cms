@@ -29,6 +29,8 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
     Route::post('/login', [Authentication::class, 'Login'])->name('Login');
     Route::post('/logout', [Authentication::class, 'Logout'])->name('Logout');
 
+    Route::post('/contactUs', [Person::class, 'contactUs'])->name('contactUs');
+
 
     Route::middleware([CheckToken::class])->group(function () {
 

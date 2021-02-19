@@ -21,6 +21,7 @@ use App\Models\Person as ModelsPerson;
 use App\Models\PersonInfo;
 use App\Models\Role;
 use App\Models\Role_Permission;
+use App\Models\User_Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -180,6 +181,21 @@ class Person extends Controller
                 FM::deleteFile($file);
             }
             return response(['statusText' => 'ok', 'message' => "تغییرات ذخیره شد"], 201);
+        }
+    }
+
+    public function contactUs(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $result = User_Message::create([
+            'email' => $content->email,
+            'name' => $content->name,
+            'message' => $content->message
+        ]);
+        if ($result) {
+            return response(['statusText' => 'ok', 'message' => "پیام ذخیره شد"], 200);
+        }else{
+            return response(['statusText' => 'fail', 'message' => "پیام ذخیره نشد"], 200);
         }
     }
 }

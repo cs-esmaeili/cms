@@ -86,7 +86,8 @@
                                 <div class="nk-news-box-item-text">
                                     <p>{{ $item->description }}</p>
                                 </div>
-                                <a href="blog-article.html" class="nk-news-box-item-url">Read More</a>
+                                <a href={{ route('postPageView', ['post_id' => $item->post_id]) }}
+                                    class="nk-news-box-item-url">ادامه مطلب</a>
                                 <div class="nk-news-box-item-date"><span
                                         class="fa fa-calendar"></span>{{ $item->time }}
                                 </div>
@@ -114,7 +115,8 @@
                             <div class="nk-news-box-item-text">
                                 <p>{{ $item->description }}</p>
                             </div>
-                            <a href="blog-article.html" class="nk-news-box-item-url">Read More</a>
+                            <a href={{ route('postPageView', ['post_id' => $item->post_id]) }}
+                                class="nk-news-box-item-url">ادامه مطلب</a>
                             <div class="nk-news-box-item-date"><span class="fa fa-calendar"></span>{{ $item->time }}
                             </div>
                         </div>

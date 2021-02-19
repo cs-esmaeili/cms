@@ -45,10 +45,10 @@
             <div class="nk-gap"></div>
             <div class="row">
                 <div class="col-md-6">
-                    @component('components.post_card', ['data' => $data['oferPosts'][0]])@endcomponent
+                    @component('components.post_card_v', ['data' => $data['oferPosts'][0]])@endcomponent
                 </div>
                 <div class="col-md-6">
-                    @component('components.post_card', ['data' => $data['oferPosts'][1]])@endcomponent
+                    @component('components.post_card_v', ['data' => $data['oferPosts'][1]])@endcomponent
                 </div>
             </div>
             <!-- END: Similar Articles -->

@@ -25,6 +25,10 @@ class Post extends Model
     {
         return $this->belongsTo(File::class, 'image', 'file_id');
     }
+    public function publicPosts()
+    {
+        return $this->where('status' , '=' , 1);
+    }
     public function postFullData()
     {
         $post = $this->toArray();

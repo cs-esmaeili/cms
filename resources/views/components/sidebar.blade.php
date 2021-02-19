@@ -45,7 +45,8 @@
                     $item = json_decode($data['oferPosts'][$i]);
                 @endphp
                 <div class="nk-widget-post">
-                    <h3 class="nk-post-title"><a href="blog-article.html">{{ $item->title }}</a></h3>
+                    <h3 class="nk-post-title"><a
+                            href={{ route('postPageView', ['post_id' => $item->post_id]) }}>{{ $item->title }}</a></h3>
                     <a href="blog-article.html" class="nk-post-image">
                         <img src={{ $item->image }} alt="">
                     </a>

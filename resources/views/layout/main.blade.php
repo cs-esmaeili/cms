@@ -59,12 +59,11 @@
 
     @if (Route::currentRouteNamed('indexPageView'))
         @include('templates.index_template')
-    @elseif(Route::currentRouteNamed('postPage'))
+    @elseif(Route::currentRouteNamed('postPageView'))
         @include('templates.post_template')
+    @elseif(Route::currentRouteNamed('categoryPageView'))
+        @include('templates.category_list_template')
     @endif
-
-
-
     @include('layout.footer')
 </body>
 <!-- START: Scripts -->
