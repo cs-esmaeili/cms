@@ -7,9 +7,6 @@
             <li><span class="fa fa-angle-right"></span></li>
             <li><a href="#">Blog</a></li>
             <li><span class="fa fa-angle-right"></span></li> --}}
-            @php
-                // dd();
-            @endphp
             <li><span>{{ $data['posts'][0]['category']['name']}}</span></li>
         </ul>
     </div>

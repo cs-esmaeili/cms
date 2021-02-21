@@ -1,5 +1,4 @@
-<div style="height: 500px;"></div>
-<div class="content_background" style="width: 100%">
+<div  style="width: 100%">
     <div class="container">
         <!-- START: Image Slider -->
 

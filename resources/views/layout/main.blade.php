@@ -54,8 +54,8 @@
 </head>
 
 <body>
-    @include('layout.background')
     @include('layout.header')
+
 
     @if (Route::currentRouteNamed('indexPageView'))
         @include('templates.index_template')
@@ -63,6 +63,8 @@
         @include('templates.post_template')
     @elseif(Route::currentRouteNamed('categoryPageView'))
         @include('templates.category_list_template')
+    @elseif(Route::currentRouteNamed('aboutUs'))
+        @include('templates.empty_template')
     @endif
     @include('layout.footer')
 </body>

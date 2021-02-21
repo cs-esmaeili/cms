@@ -1,11 +1,7 @@
 /* PLACE YOU CUSTOM STYLES IN THIS FILE */
 #my_footer {
-    display: block;
-    width: 100%;
     background: linear-gradient(180deg, rgba(17, 17, 17, 0) 11.13%, #1110 79.52%), url(http://127.0.0.1/cms/system/footer.png);
-    background-position: center top;
-    background-size: 100% auto;
-    background-repeat: no-no-repeat;
+    background-size: cover;
 }
 
 .nav_color {
@@ -24,12 +20,12 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(0deg, #171e22a8, #171E2214);
+    background: linear-gradient(0deg, #171E22, #4cb88014, #171E2214);
 }
 
 .content_background {
     /* background: linear-gradient(180deg, #171E22, #171E22); */
-    background-image: url(http://127.0.0.1/cms/system/body_background.png);
+    /* background-image: url(http://127.0.0.1/cms/system/body_background.png); */
     position: relative;
     display: block;
     width: 100%;
