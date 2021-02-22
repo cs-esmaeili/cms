@@ -11,44 +11,44 @@
 
                     <ul class="nk-nav nk-nav-right d-none d-lg-table-cell" data-nav-mobile="#nk-nav-mobile">
                         <li>
-                            <a href="gallery.html">
+                            <a href={{ route('about_us') }}>
                                 درباره ما
                             </a>
                         </li>
                         <li>
-                            <a href="gallery.html">
+                            <a href={{ route('contact_us') }}>
                                 ارتباط با ما
                             </a>
                         </li>
                         <li>
-                            <a href="gallery.html">
+                            <a>
                                 فروشگاه
                             </a>
                         </li>
 
                         <li class=" nk-drop-item">
-                            <a href="tournaments.html">
+                            <a>
                                 آموزش
                             </a>
                             <ul class="dropdown">
                                 <li>
                                 <li class=" nk-drop-item">
-                                    <a href="tournaments.html">
+                                    <a>
                                         Dota 2
                                     </a>
                                     <ul class="dropdown">
                                         <li>
-                                            <a href="tournaments.html">
+                                            <a>
                                                 هیرو ها
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="tournaments-teams.html">
+                                            <a>
                                                 آیتم ها
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="tournaments-teammate.html">
+                                            <a>
                                                 ترفند ها
                                             </a>
                                         </li>
@@ -56,12 +56,12 @@
                                 </li>
                         </li>
                         <li>
-                            <a href="tournaments-teams.html">
+                            <a>
                                 World of warcraft
                             </a>
                         </li>
                         <li>
-                            <a href="tournaments-teammate.html">
+                            <a>
                                 PUBG
                             </a>
                         </li>
