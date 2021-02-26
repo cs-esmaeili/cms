@@ -41,5 +41,11 @@ class PermissionSeeder extends Seeder
         Permission::create([
             'name' => 'postList_page',
         ]);
+        Permission::create([
+            'name' => 'siteindex_page',
+        ]);
+        Permission::create([
+            'name' => 'dashboard_page',
+        ]);
     }
 }

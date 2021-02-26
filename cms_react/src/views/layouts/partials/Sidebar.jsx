@@ -14,15 +14,28 @@ const Sidebar = () => {
                 <div className="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
             </a>
             <hr className="sidebar-divider my-0" />
-            <li className="nav-item active">
-                <Link
-                    className="nav-link"
-                    to={config.web_url}
-                >
-                    <span>داشبورد</span>
-                    <i className="fas fa-fw fa-tachometer-alt"></i>
-                </Link>
-            </li>
+            {permission.includes('dashboard_page') &&
+                <li className="nav-item active">
+                    <Link
+                        className="nav-link"
+                        to={config.web_url}
+                    >
+                        <span>داشبورد</span>
+                        <i className="fas fa-fw fa-tachometer-alt"></i>
+                    </Link>
+                </li>
+            }
+            {permission.includes('siteindex_page') &&
+                <li className="nav-item">
+                    <Link
+                        className="nav-link"
+                        to={config.web_url + "siteIndex_page"}
+                    >
+                        <span>صفحه اصلی سایت</span>
+                        <i className="fas fa-fw fa-tachometer-alt"></i>
+                    </Link>
+                </li>
+            }
             {(permission.includes('admins_page') || permission.includes('rolePermissions_page')) &&
                 <li className="nav-item">
                     <div className="nav-link collapsed" data-toggle="collapse" data-target="#collapseAdmin"
@@ -107,7 +120,17 @@ const Sidebar = () => {
             }
             <hr className="sidebar-divider d-none d-md-block" />
             <div className="text-center d-none d-md-inline">
-                <button className="rounded-circle border-0" id="sidebarToggle"></button>
+                <button className="rounded-circle border-0" id="sidebarToggle" onClick={() => {
+                    let sidebar = document.getElementById('accordionSidebar');
+                    let body = document.getElementById('page-top');
+                    if (sidebar.classList.contains('toggled')) {
+                        sidebar.classList.remove("toggled");
+                        body.classList.remove("toggled");
+                    } else {
+                        sidebar.classList.add("toggled");
+                        body.classList.add("toggled");
+                    }
+                }}></button>
             </div>
         </ul>
     );

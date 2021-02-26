@@ -42,7 +42,7 @@ const Category = () => {
                 let result = (
                     (array === categoryPyramid)
                         ?
-                        <div key={generateID()} className="col-3">
+                        <div key={generateID()} className="col-xl-3 col-lg-6 col-md-6 col-sm-12">
                             <ul key={generateID()} className="list-group">
                                 {elements(array[index])}
                             </ul>
@@ -123,29 +123,29 @@ const Category = () => {
                 <form className="m-2" onSubmit={addCategory}>
                     <div className="card shadow">
                         <div className="card-header">
-                            <h6 className="font-weight-bold text-primary">دسترسی ها</h6>
+                            <h6 className="font-weight-bold text-primary">ساخت دسته بندی</h6>
                         </div>
                         <div className="card-body" >
                             <div className="row" >
-                                <div className="col-3">
+                                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12">
                                     <div className="form-group">
                                         <label htmlFor="fileId">ای دی فایل</label>
                                         <input className="form-control" id="fileId" style={{ textAlign: "right" }} value={file_id} onChange={(e) => setFile_id(e.target.value)} />
                                     </div>
                                 </div>
-                                <div className="col-3">
+                                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12">
                                     <div className="form-group">
                                         <label htmlFor="categoryName">نام دسته بندی</label>
                                         <input className="form-control" id="categoryName" style={{ textAlign: "right" }} value={name} onChange={(e) => setName(e.target.value)} />
                                     </div>
                                 </div>
-                                <div className="col-3">
+                                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12">
                                     <div className="form-group">
                                         <label htmlFor="categoryType">نوع دسته بندی</label>
                                         <input className="form-control" id="categoryType" style={{ textAlign: "right" }} value={type} onChange={(e) => setType(e.target.value)} />
                                     </div>
                                 </div>
-                                <div className="col-3">
+                                <div className="col-xl-3 col-lg-3 col-md-6 col-sm-12">
                                     <div className="form-group">
                                         <label htmlFor="parentSelect">مجموعه مورد نظر</label>
                                         <select className="form-control" id="parentSelect" style={{ direction: "rtl" }} onChange={(e) => setParent_id(e.target.value)}>

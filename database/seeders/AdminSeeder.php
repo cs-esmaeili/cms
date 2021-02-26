@@ -29,7 +29,7 @@ class AdminSeeder extends Seeder
             'orginal_name' => 'firstFile',
             'new_name' => '50167980.jpg',
             'hash' => "",
-            'location' => env('FILE_MANAGER_BASE_PUBLIC_Directory') . "test/",
+            'location' => env('FILE_MANAGER_BASE_PUBLIC_Directory') . "Admins/javad/",
             'type' => "public",
             'person_id' => $obj->person_id,
         ]);

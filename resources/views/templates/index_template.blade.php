@@ -1,27 +1,8 @@
-<div  style="width: 100%">
+<div style="width: 100%">
     <div class="container">
         <!-- START: Image Slider -->
-
-        {{-- <div class="nk-image-slider" data-autoplay="8000">
-        @foreach ($data['slider'] as $item)
-            <div class="nk-image-slider-item">
-                @php
-                    $image = json_decode($item->value)->url;
-                @endphp
-                <img src={{ $image }} alt="" class="nk-image-slider-img" data-thumb={{ $image }}>
-                <div class="nk-image-slider-content">
-                    <h3 class="h4">As we Passed, I remarked</h3>
-                    <p class="text-white">As we passed, I remarked a beautiful church-spire rising above some old
-                        elms in the park; and before them, in the midst of a lawn, chimneys covered with ivy, and
-                        the windows shining in the sun.</p>
-                    <a href="#" class="nk-btn nk-btn-rounded nk-btn-color-white nk-btn-hover-color-main-1">Read
-                        More</a>
-                </div>
-            </div>
-        @endforeach
-    </div> --}}
         <div style="height: 10px;"></div>
-        <div id="carouselExampleIndicators" class="carousel slide mt-2" data-ride="carousel"
+        {{-- <div id="carouselExampleIndicators" class="carousel slide mt-2" data-ride="carousel"
             style="height: 360px; position: relative; overflow: hidden; background-color: #232930; border-bottom: 3px solid #dd163b; z-index: 0;">
             <ol class="carousel-indicators">
                 @for ($i = 0; $i < count($data['slider']); $i++)
@@ -39,7 +20,8 @@
                         $image = json_decode($data['slider'][$i]->value)->url;
                     @endphp
                     @if ($i == 0) <div class="carousel-item active">
-                    <img class="d-block w-100" src={{ $image }} alt="First slide">
+                    <img class="d-block w-100" src={{ $image }} style="width: 100%"
+                    alt="First slide">
                     </div>
                 @else
                     <div class="carousel-item">
@@ -56,7 +38,8 @@
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
             </a>
-        </div>
+        </div> --}}
+        @component('components.slider', ['data' => $data['slider']])@endcomponent
         <!-- END: Image Slider -->
         <!-- START: Latest News -->
         <div class="nk-gap-2"></div>

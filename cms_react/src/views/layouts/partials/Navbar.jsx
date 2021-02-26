@@ -1,8 +1,9 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 
 
 const Navbar = () => {
-
+    const profile = useSelector((state) => state.profile);
     return (
         <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
             <ul className="navbar-nav ml-auto">
@@ -150,7 +151,7 @@ const Navbar = () => {
                 <li className="nav-item dropdown no-arrow">
                     <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img className="img-profile rounded-circle" src="img/undraw_profile.svg" />
+                        <img className="img-profile rounded-circle" src={profile.information.image} />
                         <span className="mr-2 d-none d-lg-inline text-gray-600 small">جواد اسماعیلی</span>
                     </a>
 
@@ -193,7 +194,17 @@ const Navbar = () => {
             </form>
 
 
-            <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3">
+            <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3" onClick={() => {
+                let sidebar = document.getElementById('accordionSidebar');
+                let body = document.getElementById('page-top');
+                if (sidebar.classList.contains('toggled')) {
+                    sidebar.classList.remove("toggled");
+                    body.classList.remove("toggled");
+                } else {
+                    sidebar.classList.add("toggled");
+                    body.classList.add("toggled");
+                }
+            }}>
                 <i className="fa fa-bars"></i>
             </button>
 

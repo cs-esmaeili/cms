@@ -5,11 +5,11 @@
             <div class="container">
                 <div class="nk-nav-table">
 
-                    <a href="index.html" class="nk-nav-logo">
-                        <img src={{ asset('system/logo_header_site.png') }} alt="GoodGames" width="199">
+                    <a style="width: auto" href="index.html" class="nk-nav-logo">
+                        <img src={{ asset('system/logo_header_site.png') }} class="img-fluid" alt="Emeral">
                     </a>
 
-                    <ul class="nk-nav nk-nav-right d-none d-lg-table-cell" data-nav-mobile="#nk-nav-mobile">
+                    <ul  style="width: auto"  class="nk-nav nk-nav-right d-none d-lg-table-cell" data-nav-mobile="#nk-nav-mobile">
                         <li>
                             <a href={{ route('about_us') }}>
                                 درباره ما

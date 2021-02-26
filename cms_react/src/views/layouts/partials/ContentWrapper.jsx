@@ -11,6 +11,7 @@ import CreatePost from "../../contents/CreatePost";
 import Dashboard from './../../contents/Dashboard';
 import PermissionDenid from './../../components/modals/PermissionDenid';
 import PostList from './../../contents/PostList';
+import SiteIndex from './../../contents/SiteIndex';
 
 const ContentWrapper = () => {
     return (
@@ -20,6 +21,9 @@ const ContentWrapper = () => {
                 <div className="container-fluid">
                     <PermissionDenid />
                     <Switch>
+                        <Route path={[config.web_url + "siteIndex_page"]}>
+                            <SiteIndex />
+                        </Route>
                         <Route path={[config.web_url + "postList"]}>
                             <PostList />
                         </Route>
