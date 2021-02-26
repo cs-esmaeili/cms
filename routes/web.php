@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [IndexPage::class, 'indexPageView'])->name('indexPageView');
+Route::view('/', 'contents.coming-soon')->name('contact_us');
+// Route::get('/', [IndexPage::class, 'indexPageView'])->name('indexPageView');
 Route::get('/post/{post_id}', [PostPage::class, 'postPageView'])->name('postPageView');
 Route::get('/category/{category_id}/{page_number}', [CategoryPage::class, 'categoryPageView'])->name('categoryPageView');
 Route::view('/about_us', 'contents.about_us')->name('about_us');
