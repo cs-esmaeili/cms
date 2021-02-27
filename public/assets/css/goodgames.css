@@ -3375,12 +3375,12 @@ img.rounded {
     right: 20px;
 }
 
-.nk-navbar .nk-nav .nk-drop-item .nk-drop-item .dropdown {
+/* .nk-navbar .nk-nav .nk-drop-item .nk-drop-item .dropdown {
     top: 0;
     left: 5px;
     margin-top: -9px;
     margin-left: 100%;
-}
+} */
 
 .nk-navbar.nk-navbar-light .nk-nav .dropdown {
     background-color: #fff;
@@ -3618,12 +3618,12 @@ img.rounded {
     position: relative;
 }
 
-.nk-navbar-side .nk-nav .nk-drop-item .nk-drop-item > a::after,
+/* .nk-navbar-side .nk-nav .nk-drop-item .nk-drop-item > a::after,
 .nk-navbar-side .nk-nav .nk-drop-item > a::after,
 .nk-navbar-side .nk-nav > .nk-drop-item > a::after {
     position: absolute;
     right: 20px;
-}
+} */
 
 .nk-navbar-side .nk-nav .dropdown {
     display: block;

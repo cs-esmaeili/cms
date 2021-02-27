@@ -11,7 +11,7 @@ import './Login.css';
 const Login = ({ history, relogin = false }) => {
     const [username, Setusername] = useState("");
     const [password, Setpassword] = useState("");
-    const [show, setShow] = useState(true);
+    const [show, setShow] = useState(false);
     const [forceUpdate, setForceUpdate] = useState(false);
     const validator = useRef(getValidator);
     const dispatch = useDispatch();
@@ -49,7 +49,7 @@ const Login = ({ history, relogin = false }) => {
     };
 
     useEffect(() => {
-        if(getCookie('token') === null){
+        if (getCookie('token') === null) {
             history.replace(config.web_url + "logIn");
         }
     }, []);
@@ -97,11 +97,11 @@ const Login = ({ history, relogin = false }) => {
                                         rules('password')
                                     )}
                                 </div>
-                                {show
-                                    ? <div className="alert alert-danger" role="alert" style={{ textAlign: "center" }}>
-                                        نام کاربری یا رمز عبور اشتباه است
-                                            </div>
-                                    : null}
+                                {show &&
+                                <div className="alert alert-danger" role="alert" style={{ textAlign: "center" }}>
+                                    نام کاربری یا رمز عبور اشتباه است
+                                </div>
+                                }
 
                                 <button type="submit" className="btn btn-primary btn-user btn-block">
                                     ورود

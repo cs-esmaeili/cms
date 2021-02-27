@@ -151,7 +151,7 @@ const SiteIndex = () => {
                                 <h6 className="font-weight-bold text-primary">مطالب پر بازدید</h6>
                             </div>
                             <div className="card-body" >
-                                <input className="form-control mb-2" style={{ textAlign: "right" }} onKeyDown={(e) => {
+                                <input className="form-control mb-2" onKeyDown={(e) => {
                                     if (e.key === 'Enter') {
                                         addKey('indexPage', { location: 2, post_id: e.target.value });
                                         e.target.value = "";
@@ -170,15 +170,20 @@ const SiteIndex = () => {
                                 <h6 className="font-weight-bold text-primary">اسلایدر</h6>
                             </div>
                             <div className="card-body" >
-                                <input className="form-control mb-2" style={{ textAlign: "right" }} onKeyDown={(e) => {
-                                    if (e.key === 'Enter') {
-                                        addKey('indexPage', { location: 1, url: e.target.value });
-                                        e.target.value = "";
-                                    }
-                                }} />
+                                <form onSubmit={(e) => {
+                                    e.preventDefault();
+                                    addKey('indexPage', { location: 1, url: e.target.url.value, url_target: e.target.url_target.value });
+                                    e.target.url.value = "";
+                                    e.target.url_target.value = "";
+                                }}>
+                                    <input className="form-control mb-2" name="url" />
+                                    <input className="form-control mb-2" name="url_target" />
+                                    <button type="submit" className="btn btn-success" style={{ width: "100%" }}>ثبت</button>
+                                </form>
                                 <Table titles={[
                                     "عملیات",
                                     "url",
+                                    "url_target",
                                 ]} data={sliderImages} select={false} columens={columensSliderImages} />
                             </div>
                         </div>
@@ -215,7 +220,7 @@ const SiteIndex = () => {
                                 <h6 className="font-weight-bold text-primary">مطالب پیشنهادی</h6>
                             </div>
                             <div className="card-body" >
-                                <input className="form-control mb-2" style={{ textAlign: "right" }} onKeyDown={(e) => {
+                                <input className="form-control mb-2" onKeyDown={(e) => {
                                     if (e.key === 'Enter') {
                                         addKey('indexPage', { location: 4, post_id: e.target.value });
                                         e.target.value = "";

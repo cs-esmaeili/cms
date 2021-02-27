@@ -38,6 +38,6 @@ class CategoryPage extends Controller
                 'category_id' => $request->category_id,
             ],
         ];
-        return view('contents.category', ['data' => $data]);
+        return view('pages.category', ['data' => $data]);
     }
 }

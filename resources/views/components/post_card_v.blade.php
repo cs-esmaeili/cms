@@ -1,5 +1,8 @@
 <div class="nk-blog-post">
     <a href={{ route('postPageView', ['post_id' => $data->post_id]) }} class="nk-post-img">
+        @php
+            // dd($data);
+        @endphp
         <img src={{ $data->image }}>
         {{-- <span class="nk-post-comments-count">5</span> --}}
 

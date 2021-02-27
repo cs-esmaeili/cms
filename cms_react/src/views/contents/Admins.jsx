@@ -6,12 +6,13 @@ import { getValidator, rules } from '../../global/validator_rules';
 import { toast } from 'react-toastify';
 import { array_move } from '../../global/helpers';
 import { useSelector } from 'react-redux';
+import config from "../../config.json";
 
 const Admins = () => {
 
     const [admins, setAdmins] = useState(null);
     const [adminRoles, setAdminRoles] = useState(null);
-    const [image, setImage] = useState("/img/undraw_profile.svg");
+    const [image, setImage] = useState(config.base_url + "system/empty_profile.svg");
     const [username, setUsername] = useState("");
     const [oldUsername, setOldUsername] = useState("");
     const [password, setPassword] = useState("");

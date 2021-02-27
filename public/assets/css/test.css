@@ -1,0 +1,105 @@
+
+#my_footer {
+    background: linear-gradient(180deg, rgba(17, 17, 17, 0) 11.13%, #1110 79.52%), url(http://127.0.0.1/cms/system/footer.png);
+    background-size: cover;
+}
+
+.nav_color {
+    background-color: rgba(0, 0, 0, 0.57) !important;
+}
+
+.header_animation {
+    position: relative;
+    width: 100%;
+}
+
+.header_animation:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, #171E22, #4cb88014, #171E2214);
+}
+
+.content_background {
+    /* background: linear-gradient(180deg, #171E22, #171E22); */
+    /* background-image: url(http://127.0.0.1/cms/system/body_background.png); */
+    position: relative;
+    display: block;
+    width: 100%;
+    overflow: visible;
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
+
+.nano {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-align: right;
+}
+
+.nk-news-box .nk-news-box-each-info .nk-news-box-item-date {
+    float: left;
+    margin-top: 5px;
+    font-size: .9em;
+}
+
+.nk-blog-post {
+    margin-bottom: 30px;
+}
+
+.nk-widget-post,
+.nk-widget-post-2 {
+    padding-right: 110px;
+    padding-left: 0;
+}
+
+.nk-widget-post .nk-post-image,
+.nk-widget-post-2 .nk-post-image {
+    float: right;
+    width: 90px;
+    margin-right: -110px;
+    overflow: hidden;
+    -webkit-transition: opacity .15s ease-in-out;
+    -o-transition: opacity .15s ease-in-out;
+    transition: opacity .15s ease-in-out;
+}
+
+.nk-widget-highlighted .nk-widget-content {
+    padding: 20px 23px;
+    background-color: #232930;
+    border: 1px solid #293139;
+    text-align: right;
+    direction: rtl;
+}
+
+.nk-navbar .nk-nav .dropdown>li>a {
+    display: block;
+    padding: 17px 6px;
+    padding-left: 64px;
+    /* padding-right: 0; */
+    text-align: right;
+}
+
+.nk-breadcrumbs {
+    padding: 0;
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    list-style-type: none;
+    position: relative;
+    z-index: 1;
+}
+
+.nk-post-categories {
+    float: left;
+    margin-top: 0;
+    font-size: 1rem;
+}

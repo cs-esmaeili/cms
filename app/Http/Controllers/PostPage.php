@@ -26,6 +26,6 @@ class PostPage extends Controller
         }
 
         $data = ['relatedPost' => $relatedPost, 'oferPosts' => $sidebar['oferPosts'], 'lastVideo' => $sidebar['lastVideo'],  'lastScreenShots' => $sidebar['lastScreenShots'], 'post' => $post];
-        return view('contents.post', ['data' => $data]);
+        return view('pages.post', ['data' => $data]);
     }
 }

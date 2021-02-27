@@ -16,12 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'contents.coming-soon')->name('contact_us');
-// Route::get('/', [IndexPage::class, 'indexPageView'])->name('indexPageView');
+// Route::view('/', 'pages.coming-soon')->name('comming_soon');
+Route::get('/', [IndexPage::class, 'indexPageView'])->name('indexPageView');
 Route::get('/post/{post_id}', [PostPage::class, 'postPageView'])->name('postPageView');
 Route::get('/category/{category_id}/{page_number}', [CategoryPage::class, 'categoryPageView'])->name('categoryPageView');
-Route::view('/about_us', 'contents.about_us')->name('about_us');
-Route::view('/contact_us', 'contents.contact_us')->name('contact_us');
+Route::view('/about_us', 'pages.about_us')->name('about_us');
+Route::view('/contact_us', 'pages.contact_us')->name('contact_us');
 
-// Route::any('/post/{post_id}', function (Request $request) {
-// })->name('postPage');
+Route::view('/panel', 'pages.dashboard');
+Route::view('/panel/{path?}', 'pages.dashboard');

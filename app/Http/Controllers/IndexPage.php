@@ -64,8 +64,12 @@ class IndexPage extends Controller
         foreach ($posts as  $value) {
             $value->postFullData();
         }
+        foreach ($lastPosts as  $value) {
+            $value->postFullData();
+        }
+        // dd($lastPosts);
         $sidebar =  View::sideBar($result);
         $data = ['oferPosts' => $sidebar['oferPosts'], 'lastVideo' => $sidebar['lastVideo'],  'lastScreenShots' => $sidebar['lastScreenShots'], 'slider' => $silder, 'posts' => $posts, 'latestPosts' => $lastPosts, 'lastPictures' => $lastPictures];
-        return view('contents.index', ['data' => $data]);
+        return view('pages.home', ['data' => $data]);
     }
 }

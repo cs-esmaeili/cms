@@ -150,7 +150,7 @@ const Category = () => {
                                         <label htmlFor="parentSelect">مجموعه مورد نظر</label>
                                         <select className="form-control" id="parentSelect" style={{ direction: "rtl" }} onChange={(e) => setParent_id(e.target.value)}>
                                             <option value="0">مجموعه جدید</option>
-                                            {categoryPyramid != null && categoryPure.map(element => <option value={element.category_id} key={generateID()}>{element.name}</option>)}
+                                            {categoryPure != null && categoryPure.map(element => <option value={element.category_id} key={generateID()}>{element.name}</option>)}
                                         </select>
                                     </div>
                                 </div>

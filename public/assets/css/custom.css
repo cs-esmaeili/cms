@@ -1,10 +1,14 @@
-/* PLACE YOU CUSTOM STYLES IN THIS FILE */
-#my_footer {
-    background: linear-gradient(180deg, rgba(17, 17, 17, 0) 11.13%, #1110 79.52%), url(http://127.0.0.1/cms/system/footer.png);
-    background-size: cover;
+@font-face {
+    font-family:'IRANSans';
+    src:url("http://127.0.0.1/cms/system/IRANSans.ttf") format('truetype');
+    font-style:normal;
+}
+* {
+    font-family: 'IRANSans', Arial, sans-serif !important;
+    font-weight: normal !important;
 }
 
-.nav_color {
+.nk-navbar.nk-navbar-fixed {
     background-color: rgba(0, 0, 0, 0.57) !important;
 }
 
@@ -23,16 +27,19 @@
     background: linear-gradient(0deg, #171E22, #4cb88014, #171E2214);
 }
 
-.content_background {
-    /* background: linear-gradient(180deg, #171E22, #171E22); */
-    /* background-image: url(http://127.0.0.1/cms/system/body_background.png); */
-    position: relative;
-    display: block;
-    width: 100%;
-    overflow: visible;
-    background-position: center top;
+
+.carousel-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center, center;
     background-repeat: no-repeat;
 }
+
+/* titleha */
 
 .nk-decorated-h-2::after {
     -webkit-box-flex: 20px;
@@ -58,6 +65,9 @@
 .nk-decorated-h-2::before {
     border-bottom-color: #293139;
 }
+
+/* titleha */
+
 
 .nk-widget-highlighted .nk-widget-title::after {
     content: "";
@@ -88,6 +98,7 @@
     -o-transition: .15s color, .15s background-color;
     transition: .15s color, .15s background-color;
 }
+
 
 .nano {
     position: relative;
@@ -136,9 +147,31 @@
     display: block;
     padding: 17px 6px;
     padding-left: 64px;
-    /* padding-right: 0; */
+    padding-right: 20px;
     text-align: right;
 }
+
+.nk-navbar-side .nk-nav .nk-drop-item .nk-drop-item>a::after,
+.nk-navbar-side .nk-nav .nk-drop-item>a::after,
+.nk-navbar-side .nk-nav>.nk-drop-item>a::after {
+    position: absolute;
+    left: 20px;
+}
+
+.nk-navbar .nk-nav>li>a {
+    position: relative;
+    display: block;
+    padding: 6px 21px;
+    direction: rtl;
+}
+
+.nk-navbar .nk-nav .nk-drop-item .nk-drop-item .dropdown {
+    top: 0;
+    right: 5px;
+    margin-top: 0;
+    margin-right: 100%;
+}
+
 .nk-breadcrumbs {
     padding: 0;
     margin: 0;
@@ -150,8 +183,21 @@
     position: relative;
     z-index: 1;
 }
+
 .nk-post-categories {
     float: left;
     margin-top: 0;
     font-size: 1rem;
+}
+
+
+.nk-footer {
+    position: relative;
+    overflow: hidden;
+    color: #eee;
+    background-color: rgba(17, 22, 25, 0);
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(172, 164, 164, 0) 11.13%, #1110 79.52%), url(http://127.0.0.1/cms/system/footer.png);
+    background-size: cover;
+    background-repeat: no-repeat;
 }

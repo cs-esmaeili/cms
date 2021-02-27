@@ -173,12 +173,12 @@ const CreatePost = ({ edit = false, data = null, onSubmit = null }) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-xl-4 col-lg-12 col-md-12 col-sm-12  mb-2">
+                                <div className="col-xl-4 col-lg-12 col-md-12 col-sm-12  mb-2" >
                                     <div className="card shadow">
                                         <div className="card-header">
                                         </div>
                                         <div className="card-body" >
-                                            <button type="button" className="btn btn-warning" style={{ width: "100%" }} onClick={() => createPost(1)}>ثبت و انشار</button>
+                                            <button type="button" className="btn btn-warning" disabled style={{ width: "100%" }} onClick={() => createPost(1)}>ثبت و انشار</button>
                                         </div>
                                     </div>
                                 </div>
