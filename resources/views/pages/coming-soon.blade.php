@@ -69,7 +69,7 @@
             <div class="nk-fullscreen-block-top">
                 <div class="text-center">
                     <div class="nk-gap-4"></div>
-                    <a href="index.html"><img src={{ asset('system/logo_header_site.png') }} alt="Emeral"></a>
+                    <a href=""><img src={{ asset('system/logo_header_site.png') }} alt="Emeral"></a>
                     <div class="nk-gap-2"></div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 @font-face {
     font-family:'IRANSans';
-    src:url("http://127.0.0.1/cms/system/IRANSans.ttf") format('truetype');
+    src:url("https://www.emeral.ir/system/IRANSans.ttf") format('truetype');
     font-style:normal;
 }
 * {
@@ -28,7 +28,7 @@
 }
 
 
-.carousel-item {
+/* .carousel-item {
     position: absolute;
     top: 0;
     left: 0;
@@ -37,7 +37,7 @@
     background-size: cover;
     background-position: center, center;
     background-repeat: no-repeat;
-}
+} */
 
 /* titleha */
 
@@ -100,13 +100,7 @@
 }
 
 
-.nano {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    text-align: right;
-}
+
 
 .nk-news-box .nk-news-box-each-info .nk-news-box-item-date {
     float: left;
@@ -143,7 +137,20 @@
     direction: rtl;
 }
 
-.nk-navbar .nk-nav .dropdown>li>a {
+/* //////// */
+.nano {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-align: right;
+    direction: rtl;
+}
+.nk-navbar-side.nk-navbar-right-side {
+    width: 250px;
+    margin-right: -250px;
+}
+/* .nk-navbar .nk-nav .dropdown>li>a {
     display: block;
     padding: 17px 6px;
     padding-left: 64px;
@@ -156,21 +163,23 @@
 .nk-navbar-side .nk-nav>.nk-drop-item>a::after {
     position: absolute;
     left: 20px;
-}
+} */
 
-.nk-navbar .nk-nav>li>a {
+/* .nk-navbar .nk-nav>li>a {
     position: relative;
     display: block;
     padding: 6px 21px;
     direction: rtl;
-}
+} */
 
-.nk-navbar .nk-nav .nk-drop-item .nk-drop-item .dropdown {
+/* .nk-navbar .nk-nav .nk-drop-item .nk-drop-item .dropdown {
     top: 0;
     right: 5px;
     margin-top: 0;
     margin-right: 100%;
-}
+} */
+
+/* /////// */
 
 .nk-breadcrumbs {
     padding: 0;
@@ -197,7 +206,7 @@
     color: #eee;
     background-color: rgba(17, 22, 25, 0);
     z-index: 1;
-    background: linear-gradient(180deg, rgba(172, 164, 164, 0) 11.13%, #1110 79.52%), url(http://127.0.0.1/cms/system/footer.png);
+    background: linear-gradient(180deg, rgba(172, 164, 164, 0) 11.13%, #1110 79.52%), url(https://www.emeral.ir/system/footer.png);
     background-size: cover;
     background-repeat: no-repeat;
 }

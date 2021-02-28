@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class FM
 {
-    public static function location($key, $params, $type)
+    public static function location($key, $type)
     {
         $baseDir = "";
         if ($type == "public") {
@@ -17,19 +17,7 @@ class FM
         } else if ($type == "private") {
             $baseDir = env('FILE_MANAGER_BASE_PRIVATE_Directory');
         }
-        $templates = [
-            'person' => "person/{person_id}/",
-        ];
-        $location  =   $baseDir;
-        if (array_key_exists($key, $templates)) {
-            $location  .= $templates[$key];
-        } else {
-            $location .= $key;
-        }
-
-        foreach ($params as $key => $value) {
-            $location = str_replace('{' . $key . '}', $value, $location);
-        }
+        $location  =   $baseDir . $key;
         return $location;
     }
 
@@ -113,6 +101,15 @@ class FM
     public static function folderFilesLinks($location, $token = null)
     {
         $files = self::files($location);
+        $have_file = false;
+        foreach ($files as $key => $value) {
+            if (!is_dir($location . $value)) {
+                $have_file = true;
+            }
+        }
+        if($have_file == false){
+            return 'location have zero files';
+        }
         $outfiles = [];
         foreach ($files as $key => $value) {
             $file = File::where('new_name', '=', $value)->get();
@@ -174,9 +171,17 @@ class FM
     public static function renameDirectory($old, $new)
     {
         $result = DB::transaction(function () use ($old, $new) {
-            File::where('location', '=', $old)->update([
-                'location' => $new,
-            ]);
+            $files =  File::where('location', 'LIKE', "%$old%")->get();
+            if (count($files) == 0) {
+                return false;
+            }
+            for ($i = 0; $i < count($files); $i++) {
+                $full_old_location = $files[$i]->location;
+                $full_new_location = str_replace($old, $new, $full_old_location);
+                File::where('file_id', '=', $files[$i]->file_id)->update([
+                    'location' => $full_new_location,
+                ]);
+            }
             rename($old, $new);
             return true;
         });

@@ -13,7 +13,8 @@
                 <div class="nk-nav-table">
 
                     <a href="index.html" class="nk-nav-logo">
-                        <img src={{asset('system/logo_header_site.png')}} alt="Emeral" style="width: 150px; height: 40px;">
+                        <img src={{ asset('system/logo_header_site.png') }} alt="Emeral"
+                            style="width: 150px; height: 40px;">
                     </a>
 
                     <ul class="nk-nav nk-nav-right d-none d-lg-table-cell" data-nav-mobile="#nk-nav-mobile">
@@ -39,47 +40,20 @@
                                 آموزش
                             </a>
                             <ul class="dropdown">
-
                                 <li>
-                                    <a href="store.html">
-                                        Store
-
+                                    <a href={{ route('categoryPageView', ['category_id' => 1, 'page_number' => 1]) }}>
+                                        Dota 2
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="store-product.html">
-                                        Product
-
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="store-catalog.html">
-                                        Catalog
-
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="store-catalog-alt.html">
-                                        Catalog Alt
-
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="store-checkout.html">
-                                        Checkout
-
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="store-cart.html">
-                                        Cart
-
+                                    <a href={{ route('categoryPageView', ['category_id' => 2, 'page_number' => 1]) }}>
+                                        World of Warcraft
                                     </a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="gallery.html">
+                            <a href={{ route('indexPageView') }}>
                                 خانه
                             </a>
                         </li>
@@ -121,7 +95,7 @@
         <div class="nano">
             <div class="nano-content">
                 <a href="index.html" class="nk-nav-logo">
-                    <img src="assets/images/logo.png" alt="" width="120">
+                    <img src={{ asset('system/logo_header_site.png') }} alt="Emeral" width="120">
                 </a>
                 <div class="nk-navbar-mobile-content">
                     <ul class="nk-nav">

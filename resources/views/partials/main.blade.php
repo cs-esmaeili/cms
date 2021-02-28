@@ -69,8 +69,8 @@
         <!-- END: Footer -->
     </div>
     <!-- START: Page Background -->
-    <img class="nk-page-background-top" src="assets/images/bg-top.png" alt="">
-    <img class="nk-page-background-bottom" src="assets/images/bg-bottom.png" alt="">
+    <img class="nk-page-background-top" src={{asset('assets/images/bg-top.png')}} alt="">
+    <img class="nk-page-background-bottom" src={{asset('assets/images/bg-bottom.png')}} alt="">
     <!-- END: Page Background -->
     <!-- START: Search Modal -->
     <div class="nk-modal modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-hidden="true">

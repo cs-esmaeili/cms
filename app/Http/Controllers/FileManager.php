@@ -19,7 +19,7 @@ class FileManager extends Controller
 {
     public function savePublicFile(saveFile $request)
     {
-        $location = FM::location($request->path, json_decode($request->params, true),  'public');
+        $location = FM::location($request->path, 'public');
         $person = G::getPersonFromToken($request->bearerToken());
         $result = FM::saveFile($request->file('file'), 'public', $location, $person->person_id);
         if ($result != false) {
@@ -30,7 +30,7 @@ class FileManager extends Controller
     }
     public function savePrivateFile(saveFile $request)
     {
-        $location = FM::location($request->path, json_decode($request->params, true),  'private');
+        $location = FM::location($request->path,  'private');
         $person = G::getPersonFromToken($request->bearerToken());
         $result = FM::saveFile($request->file('file'), 'private', $location, $person->person_id);
         if ($result != false) {
@@ -41,7 +41,7 @@ class FileManager extends Controller
     }
     public function savePublicFiles(saveFiles $request)
     {
-        $location = FM::location($request->path, json_decode($request->params, true),  'public');
+        $location = FM::location($request->path,  'public');
         $person = G::getPersonFromToken($request->bearerToken());
         $files = $request->file('file');
 
@@ -54,7 +54,7 @@ class FileManager extends Controller
     }
     public function savePrivateFiles(saveFiles $request)
     {
-        $location = FM::location($request->path, json_decode($request->params, true),  'private');
+        $location = FM::location($request->path, 'private');
         $person = G::getPersonFromToken($request->bearerToken());
         $files = $request->file('file');
 
@@ -132,7 +132,7 @@ class FileManager extends Controller
     public function deletePublicFolder(deleteFolder $request)
     {
         $content =  json_decode($request->getContent());
-        $location = FM::location($content->path, (array)  $content->params, 'public');
+        $location = FM::location($content->path, 'public');
         $result = FM::deleteFolder($location);
         if ($result) {
             return response(['statusText' => 'ok', 'message' => "پوشه حذف شد"], 200);
@@ -143,7 +143,7 @@ class FileManager extends Controller
     public function deletePrivateFolder(deleteFolder $request)
     {
         $content =  json_decode($request->getContent());
-        $location = FM::location($content->path, (array)  $content->params,  'private');
+        $location = FM::location($content->path,  'private');
         $result = FM::deleteFolder($location);
         if ($result) {
             return response(['statusText' => 'ok', 'message' => "پوشه حذف شد"], 200);
@@ -176,7 +176,7 @@ class FileManager extends Controller
             }
         }
         for ($i = 0; $i < count($folders); $i++) {
-            $location = FM::location($folders[$i], [],  'public');
+            $location = FM::location($folders[$i] . '/',  'public');
             $result = FM::deleteFolder($location);
             if ($result === false) {
                 return response(['statusText' => 'fail', 'message' => "پوشه حذف نشد"], 200);
@@ -209,7 +209,7 @@ class FileManager extends Controller
             }
         }
         for ($i = 0; $i < count($folders); $i++) {
-            $location = FM::location($folders[$i], [],  'private');
+            $location = FM::location($folders[$i],  'private');
             $result = FM::deleteFolder($location);
             if ($result === false) {
                 return response(['statusText' => 'fail', 'message' => "پوشه حذف نشد"], 200);
@@ -240,8 +240,8 @@ class FileManager extends Controller
     public function renamePublicFolder(renameFolder $request)
     {
         $content =  json_decode($request->getContent());
-        $location_old = FM::location($content->old->path, (array)  $content->old->params,  'public');
-        $location_new = FM::location($content->new->path, (array)  $content->new->params,  'public');
+        $location_old = FM::location($content->old_name,   'public');
+        $location_new = FM::location($content->new_name,  'public');
         $result = FM::renameDirectory($location_old, $location_new);
         if ($result) {
             return response(['statusText' => 'ok', 'message' => "نام پوشه تغییر کرد"], 200);
@@ -252,8 +252,8 @@ class FileManager extends Controller
     public function renamePrivateFolder(renameFolder $request)
     {
         $content =  json_decode($request->getContent());
-        $location_old = FM::location($content->old->path, (array)  $content->old->params,  'private');
-        $location_new = FM::location($content->new->path, (array)  $content->new->params,  'private');
+        $location_old = FM::location($content->old->path, 'private');
+        $location_new = FM::location($content->new->path,   'private');
         $result = FM::renameDirectory($location_old, $location_new);
         if ($result) {
             return response(['statusText' => 'ok', 'message' => "نام پوشه تغییر کرد"], 200);
@@ -264,7 +264,7 @@ class FileManager extends Controller
     public function publicFolderFilesLinks(Request $request)
     {
         $content =  json_decode($request->getContent());
-        $location = FM::location($content->path, (array) $content->params, 'public');
+        $location = FM::location($content->path, 'public');
         $files = FM::folderFilesLinks($location, 'public');
         if ($files == false) {
             return response(['statusText' => 'fail'], 200);
@@ -275,14 +275,14 @@ class FileManager extends Controller
     public function privateFolderFilesLinks(Request $request)
     {
         $content =  json_decode($request->getContent());
-        $location = FM::location($content->path, (array) $content->params, 'private');
+        $location = FM::location($content->path, 'private');
         $files = FM::folderFilesLinks($location, $request->bearerToken());
         return $files;
     }
     public function publicFolderFiles(Request $request)
     {
         $content =  json_decode($request->getContent());
-        $location = FM::location($content->path, [], 'public');
+        $location = FM::location($content->path, 'public');
         $files = FM::files($location);
         if ($files === false) {
             return response(['statusText' => 'fail', 'message' => "مسیر وجود ندارد"], 200);
@@ -293,7 +293,7 @@ class FileManager extends Controller
     public function privateFolderFiles(Request $request)
     {
         $content =  json_decode($request->getContent());
-        $location = FM::location($content->path, [], 'private');
+        $location = FM::location($content->path, 'private');
         $files = FM::files($location);
         if ($files === false) {
             return response(['statusText' => 'fail', 'message' => "مسیر وجود ندارد"], 200);
@@ -304,7 +304,7 @@ class FileManager extends Controller
     public function createPublicFolder(Request $request)
     {
         $content =  json_decode($request->getContent());
-        $location = FM::location($content->path, [], 'public');
+        $location = FM::location($content->path, 'public');
         $result = FM::createFolder($location);
         if ($result === false) {
             return response(['statusText' => 'fail', 'message' => "پوشه ساخته نشد"], 200);
@@ -317,7 +317,7 @@ class FileManager extends Controller
     public function createPrivateFolder(Request $request)
     {
         $content =  json_decode($request->getContent());
-        $location = FM::location($content->path, [], 'private');
+        $location = FM::location($content->path, 'private');
         $result = FM::createFolder($location);
         if ($result === false) {
             return response(['statusText' => 'fail', 'message' => "پوشه ساخته نشد"], 200);
@@ -328,7 +328,7 @@ class FileManager extends Controller
     public function publicFileInformation(Request $request)
     {
         $content =  json_decode($request->getContent());
-        $result = FM::getPublicFile($content->name , ['orginal_name', 'new_name', 'person_id', 'created_at', 'file.file_id' , 'location']);
+        $result = FM::getPublicFile($content->name, ['orginal_name', 'new_name', 'person_id', 'created_at', 'file.file_id', 'location']);
         $file =  $result->toArray();
         $file['link'] = FM::getPublicFileLink($result);
         unset($file['location']);
@@ -342,7 +342,7 @@ class FileManager extends Controller
     public function privateFileInformation(Request $request)
     {
         $content =  json_decode($request->getContent());
-        $result = FM::getPrivateFile($content->name,  $request->bearerToken() , ['orginal_name', 'new_name', 'person_id', 'created_at', 'file_id' , 'location']);
+        $result = FM::getPrivateFile($content->name,  $request->bearerToken(), ['orginal_name', 'new_name', 'person_id', 'created_at', 'file_id', 'location']);
         $file =  $result->toArray();
         $file['link'] = FM::getPublicFileLink($result); //TODO bayad baraye private ye method to FM neveshte she
         unset($file['location']);

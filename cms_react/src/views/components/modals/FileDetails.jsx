@@ -21,7 +21,9 @@ const FileDetails = ({ item }) => {
         } catch (error) { }
     }
     useEffect(() => {
-        publicFileInformation();
+        if((item + "").includes('.')){
+            publicFileInformation();
+        }
     }, [item]);
 
     return (

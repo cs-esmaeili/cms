@@ -1,6 +1,4 @@
-<!-- START: Image Slider -->
-{{-- <div class="row h-50"> --}}
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="max-height: 360px;">
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
         @php
             $data = $data['slider'];
@@ -13,21 +11,25 @@
             data-slide-to={{ $i }}></li> @endif
         @endfor
     </ol>
-    <div class="carousel-inner" style="position: relative; height: 360px;">
+    <div class="carousel-inner">
         @for ($i = 0; $i < count($data); $i++)
             @php
                 $image = json_decode($data[$i]->value)->url;
                 $url = json_decode($data[$i]->value)->url_target;
+                // dd($image);
             @endphp
-            @if ($i == 0) <a href={{ $url }} target="_blank">
-            <div class="carousel-item active" style="background-image:
-            url({{ $image }});"></div>
-            </a>
+
+            @if ($i == 0) <div class="carousel-item active">
+            <img class="d-block w-100" style="min-height: 30vh;"
+            src={{ $image }}
+            alt="emeral">
+            </div>
         @else
-            <a href={{ $url }} target="_blank">
-            <div class="carousel-item" style="background-image:
-            url({{ $image }});"></div>
-            </a> @endif
+            <div class="carousel-item">
+            <img class="d-block w-100" style="min-height: 30vh;"
+            src={{ $image }}
+            alt="emeral">
+            </div> @endif
         @endfor
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -39,5 +41,3 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
-{{-- </div> --}}
-<!-- END: Image Slider -->

@@ -18,7 +18,7 @@ class CreateFileTable extends Migration
             $table->timestamps();
             $table->string('orginal_name', 255);
             $table->string('new_name', 255)->unique();
-            $table->string('hash', 255)->unique();
+            $table->string('hash', 255)->unique()->nullable();
             $table->mediumText('location');
             $table->foreignId('person_id');
             $table->foreign('person_id')->references('person_id')->on('person');

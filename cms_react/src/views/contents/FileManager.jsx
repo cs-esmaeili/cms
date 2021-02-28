@@ -36,6 +36,7 @@ const FileManager = () => {
                 path: currentPath,
                 list: selectedItems,
             };
+            console.log(data);
             const respons = await _deletePublicFolderOrFile(data);
             if (respons.data.statusText === "ok") {
                 publicFolderFiles(currentPath);
@@ -144,19 +145,17 @@ const FileManager = () => {
                                 deleteFilesAndFolder();
                             }
                         }}> Delete </i>
-
-                        <div className="dropdown">
-                            <i className="fas fa-folder-plus m-2 customHover noSelect" data-bs-toggle="dropdown" aria-expanded="false" style={{ cursor: "pointer" }} > NewFolder </i>
-                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div class="dropdown">
+                            <i class=" dropdown-toggle fas fa-folder-plus m-2 customHover noSelect" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> NewFolder </i>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <input type="text" onKeyDown={(e) => {
                                     if (e.key === "Enter") {
                                         createFolder(currentPath + e.target.value);
                                         e.target.value = "";
                                     }
                                 }} />
-                            </ul>
+                            </div>
                         </div>
-
 
                         <label htmlFor="file">
                             <i className="fas fa-upload m-2 customHover noSelect" style={{ cursor: "pointer" }}> Upload </i>
@@ -178,13 +177,21 @@ const FileManager = () => {
                             return (
                                 <div
                                     key={generateID()}
-
                                     onClick={(e) => {
                                         if (e.shiftKey) {
-                                            if (selectedItems == null) {
-                                                setSlectedItems(new Array(value));
+                                            if (selectedItems != null && selectedItems.includes(value)) {
+                                                let index = selectedItems.indexOf(value);
+                                                if (index !== -1) {
+                                                    selectedItems.splice(index, 1);
+                                                    console.log(selectedItems);
+                                                    setSlectedItems([...selectedItems]);
+                                                }
                                             } else {
-                                                setSlectedItems([...selectedItems, value]);
+                                                if (selectedItems == null) {
+                                                    setSlectedItems(new Array(value));
+                                                } else {
+                                                    setSlectedItems([...selectedItems, value]);
+                                                }
                                             }
                                         } else {
                                             if (value.includes('.')) {
