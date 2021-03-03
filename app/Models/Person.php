@@ -54,11 +54,11 @@ class Person extends Model
                 'description' => $personinfo->description,
                 'role' => $this->role->name,
                 'role_id' => $this->role->role_id,
+                'file_id' => $personinfo->file_id,
                 'image' => FM::getPublicFileLink($personinfo->file),
             ];
         } else {
             return null;
-            // return $this;
         }
     }
 }

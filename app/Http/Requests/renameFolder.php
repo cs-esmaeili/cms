@@ -24,8 +24,8 @@ class renameFolder extends FormRequest
     public function rules()
     {
         return [
-            'old_name' => "required",
-            'new_name' => "required",
+            // 'old_name' => "required",
+            // 'new_name' => "required",
         ];
     }
 }

@@ -126,27 +126,26 @@ class Person extends Controller
 
     public function createPerson(createPerson $request)
     {
-        $search = ModelsPerson::where('username', '=', G::changeWords($request->username))->get();
+        $content =  json_decode($request->getContent());
+        $search = ModelsPerson::where('username', '=', G::changeWords($content->username))->get();
         if ($search->count() != 0) {
             return response(['statusText' => 'fail', 'message' => "نام کاربری باید منحصر به فرد باشد"], 406);
         } else {
-            $result =  DB::transaction(function () use ($request) {
-                $token_id = G::newToken($request->username)['token_id'];
+            $result =  DB::transaction(function () use ($content) {
+                $token_id = G::newToken($content->username)['token_id'];
                 $person = ModelsPerson::create([
-                    'username' => G::changeWords($request->username),
-                    'password' => G::getHash(G::changeWords($request->password)),
-                    'role_id' => $request->role_id,
+                    'username' => G::changeWords($content->username),
+                    'password' => G::getHash(G::changeWords($content->password)),
+                    'role_id' => $content->role_id,
                     'token_id' => $token_id,
                     'status' => 1,
                 ]);
-                $location = FM::location('person', ['person_id' => $person->person_id],  'public');
-                $file_id = FM::saveFile($request->file('image'), 'public', $location, $person->person_id);
                 PersonInfo::create([
-                    'file_id' => $file_id,
                     'person_id' => $person->person_id,
-                    'name' => $request->name,
-                    'family' => $request->family,
-                    'description' => $request->description,
+                    'file_id' => $content->file_id,
+                    'name' => $content->name,
+                    'family' => $content->family,
+                    'description' => $content->description,
                 ]);
                 return response(['statusText' => 'ok', 'message' => "حساب ساخته شد"], 201);
             });
@@ -156,30 +155,19 @@ class Person extends Controller
 
     public function editPerson(editPerson $request)
     {
-        $search = ModelsPerson::where('person_id', '=', $request->person_id)->get();
+        $content =  json_decode($request->getContent());
+        $search = ModelsPerson::where('person_id', '=', $content->person_id)->get();
         if ($search->count() == 0) {
             return response(['statusText' => 'fail', 'message' => "کار بر یافت نشد"], 406);
         } else {
             $data = collect($request->request)->toArray();
             $temp = null;
             if (array_key_exists('password', $data)) {
-                $token_id = G::newToken($request->person_id, $search[0]->token->token_id)['token_id'];
+                $token_id = G::newToken($content->person_id, $search[0]->token->token_id)['token_id'];
                 $temp = ['token_id' => $token_id, 'password' => G::getHash($data['password'])];
             }
             $search[0]->update(G::getArrayItems($data, (new ModelsPerson)->getFillable(), $temp));
             $search[0]->personInfo()->update(G::getArrayItems($data, (new PersonInfo)->getFillable()));
-
-
-            if ($request->hasFile('image')) {
-                $file = $search[0]->personInfo->file;
-
-                $location = FM::location('person', ['person_id' => $request->person_id],  'public');
-                $file_id = FM::saveFile($request->file('image'), 'public', $location, $request->person_id);
-                PersonInfo::where('person_info_id', '=', $search[0]->personInfo->person_info_id)->update([
-                    'file_id' => $file_id
-                ]);
-                FM::deleteFile($file);
-            }
             return response(['statusText' => 'ok', 'message' => "تغییرات ذخیره شد"], 201);
         }
     }
@@ -194,7 +182,7 @@ class Person extends Controller
         ]);
         if ($result) {
             return response(['statusText' => 'ok', 'message' => "پیام ذخیره شد"], 200);
-        }else{
+        } else {
             return response(['statusText' => 'fail', 'message' => "پیام ذخیره نشد"], 200);
         }
     }

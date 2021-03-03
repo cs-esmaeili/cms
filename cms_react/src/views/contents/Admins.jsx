@@ -12,15 +12,15 @@ const Admins = () => {
 
     const [admins, setAdmins] = useState(null);
     const [adminRoles, setAdminRoles] = useState(null);
-    const [image, setImage] = useState(config.base_url + "system/empty_profile.svg");
+    const [role_id, setRole_id] = useState("");
+    const [file_id, setFile_id] = useState("");
     const [username, setUsername] = useState("");
     const [oldUsername, setOldUsername] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [family, setFamily] = useState("");
     const [description, setDescription] = useState("");
-    const [roleId, setRoleId] = useState("");
-    const [personId, setPersonId] = useState("");
+    const [person_id, setPerson_id] = useState("");
     const [generateID] = useGenerator();
     const [clearSelect, setclearSelect] = useState(generateID());
     const [forceUpdate, setForceUpdate] = useState(false);
@@ -42,7 +42,6 @@ const Admins = () => {
         try {
             const respons = await _Admins();
             if (respons.data.statusText === "ok") {
-                console.log(respons.data.list[0]);
                 setAdmins(respons.data.list);
             }
         } catch (error) { }
@@ -51,44 +50,35 @@ const Admins = () => {
         try {
             const respons = await _AdminRoles();
             if (respons.data.statusText === "ok") {
-                setRoleId(respons.data.list[0].role_id)
+                setRole_id(respons.data.list[0].role_id)
                 setAdminRoles(respons.data.list);
             }
         } catch (error) { }
     }
-    const showimage = (event) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                setImage(reader.result + "");
-            }
-        };
-        reader.readAsDataURL(event.target.files[0]);
-    };
+
     const resetInputs = (data) => {
         validator.current.hideMessageFor();
 
         if (data === null) {
-            setImage("/img/undraw_profile.svg");
+            setFile_id("");
             setUsername("");
             setPassword("");
             setName("");
             setFamily("");
-            setRoleId("");
+            setRole_id("");
             setDescription("");
             setSelecting(false);
             setclearSelect(generateID());
         } else {
             setOldUsername(data.username);
             setSelecting(true);
-            setImage(data.image);
-            setPersonId(data.person_id);
-
+            setFile_id(data.file_id);
+            setPerson_id(data.person_id);
             setPassword("");
             setUsername(data.username);
             setName(data.name);
             setFamily(data.family);
-            setRoleId(data.role_id);
+            setRole_id(data.role_id);
             setDescription(data.description);
             let index = adminRoles.findIndex(x => x.role_id === data.role_id);
             let reOrder = array_move(adminRoles, index, 0);
@@ -99,23 +89,23 @@ const Admins = () => {
     const handelSubmit = async (event) => {
 
         event.preventDefault();
-        let data = new FormData();
+        let data = {
+            username,
+            name,
+            family,
+            oldUsername,
+            description,
+            file_id,
+            person_id,
+            role_id,
+        };
         if (password !== null && password !== "") {
-            data.append("password", password);
+            data.password = password;
         }
-        data.append("person_id", personId);
-        data.append("username", username);
-        data.append("name", name);
-        data.append("family", family);
-        data.append("role_id", roleId);
-        data.append("oldUsername", oldUsername);
-        data.append("description", description);
-        data.append("image", event.target.imageUrl.files[0]);
         if (validator.current.allValid()) {
             try {
+                console.log(data);
                 if (selecting) {
-                    console.log("handelSubmit2");
-
                     const response = await _EditPerson(data);
                     if (response.data.statusText === "ok") {
                         resetInputs(null);
@@ -141,8 +131,8 @@ const Admins = () => {
     }
 
     useEffect(() => {
-        getAdminRoles();
         getAdmins();
+        getAdminRoles();
     }, []);
 
     if (permission === false) {
@@ -163,25 +153,14 @@ const Admins = () => {
                                         <h6 className="font-weight-bold text-primary">تصویر حساب کاربری</h6>
                                     </div>
                                     <div className="card-body flex-column d-flex  align-items-center" >
-                                        <label
-                                            htmlFor="imageUrl"
-                                        >
-                                            <img className="img-fluid" src={image} style={{ height: "10rem", margin: "20px", borderRadius: "50%" }} alt="erorr" />
-                                        </label>
-                                        <input
-                                            id="imageUrl"
-                                            name="imageUrl"
-                                            type="file"
-                                            accept="image/*"
-                                            aria-describedby="imageUrl"
-                                            onChange={showimage}
-                                            style={{ display: "none" }}
-                                        />
-                                        {validator.current.message(
-                                            "imageUrl",
-                                            (image === "/img/undraw_profile.svg") ? false : true,
-                                            "accepted"
-                                        )}
+                                        <input placeholder="ID عکس" name="file_id" id="file_id" className="form-control form-control-user" type="text" value={file_id} onChange={(e) => setFile_id(e.target.value)} />
+                                        {
+                                            validator.current.message(
+                                                "file_id",
+                                                file_id,
+                                                "required"
+                                            )
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -259,7 +238,7 @@ const Admins = () => {
                                         </div>
                                         <div className="d-flex  mb-2 mx-2">
                                             <div className="input-group">
-                                                <select className="custom-select" id="roleSelect" onChange={(e) => setRoleId(e.target.value)}>
+                                                <select className="custom-select" id="roleSelect" onChange={(e) => setRole_id(e.target.value)}>
                                                     {
                                                         (adminRoles != null) ?
                                                             adminRoles.map((row, index) =>
@@ -300,7 +279,7 @@ const Admins = () => {
                                     <h6 className="font-weight-bold text-primary">تصویر حساب کاربری</h6>
                                 </div>
                                 <div className="card-body" >
-                                    {(admins != null && adminRoles != null) ?
+                                    {(admins != null) ?
                                         <Table titles={[
                                             "نام خانوادگی",
                                             "نام",
@@ -308,7 +287,6 @@ const Admins = () => {
                                             "نام کاربری"
                                         ]} data={admins} select={true} clearSelect={clearSelect} selectLisener={(selectedData) => {
                                             if (selectedData != null) {
-
                                                 resetInputs(selectedData);
                                             }
                                         }} columens={columens} />

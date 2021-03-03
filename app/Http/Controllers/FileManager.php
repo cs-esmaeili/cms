@@ -240,13 +240,25 @@ class FileManager extends Controller
     public function renamePublicFolder(renameFolder $request)
     {
         $content =  json_decode($request->getContent());
-        $location_old = FM::location($content->old_name,   'public');
-        $location_new = FM::location($content->new_name,  'public');
-        $result = FM::renameDirectory($location_old, $location_new);
+        $location_old = FM::location($content->old_path,   'public');
+        $location_new = FM::location($content->new_path,  'public');
+        $result = FM::renameDirectory($content->old_name, $content->new_name, $location_old, $location_new);
         if ($result) {
             return response(['statusText' => 'ok', 'message' => "نام پوشه تغییر کرد"], 200);
         } else {
             return response(['statusText' => 'fail', 'message' => "نام پوشه تغییر نکرد"], 200);
+        }
+    }
+    public function renamePublicFile(renameFolder $request)
+    {
+        $content =  json_decode($request->getContent());
+        $location_old = FM::location($content->old_path,   'public');
+        $location_new = FM::location($content->new_path,  'public');
+        $result = FM::renameFile($content->old_name, $content->new_name, $location_old, $location_new);
+        if ($result) {
+            return response(['statusText' => 'ok', 'message' => "نام فایل تغییر کرد"], 200);
+        } else {
+            return response(['statusText' => 'fail', 'message' => "نام فایل تغییر نکرد"], 200);
         }
     }
     public function renamePrivateFolder(renameFolder $request)

@@ -5,7 +5,7 @@ export const setCookie = (minutes,name,value) => {
         var d = new Date();
         d.setTime(d.getTime() + (minutes * 60 * 1000));
         var expires = "expires=" + d.toGMTString();
-        document.cookie = name + "=" + value + ";" + expires;
+        document.cookie = name + "=" + value + ";" + expires + "; secure";
     }
 }
 

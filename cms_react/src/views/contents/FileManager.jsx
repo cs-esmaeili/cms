@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { _publicFolderFiles, _deletePublicFolderOrFile, _createPublicFolder, _savePublicFiles } from './../../services/FileManager';
+import { _publicFolderFiles, _deletePublicFolderOrFile, _createPublicFolder, _savePublicFiles, _renamePublicFolder } from './../../services/FileManager';
 import useGenerator from "../../global/Idgenerator";
 import { toast } from 'react-toastify';
 import UploadFile from './../components/modals/UploadFile';
@@ -56,6 +56,22 @@ const FileManager = () => {
             toast(respons.data.message);
         } catch (error) { }
     }
+    const renameFolder = async (old_name, new_name, old_path, new_path) => {
+        try {
+            const data = {
+                old_name,
+                new_name,
+                old_path,
+                new_path,
+            };
+            console.log(data);
+            const respons = await _renamePublicFolder(data);
+            if (respons.data.statusText === "ok") {
+                publicFolderFiles(currentPath);
+            }
+            toast(respons.data.message);
+        } catch (error) { }
+    }
 
     const uploadFile = async (event) => {
         event.preventDefault();
@@ -88,9 +104,11 @@ const FileManager = () => {
         publicFolderFiles(currentPath);
     }, []);
 
+    let timer;
+    let ignore = false;
     if (permission === false) {
         return (
-            <div class="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+            <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
                 <div>شما به این قسمت دسترسی ندارید</div>
             </div>
         );
@@ -145,9 +163,9 @@ const FileManager = () => {
                                 deleteFilesAndFolder();
                             }
                         }}> Delete </i>
-                        <div class="dropdown">
-                            <i class=" dropdown-toggle fas fa-folder-plus m-2 customHover noSelect" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> NewFolder </i>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <div className="dropdown">
+                            <i className=" dropdown-toggle fas fa-folder-plus m-2 customHover noSelect" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style={{ cursor: "pointer" }}> NewFolder </i>
+                            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <input type="text" onKeyDown={(e) => {
                                     if (e.key === "Enter") {
                                         createFolder(currentPath + e.target.value);
@@ -156,7 +174,11 @@ const FileManager = () => {
                                 }} />
                             </div>
                         </div>
-
+                        <i className="fas fa-arrows-alt m-2 customHover noSelect" style={{ cursor: "pointer" }} onClick={() => {
+                            if (selectedItems !== null) {
+                                deleteFilesAndFolder();
+                            }
+                        }}> Move </i>
                         <label htmlFor="file">
                             <i className="fas fa-upload m-2 customHover noSelect" style={{ cursor: "pointer" }}> Upload </i>
                         </label>
@@ -176,32 +198,48 @@ const FileManager = () => {
                         currentFolderFiles.map((value, index) => {
                             return (
                                 <div
+                                    draggable="true"
+                                    onDragOver={(e) => e.preventDefault()}
+                                    onDragStart={(e) => {
+                                        e.dataTransfer.setData("name", value);
+                                    }}
+                                    onDrop={(e) => {
+                                        e.preventDefault();
+                                        var data = e.dataTransfer.getData("name");
+                                        renameFolder(data, data , currentPath, currentPath + value + (currentPath));
+                                    }}
                                     key={generateID()}
                                     onClick={(e) => {
-                                        if (e.shiftKey) {
-                                            if (selectedItems != null && selectedItems.includes(value)) {
-                                                let index = selectedItems.indexOf(value);
-                                                if (index !== -1) {
-                                                    selectedItems.splice(index, 1);
-                                                    console.log(selectedItems);
-                                                    setSlectedItems([...selectedItems]);
-                                                }
-                                            } else {
-                                                if (selectedItems == null) {
-                                                    setSlectedItems(new Array(value));
+                                        ignore = false;
+                                        timer = setTimeout(() => {
+                                            if (ignore === false) {
+                                                if (selectedItems != null && selectedItems.includes(value)) {
+                                                    let index = selectedItems.indexOf(value);
+                                                    if (index !== -1) {
+                                                        selectedItems.splice(index, 1);
+                                                        console.log(selectedItems);
+                                                        setSlectedItems([...selectedItems]);
+                                                    }
                                                 } else {
-                                                    setSlectedItems([...selectedItems, value]);
+                                                    if (selectedItems == null) {
+                                                        setSlectedItems(new Array(value));
+                                                    } else {
+                                                        setSlectedItems([...selectedItems, value]);
+                                                    }
                                                 }
                                             }
+                                        }, 200);
+                                    }}
+                                    onDoubleClick={(e) => {
+                                        clearTimeout(timer);
+                                        ignore = true;
+                                        if (value.includes('.')) {
+                                            setSlectedItems([value]);
+                                            document.getElementById('Modal_FileDetails_open').click();
                                         } else {
-                                            if (value.includes('.')) {
-                                                setSlectedItems([value]);
-                                                document.getElementById('Modal_FileDetails_open').click();
-                                            } else {
-                                                setSlectedItems(null);
-                                                setCurrentPath(currentPath + value + "/");
-                                                publicFolderFiles(currentPath + value + "/");
-                                            }
+                                            setSlectedItems(null);
+                                            setCurrentPath(currentPath + value + "/");
+                                            publicFolderFiles(currentPath + value + "/");
                                         }
                                     }}
                                     className={(selectedItems !== null && selectedItems.includes(value)) ?

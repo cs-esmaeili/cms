@@ -70,6 +70,9 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/renamePublicFolder', [FileManager::class, 'renamePublicFolder'])->name('renamePublicFolder');
         Route::post('/renamePrivateFolder', [FileManager::class, 'renamePrivateFolder'])->name('renamePrivateFolder');
 
+        Route::post('/renamePublicFile', [FileManager::class, 'renamePublicFile'])->name('renamePublicFile');
+        // Route::post('/renamePrivateFolder', [FileManager::class, 'renamePrivateFolder'])->name('renamePrivateFolder');
+
         Route::post('/publicFolderFiles', [FileManager::class, 'publicFolderFiles'])->name('publicFolderFiles');
         Route::post('/privateFolderFiles', [FileManager::class, 'privateFolderFiles'])->name('privateFolderFiles');
 

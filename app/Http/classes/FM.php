@@ -29,7 +29,6 @@ class FM
         $result = DB::transaction(function () use ($file, $type, $location, $uploader) {
             $newName =  Str::uuid() . "." .  $file->getClientOriginalExtension();
             $hash = G::getHash($newName);
-
             $result = File::create([
                 "orginal_name" => $file->getClientOriginalName(),
                 "new_name" => $newName,
@@ -107,7 +106,7 @@ class FM
                 $have_file = true;
             }
         }
-        if($have_file == false){
+        if ($have_file == false) {
             return 'location have zero files';
         }
         $outfiles = [];
@@ -168,21 +167,46 @@ class FM
             return false;
         }
     }
-    public static function renameDirectory($old, $new)
+    public static function renameDirectory($old_name, $new_name, $old_path, $new_path)
     {
-        $result = DB::transaction(function () use ($old, $new) {
-            $files =  File::where('location', 'LIKE', "%$old%")->get();
-            if (count($files) == 0) {
-                return false;
+        $result = DB::transaction(function () use ($old_name, $new_name, $old_path, $new_path) {
+            $temp = $old_path . $old_name;
+            $files =  File::where('location', 'LIKE', "%$temp%")->get();
+            if (count($files) > 0) {
+                for ($i = 0; $i < count($files); $i++) {
+                    $full_old_location = $files[$i]->location;
+                    $full_new_location = str_replace(($old_path . $old_name), ($new_path . $new_name), $full_old_location);
+                    File::where('file_id', '=', $files[$i]->file_id)->update([
+                        'location' => $full_new_location,
+                    ]);
+                }
             }
-            for ($i = 0; $i < count($files); $i++) {
-                $full_old_location = $files[$i]->location;
-                $full_new_location = str_replace($old, $new, $full_old_location);
-                File::where('file_id', '=', $files[$i]->file_id)->update([
-                    'location' => $full_new_location,
-                ]);
+            if (!file_exists($new_path) && !is_dir($new_path)) {
+                mkdir($new_path,  0755, true);
             }
-            rename($old, $new);
+            rename($old_path . $old_name, $new_path . $new_name);
+            return true;
+        });
+        return $result;
+    }
+    public static function renameFile($old_name, $new_name, $old_path, $new_path)
+    {
+        $result = DB::transaction(function () use ($old_name, $new_name, $old_path, $new_path) {
+            $files =  File::where('new_name', '=', $old_name)->get();
+            if (count($files) > 0) {
+                for ($i = 0; $i < count($files); $i++) {
+                    $full_old_location = $files[$i]->location;
+                    $full_new_location = str_replace($old_path, $new_path, $full_old_location);
+                    File::where('file_id', '=', $files[$i]->file_id)->update([
+                        'location' => $full_new_location,
+                        'new_name' => $new_name,
+                    ]);
+                }
+            }
+            if (!file_exists($new_path) && !is_dir($new_path)) {
+                mkdir($new_path,  0755, true);
+            }
+            rename($old_path . $old_name, $new_path . $new_name);
             return true;
         });
         return $result;
@@ -197,7 +221,8 @@ class FM
     public static function getPublicFileLink($file)
     {
         $base = env('APP_URL');
-        $continue = substr($file->location, strpos($file->location, "public/") + strlen("public/")) . $file->new_name;
+        $public_folder = env('PUBLIC_FOLDER_NAME');
+        $continue = substr($file->location, strpos($file->location, $public_folder) + strlen($public_folder)) . $file->new_name;
         return $base . $continue;
     }
 }

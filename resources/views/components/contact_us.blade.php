@@ -13,7 +13,7 @@
             </div>
             <div class="nk-gap"></div>
             <textarea class="form-control required" name="message" rows="5" placeholder="* متن پیام"
-                style="text-align: right"></textarea>
+                style="text-align: right; max-height: 30vh;"></textarea>
             <div class="nk-gap-1"></div>
             <button type="submit" class="nk-btn nk-btn-rounded nk-btn-color-white">
                 <span>ارسال</span>

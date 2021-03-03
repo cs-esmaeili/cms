@@ -32,6 +32,14 @@ export const _publicFileInformation = (data) => {
         }
     });
 };
+export const _renamePublicFolder = (data) => {
+
+    return http.post(`${config.api_url}renamePublicFolder`, JSON.stringify(data), {
+        headers: {
+            "Action": "renamePublicFolder",
+        }
+    });
+};
 export const _savePublicFiles = (data , uploadLisener , doSomething) => {
     doSomething();
     return http.post(`${config.api_url}savePublicFiles`, data, {

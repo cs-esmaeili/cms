@@ -16,20 +16,21 @@
             @php
                 $image = json_decode($data[$i]->value)->url;
                 $url = json_decode($data[$i]->value)->url_target;
-                // dd($image);
             @endphp
 
-            @if ($i == 0) <div class="carousel-item active">
-            <img class="d-block w-100" style="min-height: 30vh;"
-            src={{ $image }}
-            alt="emeral">
-            </div>
-        @else
-            <div class="carousel-item">
-            <img class="d-block w-100" style="min-height: 30vh;"
-            src={{ $image }}
-            alt="emeral">
-            </div> @endif
+            @if ($i == 0)
+                <div class="carousel-item active">
+                    <a href={{ $url }} target="_blank">
+                        <img class="d-block w-100" style="min-height: 25vh;" src={{ $image }} alt="emeral">
+                    </a>
+                </div>
+            @else
+                <div class="carousel-item">
+                    <a href={{ $url }} target="_blank">
+                        <img class="d-block w-100" style="min-height: 25vh;" src={{ $image }} alt="emeral">
+                    </a>
+                </div>
+            @endif
         @endfor
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">

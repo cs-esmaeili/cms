@@ -7,7 +7,7 @@
         <div class="nk-widget-content">
             @if (count($data['lastVideo']) != 0)
                 <a href={{ $data['lastVideo']['url_target'] }}>
-                    <img style="max-width: 302px; max-height: 169px;" src={{ $data['lastVideo']['url'] }} alt="">
+                    <img class="img-fluid" src={{ $data['lastVideo']['url'] }} alt="">
                 </a>
             @endif
         </div>
