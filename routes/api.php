@@ -71,7 +71,13 @@ Route::prefix('admin')->middleware([CheckHeaders::class])->group(function () {
         Route::post('/renamePrivateFolder', [FileManager::class, 'renamePrivateFolder'])->name('renamePrivateFolder');
 
         Route::post('/renamePublicFile', [FileManager::class, 'renamePublicFile'])->name('renamePublicFile');
-        // Route::post('/renamePrivateFolder', [FileManager::class, 'renamePrivateFolder'])->name('renamePrivateFolder');
+        Route::post('/renamePrivateFile', [FileManager::class, 'renamePrivateFile'])->name('renamePrivateFile');
+
+        Route::post('/movePublicFileAndFolder', [FileManager::class, 'movePublicFileAndFolder'])->name('movePublicFileAndFolder');
+        Route::post('/movePrivateFileAndFolder', [FileManager::class, 'movePrivateFileAndFolder'])->name('movePrivateFileAndFolder');
+
+        Route::post('/renamePublicFileAndFolder', [FileManager::class, 'renamePublicFileAndFolder'])->name('renamePublicFileAndFolder');
+        Route::post('/renamePrivateFileAndFolder', [FileManager::class, 'renamePrivateFileAndFolder'])->name('renamePrivateFileAndFolder');
 
         Route::post('/publicFolderFiles', [FileManager::class, 'publicFolderFiles'])->name('publicFolderFiles');
         Route::post('/privateFolderFiles', [FileManager::class, 'privateFolderFiles'])->name('privateFolderFiles');

@@ -199,7 +199,12 @@
     font-size: 1rem;
 }
 
-
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgb(255, 0, 0);
+}
 .nk-footer {
     position: relative;
     overflow: hidden;
@@ -209,4 +214,8 @@
     background: linear-gradient(180deg, rgba(172, 164, 164, 0) 11.13%, #1110 79.52%), url(https://www.emeral.ir/system/footer.png);
     background-size: cover;
     background-repeat: no-repeat;
+}
+
+.custom_hover:hover {
+    background-color: #293139;
 }

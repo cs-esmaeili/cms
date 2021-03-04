@@ -13,14 +13,12 @@ const Modal = ({ obj_id, children, title, footer, close, size = null }) => {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <div className="container-fluid" style={{ textAlign: "center" }}>
+                            <div className="container-fluid">
                                 {children}
                             </div>
                         </div>
                         <div className="modal-footer">
                             {footer}
-                            {/* <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary">Save changes</button> */}
                         </div>
                     </div>
                 </div>

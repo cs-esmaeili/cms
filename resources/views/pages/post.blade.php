@@ -53,7 +53,7 @@
 
                         </div>
 
-                        <div style="margin-top: 20px">
+                        <div style="margin-top: 20px; direction: rtl;" >
                             {!! $item['body'] !!}
                         </div>
                     </div>

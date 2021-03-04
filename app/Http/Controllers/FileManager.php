@@ -264,9 +264,9 @@ class FileManager extends Controller
     public function renamePrivateFolder(renameFolder $request)
     {
         $content =  json_decode($request->getContent());
-        $location_old = FM::location($content->old->path, 'private');
-        $location_new = FM::location($content->new->path,   'private');
-        $result = FM::renameDirectory($location_old, $location_new);
+        $location_old = FM::location($content->old_path,   'private');
+        $location_new = FM::location($content->new_path,  'private');
+        $result = FM::renameFile($content->old_name, $content->new_name, $location_old, $location_new);
         if ($result) {
             return response(['statusText' => 'ok', 'message' => "نام پوشه تغییر کرد"], 200);
         } else {
@@ -364,5 +364,55 @@ class FileManager extends Controller
         } else {
             return response(['statusText' => 'ok', "file" => $file], 200);
         }
+    }
+
+    public function movePublicFileAndFolder(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $location_old = FM::location($content->old_path,   'public');
+        $location_new = FM::location($content->new_path,  'public');
+        $items = $content->items;
+        $folders = [];
+        $files = [];
+        foreach ($items as $key => $value) {
+            if (str_contains($value, '.')) {
+                $files[] = $value;
+            } else {
+                $folders[] = $value;
+            }
+        }
+        foreach ($files as $key => $value) {
+            $result = FM::renameFile($value, $value, $location_old, $location_new);
+            if ($result == false) {
+                return response(['statusText' => 'fail', 'message' => "فایل(ها)  منتقل نشد"], 200);
+            }
+        }
+        foreach ($folders as $key => $value) {
+            $result = FM::renameDirectory($value, $value, $location_old, $location_new);
+            if ($result == false) {
+                return response(['statusText' => 'fail', 'message' => "فایل(ها)  منتقل نشد"], 200);
+            }
+        }
+        return response(['statusText' => 'ok', 'message' => "فایل(ها)  منتقل شد"], 200);
+    }
+    public function renamePublicFileAndFolder(Request $request)
+    {
+        $content =  json_decode($request->getContent());
+        $location = FM::location($content->path, 'public');
+        $old_name = $content->old_name;
+        $new_name = $content->new_name;
+
+        if (str_contains($old_name, '.')) {
+            $result = FM::renameFile($old_name, $new_name, $location, $location);
+            if ($result == false) {
+                return response(['statusText' => 'fail', 'message' => "فایل تغییر نام پیدا نکرد"], 200);
+            }
+        } else {
+            $result = FM::renameDirectory($old_name, $new_name, $location, $location);
+            if ($result == false) {
+                return response(['statusText' => 'fail', 'message' => "فایل تغییر نام پیدا نکرد"], 200);
+            }
+        }
+        return response(['statusText' => 'ok', 'message' => "فایل تغییر نام پیدا کرد"], 200);
     }
 }

@@ -40,6 +40,22 @@ export const _renamePublicFolder = (data) => {
         }
     });
 };
+export const _movePublicFileAndFolder = (data) => {
+
+    return http.post(`${config.api_url}movePublicFileAndFolder`, JSON.stringify(data), {
+        headers: {
+            "Action": "movePublicFileAndFolder",
+        }
+    });
+};
+export const _renamePublicFileAndFolder = (data) => {
+
+    return http.post(`${config.api_url}renamePublicFileAndFolder`, JSON.stringify(data), {
+        headers: {
+            "Action": "renamePublicFileAndFolder",
+        }
+    });
+};
 export const _savePublicFiles = (data , uploadLisener , doSomething) => {
     doSomething();
     return http.post(`${config.api_url}savePublicFiles`, data, {

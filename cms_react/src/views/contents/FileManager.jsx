@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { _publicFolderFiles, _deletePublicFolderOrFile, _createPublicFolder, _savePublicFiles, _renamePublicFolder } from './../../services/FileManager';
+import { _publicFolderFiles, _deletePublicFolderOrFile, _createPublicFolder, _savePublicFiles, _renamePublicFolder, _renamePublicFileAndFolder, _movePublicFileAndFolder } from './../../services/FileManager';
 import useGenerator from "../../global/Idgenerator";
 import { toast } from 'react-toastify';
 import UploadFile from './../components/modals/UploadFile';
 import FileDetails from '../components/modals/FileDetails';
 import { useSelector } from 'react-redux';
+import FileMove from './../components/modals/FileMove';
+import FileRename from '../components/modals/FileRename';
 
 const FileManager = () => {
 
@@ -56,16 +58,16 @@ const FileManager = () => {
             toast(respons.data.message);
         } catch (error) { }
     }
-    const renameFolder = async (old_name, new_name, old_path, new_path) => {
+
+
+    const MoveHandler = async (path, items) => {
         try {
             const data = {
-                old_name,
-                new_name,
-                old_path,
-                new_path,
+                old_path: currentPath,
+                new_path: path,
+                items,
             };
-            console.log(data);
-            const respons = await _renamePublicFolder(data);
+            const respons = await _movePublicFileAndFolder(data);
             if (respons.data.statusText === "ok") {
                 publicFolderFiles(currentPath);
             }
@@ -117,6 +119,8 @@ const FileManager = () => {
             <>
                 <FileDetails item={selectedItems} />
                 <UploadFile persent={persent} />
+                <FileMove items={selectedItems} old_path={currentPath} reloadMethod={() => publicFolderFiles(currentPath)} />
+                <FileRename old_name={(selectedItems != null) ? selectedItems[0] : ""} path={currentPath} reloadMethod={() => publicFolderFiles(currentPath)} />
                 <div className="shadow p-3 mb-5 bg-white rounded">
                     <div className="row">
                         <input className="form-control" id="path" defaultValue={currentPath} onKeyDown={(e) => {
@@ -175,10 +179,11 @@ const FileManager = () => {
                             </div>
                         </div>
                         <i className="fas fa-arrows-alt m-2 customHover noSelect" style={{ cursor: "pointer" }} onClick={() => {
-                            if (selectedItems !== null) {
-                                deleteFilesAndFolder();
-                            }
+                            document.getElementById('Modal_FileMove_open').click();
                         }}> Move </i>
+                        <i className="fas fa-arrows-alt m-2 customHover noSelect" style={{ cursor: "pointer" }} onClick={() => {
+                            document.getElementById('Modal_FileRename_open').click();
+                        }}> Rename </i>
                         <label htmlFor="file">
                             <i className="fas fa-upload m-2 customHover noSelect" style={{ cursor: "pointer" }}> Upload </i>
                         </label>
@@ -206,27 +211,31 @@ const FileManager = () => {
                                     onDrop={(e) => {
                                         e.preventDefault();
                                         var data = e.dataTransfer.getData("name");
-                                        renameFolder(data, data , currentPath, currentPath + value + (currentPath));
+                                        MoveHandler(currentPath + value + '/', [data]);
                                     }}
                                     key={generateID()}
                                     onClick={(e) => {
                                         ignore = false;
                                         timer = setTimeout(() => {
                                             if (ignore === false) {
-                                                if (selectedItems != null && selectedItems.includes(value)) {
-                                                    let index = selectedItems.indexOf(value);
-                                                    if (index !== -1) {
-                                                        selectedItems.splice(index, 1);
-                                                        console.log(selectedItems);
-                                                        setSlectedItems([...selectedItems]);
+                                                if (e.shiftKey) {
+                                                    if (selectedItems != null && selectedItems.includes(value)) {
+                                                        let index = selectedItems.indexOf(value);
+                                                        if (index !== -1) {
+                                                            selectedItems.splice(index, 1);
+                                                            setSlectedItems([...selectedItems]);
+                                                        }
+                                                    } else {
+                                                        if (selectedItems == null) {
+                                                            setSlectedItems(new Array(value));
+                                                        } else {
+                                                            setSlectedItems([...selectedItems, value]);
+                                                        }
                                                     }
                                                 } else {
-                                                    if (selectedItems == null) {
-                                                        setSlectedItems(new Array(value));
-                                                    } else {
-                                                        setSlectedItems([...selectedItems, value]);
-                                                    }
+                                                    setSlectedItems(new Array(value));
                                                 }
+                                                console.log(selectedItems);
                                             }
                                         }, 200);
                                     }}

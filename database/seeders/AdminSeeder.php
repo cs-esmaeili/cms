@@ -28,7 +28,7 @@ class AdminSeeder extends Seeder
         $file = File::create([
             'orginal_name' => 'firstFile',
             'new_name' => '50167980.jpg',
-            'location' => env('FILE_MANAGER_BASE_PUBLIC_Directory') . "Admins/Javad/",
+            'location' => env('FILE_MANAGER_BASE_PUBLIC_Directory') . "/Admins/Javad/",
             'type' => "public",
             'person_id' => $obj->person_id,
         ]);

@@ -16,7 +16,7 @@
                         </div>
                         <img src={{ $item->image }} alt="Smell magic in the air. Or maybe barbecue"
                             class="nk-news-box-item-full-img">
-                        <h3 class="nk-news-box-item-title">{{ $item->title }}</h3>
+                        <h3 style="direction: ltr;" class="nk-news-box-item-title">{{ $item->title }}</h3>
                         <span class="nk-news-box-item-categories">
                             <span
                                 class="bg-main-4">{{ json_decode($data['posts'][0])->category->name }}</span>
@@ -26,8 +26,8 @@
                         </div>
                         <a href={{ route('postPageView', ['post_id' => $item->post_id]) }}
                             class="nk-news-box-item-url">ادامه مطلب</a>
-                        <div class="nk-news-box-item-date"><span
-                                class="fa fa-calendar"></span>{{ $item->time }}
+                        <div class="nk-news-box-item-date">
+                            @component('components.time', ['data' => $item])@endcomponent
                         </div>
                     </div>
                 @endfor
@@ -49,13 +49,14 @@
                             <span class="bg-main-4">{{ $item->category->name }}</span>
                         </span>
                     </div>
-                    <h3 class="nk-news-box-item-title">{{ $item->title }}</h3>
+                    <h3 style="direction: ltr;" class="nk-news-box-item-title">{{ $item->title }}</h3>
                     <div class="nk-news-box-item-text">
                         <p>{{ $item->description }}</p>
                     </div>
                     <a href={{ route('postPageView', ['post_id' => $item->post_id]) }}
                         class="nk-news-box-item-url">ادامه مطلب</a>
-                    <div class="nk-news-box-item-date"><span class="fa fa-calendar"></span>{{ $item->time }}
+                    <div class="nk-news-box-item-date">
+                        @component('components.time', ['data' => $item])@endcomponent
                     </div>
                 </div>
             @endif
