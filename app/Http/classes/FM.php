@@ -100,14 +100,8 @@ class FM
     public static function folderFilesLinks($location, $token = null)
     {
         $files = self::files($location);
-        $have_file = false;
-        foreach ($files as $key => $value) {
-            if (!is_dir($location . $value)) {
-                $have_file = true;
-            }
-        }
-        if ($have_file == false) {
-            return 'location have zero files';
+        if (count($files) == 0) {
+            return 'location is empty';
         }
         $outfiles = [];
         foreach ($files as $key => $value) {
@@ -115,7 +109,7 @@ class FM
             if ($file->count() == 1) {
                 $file = $file[0];
                 if ($file->type == "public") {
-                    $outfiles[] = env('APP_URL') . substr($location, strpos($location, 'files/')) . $value;
+                    $outfiles[] = ['name' => $file->new_name, 'link' => env('APP_URL') . substr($location, strpos($location, 'files/')) . $value];
                 } else if ($file->type == "private" || $token != null) {
                     $person = G::getPersonFromToken($token);
                     $file = $person->files()->where('new_name', '=', $value)->get();
@@ -124,7 +118,7 @@ class FM
                     }
                 }
             } else {
-                return false;
+                $outfiles[] = ['name' => $value, 'link' => ""];
             }
         }
         return $outfiles;

@@ -8,7 +8,7 @@
             </span>
         </div>
         <div class="nk-gap"></div>
-        <h2 class="nk-post-title h4" style="text-align: right">{{ $data->title }}</h2>
+        <h2 class="nk-post-title h4" style="text-align: right; direction: rtl;">{{ $data->title }}</h2>
         <div class="nk-post-text" style="text-align: right">
             <p>{{ $data->description }}</p>
         </div>

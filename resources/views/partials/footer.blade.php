@@ -22,7 +22,7 @@
     <div class="nk-copyright">
         <div class="container">
             <div class="nk-copyright-left">
-                Copyright &copy; 2021 <a href="https://www.emeral.com/" target="_blank">WWW.EMERAL.COM</a>
+                Copyright &copy; 2021 <a href="https://www.emeral.ir/" target="_blank">WWW.EMERAL.COM</a>
             </div>
             <div class="nk-copyright-right">
                 <ul class="nk-social-links-2">

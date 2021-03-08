@@ -9,6 +9,13 @@ export const _publicFolderFiles = (data) => {
         }
     });
 };
+export const _publicFolderFilesLinks = (data) => {
+    return http.post(`${config.api_url}publicFolderFilesLinks`, JSON.stringify(data), {
+        headers: {
+            "Action": "publicFolderFilesLinks",
+        }
+    });
+};
 export const _deletePublicFolderOrFile = (data) => {
     return http.post(`${config.api_url}deletePublicFolderOrFile`, JSON.stringify(data), {
         headers: {

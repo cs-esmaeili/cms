@@ -11,14 +11,11 @@
         <nav class="nk-navbar nk-navbar-top nk-navbar-sticky nk-navbar-autohide">
             <div class="container">
                 <div class="nk-nav-table">
-
-                    <a href="index.html" class="nk-nav-logo">
+                    <a href="https://www.emeral.ir/" class="nk-nav-logo">
                         <img src={{ asset('system/logo_header_site.png') }} alt="Emeral"
                             style="width: 150px; height: 40px;">
                     </a>
-
                     <ul class="nk-nav nk-nav-right d-none d-lg-table-cell" data-nav-mobile="#nk-nav-mobile">
-
 
                         <li>
                             <a href={{ route('about_us') }}>
@@ -31,23 +28,18 @@
                             </a>
                         </li>
                         <li>
-                            <a>
+                            <a style="cursor: pointer">
                                 فروشگاه
                             </a>
                         </li>
                         <li class=" nk-drop-item">
-                            <a href="store.html">
+                            <a style="cursor: pointer">
                                 آموزش
                             </a>
                             <ul class="dropdown">
                                 <li>
                                     <a href={{ route('categoryPageView', ['category_id' => 1, 'page_number' => 1]) }}>
                                         Dota 2
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href={{ route('categoryPageView', ['category_id' => 2, 'page_number' => 1]) }}>
-                                        World of Warcraft
                                     </a>
                                 </li>
                             </ul>

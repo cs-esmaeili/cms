@@ -67,8 +67,7 @@ const Table = ({
                                     {titles.map((title) => <th key={generateID()} scope="col" className="text-center">{title}</th>)}
                                 </tr>
                             </thead>
-                            <tbody>
-
+                            <tbody className="text-wrap" style={{ direction: "rtl" }}>
                                 {pData.map((row, index) =>
                                     rowelemnt(row, index)
                                 )}

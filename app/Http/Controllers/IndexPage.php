@@ -44,6 +44,7 @@ class IndexPage extends Controller
     public function indexPageView()
     {
         $result = Key_Value::where('key', '=', 'indexPage')->get();
+
         $silder = [];
         $posts = [];
         $lastPictures = [];
@@ -67,7 +68,6 @@ class IndexPage extends Controller
         foreach ($lastPosts as  $value) {
             $value->postFullData();
         }
-        // dd($lastPosts);
         $sidebar =  View::sideBar($result);
         $data = ['oferPosts' => $sidebar['oferPosts'], 'lastVideo' => $sidebar['lastVideo'],  'lastScreenShots' => $sidebar['lastScreenShots'], 'slider' => $silder, 'posts' => $posts, 'latestPosts' => $lastPosts, 'lastPictures' => $lastPictures];
         return view('pages.home', ['data' => $data]);

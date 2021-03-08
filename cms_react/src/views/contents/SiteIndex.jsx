@@ -151,7 +151,7 @@ const SiteIndex = () => {
                                 <h6 className="font-weight-bold text-primary">مطالب پر بازدید</h6>
                             </div>
                             <div className="card-body" >
-                                <input className="form-control mb-2" onKeyDown={(e) => {
+                                <input className="form-control mb-2" placeholder="پست ID" onKeyDown={(e) => {
                                     if (e.key === 'Enter') {
                                         addKey('indexPage', { location: 2, post_id: e.target.value });
                                         e.target.value = "";
@@ -176,8 +176,8 @@ const SiteIndex = () => {
                                     e.target.url.value = "";
                                     e.target.url_target.value = "";
                                 }}>
-                                    <input className="form-control mb-2" name="url" />
-                                    <input className="form-control mb-2" name="url_target" />
+                                    <input className="form-control mb-2" name="url" placeholder="لینک تصویر" />
+                                    <input className="form-control mb-2" name="url_target" placeholder="لینک مقصد" />
                                     <button type="submit" className="btn btn-success" style={{ width: "100%" }}>ثبت</button>
                                 </form>
                                 <Table titles={[
@@ -202,8 +202,8 @@ const SiteIndex = () => {
                                     e.target.url.value = "";
                                     e.target.url_target.value = "";
                                 }}>
-                                    <input className="form-control mb-2" name="url" />
-                                    <input className="form-control mb-2" name="url_target" />
+                                    <input className="form-control mb-2" name="url" placeholder="لینک تصویر" />
+                                    <input className="form-control mb-2" name="url_target" placeholder="لینک مقصد" />
                                     <button type="submit" className="btn btn-success" style={{ width: "100%" }}>ثبت</button>
                                 </form>
                                 <Table titles={[
@@ -220,7 +220,7 @@ const SiteIndex = () => {
                                 <h6 className="font-weight-bold text-primary">مطالب پیشنهادی</h6>
                             </div>
                             <div className="card-body" >
-                                <input className="form-control mb-2" onKeyDown={(e) => {
+                                <input className="form-control mb-2" placeholder="پست ID" onKeyDown={(e) => {
                                     if (e.key === 'Enter') {
                                         addKey('indexPage', { location: 4, post_id: e.target.value });
                                         e.target.value = "";
@@ -247,8 +247,8 @@ const SiteIndex = () => {
                                     e.target.url.value = "";
                                     e.target.description.value = "";
                                 }}>
-                                    <input className="form-control mb-2" name="url" />
-                                    <input className="form-control mb-2" name="description" style={{ textAlign: "right" }} />
+                                    <input className="form-control mb-2" name="url" placeholder="لینک تصویر" />
+                                    <input className="form-control mb-2" name="description" placeholder="توضیحات" style={{ textAlign: "right", direction: "rtl" }} />
                                     <button type="submit" className="btn btn-success" style={{ width: "100%" }}>ثبت</button>
                                 </form>
                                 <Table titles={[
@@ -271,8 +271,8 @@ const SiteIndex = () => {
                                     e.target.url.value = "";
                                     e.target.description.value = "";
                                 }}>
-                                    <input className="form-control mb-2" name="url" />
-                                    <input className="form-control mb-2" name="description" style={{ textAlign: "right" }} />
+                                    <input className="form-control mb-2" name="url" placeholder="لینک تصویر" />
+                                    <input className="form-control mb-2" name="description" placeholder="توضیحات" style={{ textAlign: "right", direction: "rtl" }} />
                                     <button type="submit" className="btn btn-success" style={{ width: "100%" }}>ثبت</button>
                                 </form>
                                 <Table titles={[

@@ -36,7 +36,7 @@
                             <img src={{ $item['image'] }} alt={{ $item['title'] }}>
                         </div>
                         <div class="nk-gap-1"></div>
-                        <h1 class="nk-post-title h4">{{ $item['title'] }}</h1>
+                        <h1 class="nk-post-title h4" style="text-align: right; direction: rtl;">{{ $item['title'] }}</h1>
                         <div class="nk-post-by" style="text-align: right">
                             <img src={{ $item['person']['image'] }} alt="Witch Murder" class="rounded-circle" width="35">
                             by <a href="https://nkdev.info">{{ $item['person']['name'] }}</a> in {{ $item['time'] }}
@@ -53,7 +53,7 @@
 
                         </div>
 
-                        <div style="margin-top: 20px; direction: rtl;" >
+                        <div style="margin-top: 20px; direction: rtl;">
                             {!! $item['body'] !!}
                         </div>
                     </div>

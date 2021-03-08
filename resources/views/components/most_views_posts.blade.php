@@ -9,29 +9,53 @@
                     @php
                         $item = json_decode($data['posts'][$i]);
                     @endphp
-                    <div
-                        class={{ $i == 0 ? 'nk-news-box-item nk-news-box-item-active' : 'nk-news-box-item' }}>
-                        <div class="nk-news-box-item-img">
-                            <img src={{ $item->image }} alt={{ $item->title }} />
-                        </div>
-                        <img src={{ $item->image }} alt="Smell magic in the air. Or maybe barbecue"
-                            class="nk-news-box-item-full-img">
-                        <h3 style="direction: ltr;" class="nk-news-box-item-title">{{ $item->title }}</h3>
-                        <span class="nk-news-box-item-categories">
-                            <span
-                                class="bg-main-4">{{ json_decode($data['posts'][0])->category->name }}</span>
-                        </span>
-                        <div class="nk-news-box-item-text">
-                            <p>{{ $item->description }}</p>
-                        </div>
-                        <a href={{ route('postPageView', ['post_id' => $item->post_id]) }}
-                            class="nk-news-box-item-url">ادامه مطلب</a>
-                        <div class="nk-news-box-item-date">
-                            @component('components.time', ['data' => $item])@endcomponent
-                        </div>
+                    @if ($i == 0) <div
+                    class="nk-news-box-item nk-news-box-item-active">
+                    <div class="nk-news-box-item-img">
+                    <img src={{ $item->image }} alt={{ $item->title }} />
                     </div>
-                @endfor
+                    <img src={{ $item->image }} alt="Emeral"
+                    class="nk-news-box-item-full-img">
+                    <h3 style="direction: rtl;"
+                    class="nk-news-box-item-title">{{ $item->title }}</h3>
 
+                    <span class="nk-news-box-item-categories">
+                    <span
+                    class="bg-main-4">{{ json_decode($data['posts'][0])->category->name }}</span>
+                    </span>
+                    <div class="nk-news-box-item-text">
+                    <p>{{ $item->description }}</p>
+                    </div>
+                    <a href={{ route('postPageView', ['post_id' => $item->post_id]) }}
+                    class="nk-news-box-item-url">ادامه مطلب</a>
+                    <div class="nk-news-box-item-date">
+                    @component('components.time', ['data' => $item])@endcomponent
+                    </div>
+                    </div>
+                @else
+                    <div class='nk-news-box-item'>
+                    <div class="nk-news-box-item-img">
+                    <img src={{ $item->image }} alt={{ $item->title }} />
+                    </div>
+                    <img src={{ $item->image }} alt="Emeral"
+                    class="nk-news-box-item-full-img">
+                    <h3 style="direction: rtl;"
+                    class="nk-news-box-item-title">{{ $item->title }}</h3>
+
+                    <span class="nk-news-box-item-categories">
+                    <span
+                    class="bg-main-4">{{ json_decode($data['posts'][0])->category->name }}</span>
+                    </span>
+                    <div class="nk-news-box-item-text">
+                    <p>{{ $item->description }}</p>
+                    </div>
+                    <a href={{ route('postPageView', ['post_id' => $item->post_id]) }}
+                    class="nk-news-box-item-url">ادامه مطلب</a>
+                    <div class="nk-news-box-item-date">
+                    @component('components.time', ['data' => $item])@endcomponent
+                    </div>
+                    </div> @endif
+                @endfor
             </div>
         </div>
     </div>
@@ -49,12 +73,12 @@
                             <span class="bg-main-4">{{ $item->category->name }}</span>
                         </span>
                     </div>
-                    <h3 style="direction: ltr;" class="nk-news-box-item-title">{{ $item->title }}</h3>
+                    <h3 style="direction: rtl;" class="nk-news-box-item-title">{{ $item->title }}</h3>
                     <div class="nk-news-box-item-text">
                         <p>{{ $item->description }}</p>
                     </div>
                     <a href={{ route('postPageView', ['post_id' => $item->post_id]) }}
-                        class="nk-news-box-item-url">ادامه مطلب</a>
+                         class="nk-news-box-item-more">Read More</a>
                     <div class="nk-news-box-item-date">
                         @component('components.time', ['data' => $item])@endcomponent
                     </div>

@@ -144,7 +144,6 @@
     height: 100%;
     overflow: hidden;
     text-align: right;
-    direction: rtl;
 }
 .nk-navbar-side.nk-navbar-right-side {
     width: 250px;
@@ -218,4 +217,20 @@ hr {
 
 .custom_hover:hover {
     background-color: #293139;
+}
+
+.pswp__caption__center {
+    text-align: right;
+    direction: rtl;
+    max-width: 420px;
+    margin: 0 auto;
+    font-size: 13px;
+    padding: 10px;
+    line-height: 20px;
+    color: #CCC;
+}
+
+p {
+    text-align: right;
+    direction: rtl;
 }

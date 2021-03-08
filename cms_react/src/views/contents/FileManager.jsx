@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { _publicFolderFiles, _deletePublicFolderOrFile, _createPublicFolder, _savePublicFiles, _renamePublicFolder, _renamePublicFileAndFolder, _movePublicFileAndFolder } from './../../services/FileManager';
+import { _deletePublicFolderOrFile, _createPublicFolder, _savePublicFiles, _movePublicFileAndFolder, _publicFolderFilesLinks } from './../../services/FileManager';
 import useGenerator from "../../global/Idgenerator";
 import { toast } from 'react-toastify';
 import UploadFile from './../components/modals/UploadFile';
@@ -21,9 +21,8 @@ const FileManager = () => {
         try {
             const data = {
                 path: path,
-                params: {}
             };
-            const respons = await _publicFolderFiles(data);
+            const respons = await _publicFolderFilesLinks(data);
             if (respons.data.statusText === "ok") {
                 document.getElementById('path').value = path;
                 setCurrentFolderFiles(respons.data.list);
@@ -132,7 +131,7 @@ const FileManager = () => {
                     </div>
                     <div className="row">
                         <i className="fas fa-home m-2 customHover noSelect" style={{ cursor: "pointer" }} onClick={() => { setCurrentPath('/'); publicFolderFiles('/'); }}> Home </i>
-                        <i className="fas fa-level-up-alt m-2 customHover noSelect" style={(currentPath === "/") ? { pointerEvents: 'none' } : { cursor: "pointer" }} onClick={() => {
+                        <i className="fas fa-arrow-left m-2 customHover noSelect" style={(currentPath === "/") ? { pointerEvents: 'none' } : { cursor: "pointer" }} onClick={() => {
                             let index = -1;
                             for (let i = currentPath.length - 2; i >= 0; i--) {
                                 if (currentPath[i] === '/') {
@@ -143,7 +142,10 @@ const FileManager = () => {
                             let newPath = currentPath.substring(0, index + 1);
                             setCurrentPath(newPath);
                             publicFolderFiles(newPath);
-                        }}> Up one level </i>
+                        }}> Back </i>
+                        <i className="fas fa-sync-alt m-2 customHover noSelect" style={{ cursor: "pointer" }} onClick={() => {
+                            publicFolderFiles(currentPath);
+                        }}> Reload </i>
                         <i className="far fa-square m-2 customHover noSelect" style={{ cursor: "pointer" }} onClick={() => {
                             setSlectedItems(null);
                         }}> Unselect All </i>
@@ -181,7 +183,7 @@ const FileManager = () => {
                         <i className="fas fa-arrows-alt m-2 customHover noSelect" style={{ cursor: "pointer" }} onClick={() => {
                             document.getElementById('Modal_FileMove_open').click();
                         }}> Move </i>
-                        <i className="fas fa-arrows-alt m-2 customHover noSelect" style={{ cursor: "pointer" }} onClick={() => {
+                        <i className="fas fa-edit m-2 customHover noSelect" style={{ cursor: "pointer" }} onClick={() => {
                             document.getElementById('Modal_FileRename_open').click();
                         }}> Rename </i>
                         <label htmlFor="file">
@@ -199,19 +201,24 @@ const FileManager = () => {
                     </div>
                 </div>
                 <div className="row listFiles">
-                    {currentFolderFiles != null &&
+                    {currentFolderFiles != null && currentFolderFiles === "location is empty" &&
+                        <div className="w-100" style={{ textAlign: "center" }}>
+                            پوشه خالی است
+                        </div>
+                    }
+                    {currentFolderFiles != null && currentFolderFiles !== "location is empty" &&
                         currentFolderFiles.map((value, index) => {
                             return (
                                 <div
                                     draggable="true"
                                     onDragOver={(e) => e.preventDefault()}
                                     onDragStart={(e) => {
-                                        e.dataTransfer.setData("name", value);
+                                        e.dataTransfer.setData("name", value.name);
                                     }}
                                     onDrop={(e) => {
                                         e.preventDefault();
                                         var data = e.dataTransfer.getData("name");
-                                        MoveHandler(currentPath + value + '/', [data]);
+                                        MoveHandler(currentPath + value.name + '/', [data]);
                                     }}
                                     key={generateID()}
                                     onClick={(e) => {
@@ -219,21 +226,21 @@ const FileManager = () => {
                                         timer = setTimeout(() => {
                                             if (ignore === false) {
                                                 if (e.shiftKey) {
-                                                    if (selectedItems != null && selectedItems.includes(value)) {
-                                                        let index = selectedItems.indexOf(value);
+                                                    if (selectedItems != null && selectedItems.includes(value.name)) {
+                                                        let index = selectedItems.indexOf(value.name);
                                                         if (index !== -1) {
                                                             selectedItems.splice(index, 1);
                                                             setSlectedItems([...selectedItems]);
                                                         }
                                                     } else {
                                                         if (selectedItems == null) {
-                                                            setSlectedItems(new Array(value));
+                                                            setSlectedItems(new Array(value.name));
                                                         } else {
-                                                            setSlectedItems([...selectedItems, value]);
+                                                            setSlectedItems([...selectedItems, value.name]);
                                                         }
                                                     }
                                                 } else {
-                                                    setSlectedItems(new Array(value));
+                                                    setSlectedItems(new Array(value.name));
                                                 }
                                                 console.log(selectedItems);
                                             }
@@ -242,16 +249,16 @@ const FileManager = () => {
                                     onDoubleClick={(e) => {
                                         clearTimeout(timer);
                                         ignore = true;
-                                        if (value.includes('.')) {
-                                            setSlectedItems([value]);
+                                        if (value.name.includes('.')) {
+                                            setSlectedItems([value.name]);
                                             document.getElementById('Modal_FileDetails_open').click();
                                         } else {
                                             setSlectedItems(null);
-                                            setCurrentPath(currentPath + value + "/");
-                                            publicFolderFiles(currentPath + value + "/");
+                                            setCurrentPath(currentPath + value.name + "/");
+                                            publicFolderFiles(currentPath + value.name + "/");
                                         }
                                     }}
-                                    className={(selectedItems !== null && selectedItems.includes(value)) ?
+                                    className={(selectedItems !== null && selectedItems.includes(value.name)) ?
                                         "col-xl-1 col-lg-2 col-md-3 col-sm-4 text-truncate customHover selectedItems"
                                         :
                                         "col-xl-1 col-lg-2 col-md-3 col-sm-4 text-truncate customHover"
@@ -260,12 +267,12 @@ const FileManager = () => {
                                         margin: "10px",
                                         textAlign: "center",
                                     }}>
-                                    {(value.includes('.') ?
-                                        <i className="fas fa-5x fa-file"></i>
+                                    {(value.name.includes('.') ?
+                                        <img src={value.link} alt="File" style={{ width: "80px", height: "80px" }} />
                                         :
                                         <i className="fa fa-5x fa-folder" aria-hidden="true"></i>
                                     )}
-                                    <div>{value}</div>
+                                    <div>{value.name}</div>
                                 </div>
                             );
                         })

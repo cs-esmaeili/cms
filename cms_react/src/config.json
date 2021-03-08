@@ -1,7 +1,7 @@
 {
     "app_name": "Emeral",
-    "base_url" : "http://127.0.0.1/cms/",
-    "api_url": "http://127.0.0.1/cms/api/admin/",
+    "base_url" : "https://www.emeral.ir/",
+    "api_url": "https://www.emeral.ir/api/admin/",
     "web_url": "/panel/",
-    "logo_url": "http://127.0.0.1/cms/system/logo.png"
+    "logo_url": "https://www.emeral.ir/system/logo.png"
 }

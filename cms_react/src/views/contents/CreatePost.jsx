@@ -111,7 +111,7 @@ const CreatePost = ({ edit = false, data = null, onSubmit = null }) => {
                                     <h6 className="font-weight-bold text-primary">عنوان</h6>
                                 </div>
                                 <div className="card-body" >
-                                    <input className="form-control" style={{ textAlign: "right" }} value={title} onChange={(e) => setTitle(e.target.value)} />
+                                    <input className="form-control" style={{ textAlign: "right" , direction:"rtl" }} value={title} onChange={(e) => setTitle(e.target.value)} />
                                 </div>
                             </div>
                         </div>
@@ -123,7 +123,7 @@ const CreatePost = ({ edit = false, data = null, onSubmit = null }) => {
                                     <h6 className="font-weight-bold text-primary">توضیحات</h6>
                                 </div>
                                 <div className="card-body" >
-                                    <input className="form-control" style={{ textAlign: "right" }} value={description} onChange={(e) => setDescription(e.target.value)} />
+                                    <input className="form-control" style={{ textAlign: "right" ,  direction:"rtl" }} value={description} onChange={(e) => setDescription(e.target.value)} />
                                 </div>
                             </div>
                         </div>
@@ -135,7 +135,7 @@ const CreatePost = ({ edit = false, data = null, onSubmit = null }) => {
                                     <h6 className="font-weight-bold text-primary">کلمات کلیدی</h6>
                                 </div>
                                 <div className="card-body" >
-                                    <input className="form-control" style={{ textAlign: "right" }} value={meta_keywords} onChange={(e) => setMeta_keywords(e.target.value)} />
+                                    <input className="form-control" style={{ textAlign: "right" ,  direction:"rtl" }} value={meta_keywords} onChange={(e) => setMeta_keywords(e.target.value)} />
                                 </div>
                             </div>
                         </div>
