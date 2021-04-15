@@ -7,20 +7,11 @@
     <div class="nk-gap-1"></div>
     <div class="container">
         <ul class="nk-breadcrumbs">
-
-
             {{-- <li><a href="index.html">Home</a></li>
-
-
                 <li><span class="fa fa-angle-right"></span></li>
-
                 <li><a href="#">Blog</a></li> --}}
-
-
             {{-- <li><span class="fa fa-angle-right"></span></li> --}}
-
             <li><span style="padding-right: 0"></span></li>
-
         </ul>
     </div>
     <div class="nk-gap-1"></div>
@@ -44,25 +35,25 @@
                                 <span class="bg-main-1">{{ $item['category']->name }}</span>
                             </div>
                         </div>
-
                         <div style="margin-top: 20px; margin-bottom: 10px; text-align: right; direction: rtl;">
                             {{ $item['person']['description'] }}
                         </div>
-
                         <div style="border-bottom: 4px solid #dd163b;">
-
                         </div>
-
                         <div style="margin-top: 20px; direction: rtl;">
                             {!! $item['body'] !!}
                         </div>
                     </div>
                     <!-- END: Post Text -->
-
                     @if (count($data['oferPosts']) == 2)
                         <!-- START: Similar Articles -->
                         <div class="nk-gap-2"></div>
-                        <h3 class="nk-decorated-h-2"><span><span class="text-main-1">Similar</span> Articles</span></h3>
+                        <h3 class="nk-decorated-h-2">
+                            <span>
+                                مطالب
+                                <span class="text-main-1"> مشابه</span>
+                            </span>
+                        </h3>
                         <div class="nk-gap"></div>
                         <div class="row">
                             <div class="col-md-6">
@@ -82,5 +73,4 @@
             </div>
         </div>
     </div>
-
 @endsection

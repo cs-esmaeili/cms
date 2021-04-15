@@ -78,7 +78,7 @@
                         <p>{{ $item->description }}</p>
                     </div>
                     <a href={{ route('postPageView', ['post_id' => $item->post_id]) }}
-                         class="nk-news-box-item-more">Read More</a>
+                         class="nk-news-box-item-more">ادامه مطلب</a>
                     <div class="nk-news-box-item-date">
                         @component('components.time', ['data' => $item])@endcomponent
                     </div>

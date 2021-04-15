@@ -161,14 +161,14 @@ const Navbar = () => {
                             مشخصات
                         <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                         </a>
-                        <a className="dropdown-item" href="#">
+                        {/* <a className="dropdown-item" href="#">
                             تنظیمات
                         <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                         </a>
                         <a className="dropdown-item" href="#">
                             فعالیت ها
                         <i className="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                        </a>
+                        </a> */}
                         <div className="dropdown-divider"></div>
                         <a className="dropdown-item" href="#" data-toggle="modal" data-target="#Modal_Logout">
                             خروج
@@ -178,7 +178,7 @@ const Navbar = () => {
                 </li>
 
             </ul>
-
+{/*
             <form
                 className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                 <div className="input-group">
@@ -191,7 +191,7 @@ const Navbar = () => {
                         aria-label="Search" aria-describedby="basic-addon2" style={{ textAlign: "right" }} />
 
                 </div>
-            </form>
+            </form> */}
 
 
             <button id="sidebarToggleTop" className="btn btn-link d-md-none rounded-circle mr-3" onClick={() => {
